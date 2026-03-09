@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduPath Global — Study Abroad Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E8C97A;
+  --dark: #0A0C12;
+  --dark2: #12151E;
+  --dark3: #1A1E2E;
+  --dark4: #222840;
+  --text: #E8EAF0;
+  --text-muted: #8A90A8;
+  --accent: #4F8EF7;
+  --green: #3DD68C;
+  --red: #F76F6F;
+  --orange: #F7A94F;
+  --border: rgba(201,168,76,0.18);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+/* Scrollbar */
+::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:var(--dark2);} ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,12,18,0.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--gold);letter-spacing:-0.5px;cursor:pointer;}
+.logo span{color:var(--text);}
+.nav-links{display:flex;gap:0.5rem;align-items:center;}
+.nav-links button{background:none;border:none;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:0.85rem;padding:0.4rem 0.8rem;border-radius:8px;cursor:pointer;transition:all 0.2s;}
+.nav-links button:hover,.nav-links button.active{color:var(--gold);background:rgba(201,168,76,0.1);}
+.lang-btn{background:rgba(201,168,76,0.15)!important;color:var(--gold)!important;border:1px solid var(--border)!important;font-weight:600!important;}
+.btn-premium-nav{background:linear-gradient(135deg,#2A1F0A,#4A3510)!important;border:1px solid var(--gold)!important;color:var(--gold)!important;font-weight:600!important;}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 2rem 4rem;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(201,168,76,0.08) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 20% 80%,rgba(79,142,247,0.06) 0%,transparent 60%),linear-gradient(180deg,var(--dark) 0%,var(--dark2) 100%);}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px);background-size:60px 60px;}
+.hero-content{position:relative;z-index:1;max-width:900px;}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(201,168,76,0.1);border:1px solid var(--border);border-radius:100px;padding:0.4rem 1rem;font-size:0.8rem;color:var(--gold);margin-bottom:2rem;animation:fadeInDown 0.8s ease;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:900;line-height:1.1;margin-bottom:1.5rem;animation:fadeInUp 0.8s ease 0.1s both;}
+.hero h1 .accent{color:var(--gold);}
+.hero p{font-size:1.1rem;color:var(--text-muted);max-width:600px;margin:0 auto 2.5rem;animation:fadeInUp 0.8s ease 0.2s both;line-height:1.7;}
+.hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeInUp 0.8s ease 0.3s both;}
+.btn{padding:0.75rem 1.75rem;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;border:none;transition:all 0.25s;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#0A0C12;}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,168,76,0.4);}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text);}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.05);}
+.hero-stats{display:flex;gap:3rem;justify-content:center;margin-top:3.5rem;flex-wrap:wrap;animation:fadeInUp 0.8s ease 0.4s both;}
+.stat{text-align:center;}
+.stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold);}
+.stat-label{font-size:0.8rem;color:var(--text-muted);margin-top:0.2rem;}
+
+/* SECTIONS */
+section{padding:5rem 2rem;}
+.section-header{text-align:center;margin-bottom:3rem;}
+.section-header h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;margin-bottom:0.75rem;}
+.section-header p{color:var(--text-muted);max-width:600px;margin:0 auto;}
+.section-tag{display:inline-block;background:rgba(201,168,76,0.1);color:var(--gold);font-size:0.75rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:0.3rem 0.8rem;border-radius:6px;margin-bottom:0.75rem;}
+.container{max-width:1300px;margin:0 auto;}
+
+/* TABS */
+.tabs{display:flex;gap:0.5rem;justify-content:center;margin-bottom:2.5rem;flex-wrap:wrap;}
+.tab{background:var(--dark3);border:1px solid var(--border);color:var(--text-muted);padding:0.6rem 1.2rem;border-radius:10px;cursor:pointer;font-size:0.85rem;font-weight:500;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.tab:hover,.tab.active{background:rgba(201,168,76,0.15);border-color:var(--gold);color:var(--gold);}
+
+/* UNIVERSITY CARDS */
+.uni-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
+.uni-card{background:var(--dark2);border:1px solid var(--border);border-radius:16px;padding:1.5rem;transition:all 0.3s;cursor:pointer;position:relative;overflow:hidden;}
+.uni-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--accent));opacity:0;transition:opacity 0.3s;}
+.uni-card:hover{transform:translateY(-4px);border-color:rgba(201,168,76,0.4);box-shadow:0 20px 50px rgba(0,0,0,0.4);}
+.uni-card:hover::before{opacity:1;}
+.uni-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;}
+.uni-logo{width:48px;height:48px;border-radius:10px;background:var(--dark3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:0.7rem;color:var(--gold);text-align:center;flex-shrink:0;line-height:1.2;}
+.uni-name{font-weight:600;font-size:0.95rem;line-height:1.3;}
+.uni-country{font-size:0.8rem;color:var(--text-muted);margin-top:0.2rem;}
+.uni-rank{position:absolute;top:1rem;right:1rem;background:rgba(201,168,76,0.1);border:1px solid var(--border);border-radius:8px;padding:0.2rem 0.6rem;font-size:0.75rem;color:var(--gold);font-weight:600;}
+.uni-stats{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-bottom:1rem;}
+.uni-stat{background:var(--dark3);border-radius:8px;padding:0.5rem 0.7rem;}
+.uni-stat-label{font-size:0.7rem;color:var(--text-muted);}
+.uni-stat-val{font-size:0.85rem;font-weight:600;color:var(--text);margin-top:0.1rem;}
+.badge-verified{display:inline-flex;align-items:center;gap:0.3rem;background:rgba(61,214,140,0.1);border:1px solid rgba(61,214,140,0.3);border-radius:6px;padding:0.2rem 0.5rem;font-size:0.7rem;color:var(--green);margin-bottom:0.8rem;}
+.uni-card-actions{display:flex;gap:0.5rem;margin-top:1rem;}
+.btn-sm{padding:0.5rem 1rem;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-sm-gold{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#0A0C12;}
+.btn-sm-outline{background:transparent;border:1px solid var(--border);color:var(--text-muted);}
+.btn-sm-outline:hover{border-color:var(--gold);color:var(--gold);}
+.chance-pill{display:inline-flex;align-items:center;gap:0.3rem;border-radius:100px;padding:0.25rem 0.7rem;font-size:0.75rem;font-weight:600;margin-top:0.5rem;}
+.high{background:rgba(61,214,140,0.12);color:var(--green);}
+.med{background:rgba(247,169,79,0.12);color:var(--orange);}
+.low{background:rgba(247,111,111,0.12);color:var(--red);}
+
+/* SEARCH & FILTER */
+.search-bar{background:var(--dark2);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:2rem;display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;}
+.filter-group{flex:1;min-width:160px;}
+.filter-group label{display:block;font-size:0.78rem;color:var(--text-muted);margin-bottom:0.5rem;font-weight:500;}
+.filter-group input,.filter-group select{width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:0.65rem 0.9rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;}
+.filter-group input:focus,.filter-group select:focus{border-color:var(--gold);}
+.filter-group select option{background:var(--dark3);}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:2000;align-items:center;justify-content:center;padding:1rem;}
+.modal-overlay.show{display:flex;}
+.modal{background:var(--dark2);border:1px solid var(--border);border-radius:20px;width:100%;max-width:750px;max-height:90vh;overflow-y:auto;animation:modalIn 0.3s ease;}
+@keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.modal-header{padding:1.5rem 2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--dark2);z-index:1;}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;}
+.modal-close{background:var(--dark3);border:1px solid var(--border);color:var(--text-muted);width:36px;height:36px;border-radius:8px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.modal-close:hover{border-color:var(--red);color:var(--red);}
+.modal-body{padding:2rem;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.info-card{background:var(--dark3);border-radius:12px;padding:1.2rem;border:1px solid var(--border);}
+.info-card h4{font-size:0.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.5rem;}
+.info-card p{font-size:0.95rem;font-weight:500;}
+.info-card p.good{color:var(--green);}
+.info-card p.warn{color:var(--orange);}
+.prog-bar-wrap{background:var(--dark3);border-radius:100px;height:8px;margin-top:0.5rem;overflow:hidden;}
+.prog-bar-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--gold),var(--gold-light));transition:width 0.8s ease;}
+
+/* CALCULATOR */
+.calc-section{background:var(--dark2);border:1px solid var(--border);border-radius:20px;padding:2rem;max-width:700px;margin:0 auto;}
+.calc-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+.input-wrap{position:relative;}
+.input-wrap label{display:block;font-size:0.8rem;color:var(--text-muted);margin-bottom:0.4rem;}
+.input-wrap input,.input-wrap select{width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:0.7rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;}
+.input-wrap input:focus,.input-wrap select:focus{border-color:var(--gold);}
+.result-box{background:var(--dark3);border:2px solid var(--gold);border-radius:16px;padding:2rem;text-align:center;margin-top:1.5rem;display:none;}
+.result-box.show{display:block;}
+.chance-circle{width:100px;height:100px;border-radius:50%;background:conic-gradient(var(--gold) 0deg, var(--dark4) 0deg);border:4px solid var(--border);margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--gold);}
+.tips-list{text-align:left;margin-top:1rem;}
+.tip-item{background:var(--dark4);border-radius:8px;padding:0.7rem 1rem;margin-bottom:0.5rem;font-size:0.85rem;display:flex;gap:0.5rem;align-items:flex-start;}
+
+/* PROGRESS */
+.progress-header{background:var(--dark2);border:1px solid var(--border);border-radius:14px;padding:1rem 1.5rem;margin-bottom:2rem;display:flex;align-items:center;gap:1.5rem;}
+.progress-label{font-size:0.85rem;color:var(--text-muted);white-space:nowrap;}
+.progress-track{flex:1;height:8px;background:var(--dark3);border-radius:100px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--accent));border-radius:100px;transition:width 0.5s ease;}
+.progress-count{font-size:0.85rem;color:var(--gold);font-weight:600;white-space:nowrap;}
+
+/* COUNTRY CARDS */
+.country-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;}
+.country-card{background:var(--dark2);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all 0.3s;cursor:pointer;}
+.country-card:hover{border-color:rgba(201,168,76,0.4);transform:translateY(-3px);}
+.country-top{padding:1.5rem;display:flex;align-items:center;gap:1rem;}
+.country-flag{font-size:2.5rem;}
+.country-name{font-size:1.1rem;font-weight:600;}
+.country-uni-count{font-size:0.8rem;color:var(--text-muted);}
+.country-info{padding:0 1.5rem 1.5rem;}
+.ci-row{display:flex;justify-content:space-between;align-items:center;padding:0.4rem 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.85rem;}
+.ci-row:last-child{border-bottom:none;}
+.ci-label{color:var(--text-muted);}
+.ci-val{font-weight:500;}
+
+/* TIMELINE */
+.timeline{position:relative;max-width:600px;margin:0 auto;}
+.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--gold),var(--accent));}
+.tl-item{display:flex;gap:1.5rem;margin-bottom:1.5rem;position:relative;}
+.tl-dot{width:40px;height:40px;border-radius:50%;background:var(--dark2);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:var(--gold);flex-shrink:0;z-index:1;}
+.tl-content{background:var(--dark2);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;flex:1;}
+.tl-month{font-size:0.75rem;color:var(--gold);font-weight:600;margin-bottom:0.3rem;}
+.tl-task{font-size:0.9rem;font-weight:500;}
+.tl-desc{font-size:0.8rem;color:var(--text-muted);margin-top:0.3rem;}
+
+/* MAP */
+#map{height:450px;border-radius:16px;border:1px solid var(--border);overflow:hidden;}
+.leaflet-tile-pane img{filter:brightness(0.6) saturate(0.5);}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;max-width:900px;margin:0 auto;}
+.price-card{background:var(--dark2);border:1px solid var(--border);border-radius:20px;padding:2rem;position:relative;overflow:hidden;transition:all 0.3s;}
+.price-card.featured{border-color:var(--gold);background:linear-gradient(135deg,var(--dark2),rgba(201,168,76,0.05));}
+.price-card.featured::before{content:'POPULAR';position:absolute;top:1.5rem;right:1.5rem;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#0A0C12;font-size:0.65rem;font-weight:700;padding:0.25rem 0.6rem;border-radius:100px;letter-spacing:0.5px;}
+.price-name{font-size:0.8rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.5rem;}
+.price-amount{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:var(--gold);margin-bottom:0.3rem;}
+.price-amount span{font-size:1rem;font-family:'DM Sans',sans-serif;color:var(--text-muted);}
+.price-features{list-style:none;margin:1.5rem 0;}
+.price-features li{display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;padding:0.4rem 0;color:var(--text-muted);}
+.price-features li .check{color:var(--green);font-size:1rem;}
+.price-features li.included{color:var(--text);}
+
+/* DOC BUILDER */
+.doc-tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.doc-tab{background:var(--dark3);border:1px solid var(--border);color:var(--text-muted);padding:0.5rem 1rem;border-radius:8px;cursor:pointer;font-size:0.85rem;font-weight:500;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.doc-tab:hover,.doc-tab.active{background:rgba(201,168,76,0.15);border-color:var(--gold);color:var(--gold);}
+.doc-editor{background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:1.5rem;}
+.doc-editor textarea{width:100%;background:transparent;border:none;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;line-height:1.7;resize:vertical;outline:none;min-height:280px;}
+.doc-toolbar{display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;}
+.doc-tool{background:var(--dark4);border:1px solid var(--border);color:var(--text-muted);padding:0.4rem 0.8rem;border-radius:6px;cursor:pointer;font-size:0.78rem;font-weight:500;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.doc-tool:hover{border-color:var(--gold);color:var(--gold);}
+
+/* PAYMENT MODAL */
+.payment-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+.payment-form input{width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:0.7rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;}
+.payment-form input:focus{border-color:var(--gold);}
+.payment-methods{display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.pay-method{background:var(--dark3);border:2px solid var(--border);border-radius:10px;padding:0.7rem 1.2rem;cursor:pointer;font-size:0.85rem;font-weight:500;transition:all 0.2s;display:flex;align-items:center;gap:0.4rem;}
+.pay-method.active{border-color:var(--gold);color:var(--gold);}
+
+/* QUIZ / TEST PAGE */
+.quiz-section{max-width:700px;margin:0 auto;}
+.quiz-card{background:var(--dark2);border:1px solid var(--border);border-radius:20px;padding:2rem;}
+.quiz-question{font-size:1.1rem;font-weight:600;margin-bottom:1.5rem;line-height:1.5;}
+.quiz-options{display:flex;flex-direction:column;gap:0.7rem;}
+.quiz-opt{background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1.2rem;cursor:pointer;font-size:0.9rem;transition:all 0.2s;}
+.quiz-opt:hover{border-color:var(--gold);color:var(--gold);}
+.quiz-opt.selected{border-color:var(--gold);background:rgba(201,168,76,0.1);color:var(--gold);}
+.quiz-opt.correct{border-color:var(--green);background:rgba(61,214,140,0.1);color:var(--green);}
+.quiz-opt.wrong{border-color:var(--red);background:rgba(247,111,111,0.1);color:var(--red);}
+.quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;}
+
+/* NOTIFY */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--dark2);border:1px solid var(--gold);border-radius:12px;padding:1rem 1.5rem;z-index:3000;animation:slideUp 0.3s ease;font-size:0.9rem;max-width:320px;}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+
+/* ANIMATIONS */
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-15px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px);}to{opacity:1;transform:translateY(0);}}
+
+/* WHATSAPP */
+.wa-float{position:fixed;bottom:2rem;left:2rem;z-index:999;display:flex;align-items:center;gap:0.7rem;background:linear-gradient(135deg,#25D366,#128C7E);border-radius:100px;padding:0.7rem 1.2rem;cursor:pointer;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s;}
+.wa-float:hover{transform:scale(1.05);}
+.wa-float svg{width:22px;height:22px;fill:white;flex-shrink:0;}
+.wa-float span{color:white;font-size:0.85rem;font-weight:600;}
+
+/* VERIFY BADGE */
+.verify-badge{display:inline-flex;align-items:center;gap:0.3rem;background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.3);border-radius:6px;padding:0.2rem 0.5rem;font-size:0.68rem;color:var(--accent);margin-left:0.5rem;}
+
+/* PAGE SECTIONS */
+.page{display:none;}
+.page.active{display:block;}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .calc-row{grid-template-columns:1fr;}
+  .info-grid{grid-template-columns:1fr;}
+  .payment-form .form-row{grid-template-columns:1fr;}
+  .nav-links .nav-link-text{display:none;}
+  .hero h1{font-size:2.2rem;}
+}
+
+/* SCHOLARSHIP TAGS */
+.schol-tag{display:inline-block;background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.3);border-radius:6px;padding:0.2rem 0.5rem;font-size:0.72rem;color:var(--accent);margin:0.15rem;}
+.schol-tag.gold-tag{background:rgba(201,168,76,0.1);border-color:var(--border);color:var(--gold);}
+
+/* SECTION DIVIDER */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:2rem 0;}
+
+/* HIGHLIGHT */
+mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;padding:0 3px;}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav id="mainNav">
+  <div class="logo" onclick="showPage('home')">EduPath<span>Global</span></div>
+  <div class="nav-links">
+    <button class="active" onclick="showPage('home')" data-i18n="nav_home">Home</button>
+    <button onclick="showPage('universities')" data-i18n="nav_unis">Universities</button>
+    <button onclick="showPage('calculator')" data-i18n="nav_calc">Calculator</button>
+    <button onclick="showPage('countries')" data-i18n="nav_countries">Countries</button>
+    <button onclick="showPage('timeline')" data-i18n="nav_timeline">Timeline</button>
+    <button onclick="showPage('docs')" data-i18n="nav_docs">Docs</button>
+    <button onclick="showPage('test')" data-i18n="nav_test">Test</button>
+    <button class="btn-premium-nav" onclick="showPayment('premium')" data-i18n="nav_premium">⭐ Premium $2</button>
+    <button class="btn-premium-nav" style="background:linear-gradient(135deg,#0A2040,#1A3A5C)!important;border-color:var(--accent)!important;color:var(--accent)!important;" onclick="showPayment('pro')" data-i18n="nav_pro">💎 Pro $5</button>
+    <button class="lang-btn" onclick="cycleLang()">🌐 <span id="langLabel">EN</span></button>
+  </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🌍 <span data-i18n="hero_badge">Your Gateway to World-Class Education</span></div>
+    <h1><span data-i18n="hero_h1a">Discover Your</span> <span class="accent" data-i18n="hero_h1b">Dream University</span><br><span data-i18n="hero_h1c">Abroad</span></h1>
+    <p data-i18n="hero_p">AI-powered admission calculator, 70 top universities with real 2026 data, scholarships, visa guides and personalized roadmaps for students worldwide.</p>
+    <div class="hero-actions">
+      <button class="btn btn-gold" onclick="showPage('universities')">🎓 <span data-i18n="btn_explore">Explore Universities</span></button>
+      <button class="btn btn-outline" onclick="showPage('calculator')">🤖 <span data-i18n="btn_calc">AI Chance Calculator</span></button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">70+</div><div class="stat-label" data-i18n="stat1">Universities</div></div>
+      <div class="stat"><div class="stat-num">35+</div><div class="stat-label" data-i18n="stat2">Countries</div></div>
+      <div class="stat"><div class="stat-num">500+</div><div class="stat-label" data-i18n="stat3">Scholarships</div></div>
+      <div class="stat"><div class="stat-num">2026</div><div class="stat-label" data-i18n="stat4">Updated Data</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Featured Countries Quick Pick -->
+<section style="padding:3rem 2rem;">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag" data-i18n="tag_popular">Popular Destinations</div>
+      <h2 data-i18n="h_countries">Study by Country</h2>
+    </div>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;">
+      <button class="tab" onclick="filterByCountry('Germany')">🇩🇪 Germany</button>
+      <button class="tab" onclick="filterByCountry('USA')">🇺🇸 USA</button>
+      <button class="tab" onclick="filterByCountry('UK')">🇬🇧 UK</button>
+      <button class="tab" onclick="filterByCountry('Canada')">🇨🇦 Canada</button>
+      <button class="tab" onclick="filterByCountry('Australia')">🇦🇺 Australia</button>
+      <button class="tab" onclick="filterByCountry('Netherlands')">🇳🇱 Netherlands</button>
+      <button class="tab" onclick="filterByCountry('Japan')">🇯🇵 Japan</button>
+      <button class="tab" onclick="filterByCountry('France')">🇫🇷 France</button>
+      <button class="tab" onclick="filterByCountry('Switzerland')">🇨🇭 Switzerland</button>
+      <button class="tab" onclick="filterByCountry('Sweden')">🇸🇪 Sweden</button>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- UNIVERSITIES PAGE -->
+<div id="page-universities" class="page" style="padding-top:80px;">
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag" data-i18n="tag_top70">Top 70 Universities 2026</div>
+      <h2 data-i18n="h_unis">World's Best Universities</h2>
+      <p data-i18n="p_unis">Official verified data — rankings, scholarships, IELTS requirements, acceptance rates</p>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="search-bar">
+      <div class="filter-group" style="flex:2;">
+        <label data-i18n="lbl_search">Search University</label>
+        <input type="text" id="uniSearch" placeholder="MIT, Oxford, TU Munich..." oninput="filterUnis()">
+      </div>
+      <div class="filter-group">
+        <label data-i18n="lbl_country">Country</label>
+        <select id="countryFilter" onchange="filterUnis()">
+          <option value="">All Countries</option>
+          <option>USA</option><option>UK</option><option>Germany</option><option>Switzerland</option>
+          <option>Canada</option><option>Australia</option><option>Japan</option><option>France</option>
+          <option>Netherlands</option><option>Sweden</option><option>China</option><option>Singapore</option>
+          <option>South Korea</option><option>Belgium</option><option>Denmark</option><option>Finland</option>
+          <option>Austria</option><option>Italy</option><option>Norway</option><option>New Zealand</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label data-i18n="lbl_degree">Degree</label>
+        <select id="degreeFilter" onchange="filterUnis()">
+          <option value="">All Degrees</option>
+          <option>Bachelor</option><option>Master</option><option>PhD</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label data-i18n="lbl_ielts">Min IELTS</label>
+        <select id="ieltsFilter" onchange="filterUnis()">
+          <option value="0">Any</option>
+          <option value="6">6.0+</option><option value="6.5">6.5+</option>
+          <option value="7">7.0+</option><option value="7.5">7.5+</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label data-i18n="lbl_sort">Sort by</label>
+        <select id="sortFilter" onchange="filterUnis()">
+          <option value="rank">QS Rank</option>
+          <option value="acceptance">Acceptance Rate</option>
+          <option value="tuition">Tuition</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="progress-header">
+      <span class="progress-label" data-i18n="showing">Showing</span>
+      <div class="progress-track"><div class="progress-fill" id="filterProgress" style="width:100%"></div></div>
+      <span class="progress-count" id="uniCount">70 universities</span>
+    </div>
+
+    <div class="uni-grid" id="uniGrid"></div>
+  </div>
+</section>
+</div>
+
+<!-- CALCULATOR PAGE -->
+<div id="page-calculator" class="page" style="padding-top:80px;">
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">AI Calculator</div>
+      <h2 data-i18n="h_calc">Admission Chance Calculator</h2>
+      <p data-i18n="p_calc">Enter your profile and see your admission probability for any university</p>
+    </div>
+
+    <!-- Progress for quiz form -->
+    <div class="progress-header" style="max-width:700px;margin:0 auto 1.5rem;">
+      <span class="progress-label" data-i18n="form_progress">Profile completed:</span>
+      <div class="progress-track"><div class="progress-fill" id="calcProgress" style="width:0%"></div></div>
+      <span class="progress-count" id="calcProgressText">0/6</span>
+    </div>
+
+    <div class="calc-section">
+      <div class="calc-row">
+        <div class="input-wrap">
+          <label data-i18n="lbl_gpa">GPA (0-4.0)</label>
+          <input type="number" id="calcGpa" min="0" max="4" step="0.1" placeholder="3.5" oninput="updateCalcProgress()">
+        </div>
+        <div class="input-wrap">
+          <label>IELTS Score</label>
+          <input type="number" id="calcIelts" min="0" max="9" step="0.5" placeholder="6.5" oninput="updateCalcProgress()">
+        </div>
+      </div>
+      <div class="calc-row">
+        <div class="input-wrap">
+          <label data-i18n="lbl_activity">Extracurriculars / Activities</label>
+          <select id="calcActivity" onchange="updateCalcProgress()">
+            <option value="">Select level</option>
+            <option value="3">Many (5+ activities)</option>
+            <option value="2">Some (2-4)</option>
+            <option value="1">Few (0-1)</option>
+          </select>
+        </div>
+        <div class="input-wrap">
+          <label data-i18n="lbl_rec">Recommendation Letters</label>
+          <select id="calcRec" onchange="updateCalcProgress()">
+            <option value="">Select</option>
+            <option value="3">Strong (Professor/Manager)</option>
+            <option value="2">Average</option>
+            <option value="1">Weak</option>
+          </select>
+        </div>
+      </div>
+      <div class="calc-row">
+        <div class="input-wrap">
+          <label data-i18n="lbl_uni_target">Target University</label>
+          <select id="calcUni" onchange="updateCalcProgress()">
+            <option value="">Choose university</option>
+          </select>
+        </div>
+        <div class="input-wrap">
+          <label data-i18n="lbl_degree2">Degree Program</label>
+          <select id="calcDegree" onchange="updateCalcProgress()">
+            <option value="">Select degree</option>
+            <option value="bachelor">Bachelor</option>
+            <option value="master">Master</option>
+            <option value="phd">PhD / Doctorate</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-gold" style="width:100%;justify-content:center;" onclick="calculateChance()">🤖 <span data-i18n="btn_calculate">Calculate My Chances</span></button>
+
+      <div class="result-box" id="resultBox">
+        <div class="chance-circle" id="chanceCircle">72%</div>
+        <h3 id="resultTitle" style="font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:0.5rem;"></h3>
+        <p id="resultDesc" style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;"></p>
+        <div class="tips-list" id="tipsList"></div>
+        <div style="margin-top:1.5rem;display:flex;gap:0.7rem;flex-wrap:wrap;justify-content:center;">
+          <button class="btn btn-gold btn-sm" onclick="showPage('timeline')">📅 <span data-i18n="btn_timeline">Generate Timeline</span></button>
+          <a href="https://wa.me/996553373812" target="_blank" class="btn btn-outline btn-sm">💬 <span data-i18n="btn_consult">Get Consultation</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- COUNTRIES PAGE -->
+<div id="page-countries" class="page" style="padding-top:80px;">
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag" data-i18n="tag_countries">Study Destinations</div>
+      <h2 data-i18n="h_countries2">Countries Guide 2026</h2>
+      <p data-i18n="p_countries">Tuition fees, living costs, part-time work, and visa information</p>
+    </div>
+
+    <!-- MAP -->
+    <div id="map" style="margin-bottom:3rem;"></div>
+
+    <div class="country-grid" id="countryGrid"></div>
+  </div>
+</section>
+</div>
+
+<!-- TIMELINE PAGE -->
+<div id="page-timeline" class="page" style="padding-top:80px;">
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Auto Planner</div>
+      <h2 data-i18n="h_timeline">Application Timeline Generator</h2>
+      <p data-i18n="p_timeline">Select country and degree — get your personalized step-by-step roadmap</p>
+    </div>
+
+    <div style="max-width:600px;margin:0 auto 3rem;">
+      <div class="search-bar" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;">
+        <div class="filter-group">
+          <label data-i18n="lbl_tl_country">Target Country</label>
+          <select id="tlCountry" onchange="generateTimeline()">
+            <option value="Germany">Germany</option>
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+            <option value="Canada">Canada</option>
+            <option value="Australia">Australia</option>
+            <option value="Netherlands">Netherlands</option>
+            <option value="Japan">Japan</option>
+            <option value="Sweden">Sweden</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label data-i18n="lbl_tl_degree">Degree</label>
+          <select id="tlDegree" onchange="generateTimeline()">
+            <option value="Bachelor">Bachelor</option>
+            <option value="Master">Master</option>
+            <option value="PhD">PhD</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Start Year</label>
+          <select id="tlYear" onchange="generateTimeline()">
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline" id="timelineContent"></div>
+  </div>
+</section>
+</div>
+
+<!-- DOCS PAGE -->
+<div id="page-docs" class="page" style="padding-top:80px;">
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag" data-i18n="tag_docs">Document Builder</div>
+      <h2 data-i18n="h_docs">Create Your Documents</h2>
+      <p data-i18n="p_docs">SOP, CV, Motivation Letter, Visa Cover Letter — professional templates</p>
+    </div>
+
+    <div class="doc-tabs">
+      <button class="doc-tab active" onclick="switchDoc('sop',this)">📝 Statement of Purpose</button>
+      <button class="doc-tab" onclick="switchDoc('cv',this)">📄 CV / Resume</button>
+      <button class="doc-tab" onclick="switchDoc('motivation',this)">💌 Motivation Letter</button>
+      <button class="doc-tab" onclick="switchDoc('visa',this)">🛂 Visa Cover Letter</button>
+    </div>
+
+    <div class="doc-editor" id="docEditor">
+      <div class="doc-toolbar">
+        <button class="doc-tool" onclick="docAction('name')">+ Your Name</button>
+        <button class="doc-tool" onclick="docAction('uni')">+ University Name</button>
+        <button class="doc-tool" onclick="docAction('program')">+ Program</button>
+        <button class="doc-tool" onclick="docAction('year')">+ Year</button>
+        <button class="doc-tool" onclick="docAction('clear')">🗑 Clear</button>
+      </div>
+      <textarea id="docText" placeholder="Your document will appear here..."></textarea>
+    </div>
+
+    <div style="display:flex;gap:1rem;margin-top:1rem;flex-wrap:wrap;">
+      <button class="btn btn-gold" onclick="copyDoc()">📋 <span data-i18n="btn_copy">Copy Text</span></button>
+      <button class="btn btn-outline" onclick="downloadDoc()">⬇ <span data-i18n="btn_download">Download .txt</span></button>
+      <button class="btn btn-outline" style="border-color:var(--accent);color:var(--accent);" onclick="showPayment('premium')">⭐ <span data-i18n="btn_premium_doc">Premium Templates</span></button>
+    </div>
+
+    <!-- Premium locked section -->
+    <div style="margin-top:3rem;background:linear-gradient(135deg,rgba(201,168,76,0.05),rgba(201,168,76,0.02));border:1px solid var(--border);border-radius:20px;padding:2rem;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;backdrop-filter:blur(3px);background:rgba(10,12,18,0.6);display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:20px;z-index:2;">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">🔒</div>
+        <p style="font-weight:600;margin-bottom:0.3rem;" data-i18n="locked_premium">Premium Feature</p>
+        <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1rem;text-align:center;" data-i18n="locked_desc">Unlock Europass CV, SOP templates + IELTS strategy plan</p>
+        <button class="btn btn-gold btn-sm" onclick="showPayment('premium')">⭐ Unlock for $2</button>
+      </div>
+      <h3 style="font-family:'Playfair Display',serif;margin-bottom:1rem;">Premium Templates</h3>
+      <p>Europass CV Template • SOP Structure + Example • IELTS Strategy Plan (Band 7-8) • Visa Document Checklist</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- TEST PAGE -->
+<div id="page-test" class="page" style="padding-top:80px;">
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag" data-i18n="tag_test">Knowledge Test</div>
+      <h2 data-i18n="h_test">Study Abroad Quiz</h2>
+      <p data-i18n="p_test">Test your knowledge about studying abroad, universities, visas and scholarships</p>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-header" style="max-width:700px;margin:0 auto 2rem;">
+      <span class="progress-label" data-i18n="quiz_progress">Progress:</span>
+      <div class="progress-track"><div class="progress-fill" id="quizProgress" style="width:0%"></div></div>
+      <span class="progress-count" id="quizProgressText">0/10</span>
+    </div>
+
+    <div class="quiz-section">
+      <div class="quiz-card" id="quizCard">
+        <div class="quiz-question" id="quizQuestion"></div>
+        <div class="quiz-options" id="quizOptions"></div>
+        <div class="quiz-nav">
+          <span style="color:var(--text-muted);font-size:0.85rem;" id="quizScore"></span>
+          <button class="btn btn-gold btn-sm" id="quizNext" onclick="nextQuestion()" style="display:none;">Next →</button>
+        </div>
+      </div>
+
+      <div id="quizResult" style="display:none;" class="quiz-card" style="text-align:center;">
+        <div style="text-align:center;padding:2rem;">
+          <div style="font-size:3rem;margin-bottom:1rem;" id="quizEmoji">🎓</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:0.5rem;" id="quizFinalTitle"></h3>
+          <p style="color:var(--text-muted);margin-bottom:1.5rem;" id="quizFinalDesc"></p>
+          <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+            <button class="btn btn-gold" onclick="restartQuiz()">🔄 Retry</button>
+            <button class="btn btn-outline" onclick="showPage('calculator')">🤖 Try Calculator</button>
+            <a href="https://wa.me/996553373812" target="_blank" class="btn btn-outline" style="border-color:#25D366;color:#25D366;">💬 Consult</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Extra study areas for test page -->
+    <div style="margin-top:3rem;max-width:700px;margin-left:auto;margin-right:auto;">
+      <div class="section-tag" style="margin-bottom:1rem;" data-i18n="tag_degree_filter">Filter by Degree</div>
+      <div style="display:flex;gap:0.7rem;flex-wrap:wrap;">
+        <button class="tab active" onclick="filterDegree('all',this)">All</button>
+        <button class="tab" onclick="filterDegree('bachelor',this)">🎓 Bachelor</button>
+        <button class="tab" onclick="filterDegree('master',this)">🎓 Master</button>
+        <button class="tab" onclick="filterDegree('phd',this)">🔬 PhD / Doctorate</button>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- UNIVERSITY DETAIL MODAL -->
+<div class="modal-overlay" id="uniModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modalUniName"></div>
+        <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.3rem;">
+          <span class="badge-verified">✔ Official Data Verified 2026</span>
+          <span class="verify-badge">🎓 Accredited Institution</span>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('uniModal')">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="modal-overlay" id="payModal">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-header">
+      <div class="modal-title" id="payTitle">Subscribe to Premium</div>
+      <button class="modal-close" onclick="closeModal('payModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="payFeatures" style="margin-bottom:1.5rem;"></div>
+      <div class="payment-methods" id="payMethods">
+        <div class="pay-method active" onclick="selectPayMethod(this,'card')">💳 Card</div>
+        <div class="pay-method" onclick="selectPayMethod(this,'paypal')">🅿 PayPal</div>
+        <div class="pay-method" onclick="selectPayMethod(this,'mbank')">📱 MBank</div>
+        <div class="pay-method" onclick="selectPayMethod(this,'elsom')">📱 Elsom</div>
+        <div class="pay-method" onclick="selectPayMethod(this,'crypto')">₿ Crypto</div>
+      </div>
+      <div class="payment-form" id="cardForm">
+        <div class="form-row">
+          <input type="text" placeholder="Card Number (4 × 4 digits)" maxlength="19" id="cardNum" oninput="formatCard(this)">
+          <input type="text" placeholder="MM/YY" maxlength="5">
+        </div>
+        <div class="form-row">
+          <input type="text" placeholder="Cardholder Name">
+          <input type="text" placeholder="CVV" maxlength="3">
+        </div>
+        <input type="email" placeholder="Email" style="width:100%;margin-bottom:1rem;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:0.7rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;">
+      </div>
+      <p style="color:var(--text-muted);font-size:0.78rem;margin-bottom:1rem;">🔒 Secure payment • 30-day money back guarantee • Worldwide payment accepted</p>
+      <button class="btn btn-gold" style="width:100%;justify-content:center;" onclick="processPayment()" id="payBtn">
+        💳 <span id="payBtnText">Subscribe Now</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/996553373812" target="_blank" class="wa-float">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span data-i18n="wa_text">Get Consultation</span>
+</a>
+
+<script>
+// ===================== DATA =====================
+const universities = [
+{id:1,name:"MIT",full:"Massachusetts Institute of Technology",country:"USA",flag:"🇺🇸",rank:1,acceptance:4,tuition:57986,ielts:7.0,gpa:3.9,scholarships:["Fullbright","MIT Fellowship","MISTI"],accreditation:"NEASC",location:"Cambridge, MA",visa:"F-1 Student Visa",workOpp:"CPT/OPT up to 3 years",coopPrograms:true,appFee:75,feeWaiver:true,requirements:{gpa:3.9,sat:"1500+",toefl:100,extras:"Research, publications"},deadline:"Jan 1",livingCost:22000,rankings:{qs:1,times:2,shanghai:1},logo:"MIT",color:"#8B0000"},
+{id:2,name:"Harvard",full:"Harvard University",country:"USA",flag:"🇺🇸",rank:4,acceptance:3,tuition:59076,ielts:7.0,gpa:3.9,scholarships:["Fullbright","Harvard Financial Aid","Aga Khan"],accreditation:"NEASC",location:"Cambridge, MA",visa:"F-1",workOpp:"CPT/OPT",coopPrograms:false,appFee:85,feeWaiver:true,requirements:{gpa:3.9,sat:"1580+",extras:"Leadership, community service"},deadline:"Jan 2",livingCost:23000,rankings:{qs:4,times:1,shanghai:1},logo:"H",color:"#A51C30"},
+{id:3,name:"Stanford",full:"Stanford University",country:"USA",flag:"🇺🇸",rank:5,acceptance:4,tuition:60156,ielts:7.0,gpa:3.9,scholarships:["Fullbright","Knight-Hennessy"],accreditation:"WASC",location:"Stanford, CA",visa:"F-1",workOpp:"CPT/OPT",coopPrograms:true,appFee:90,feeWaiver:true,requirements:{gpa:3.95,extras:"Innovation, research"},deadline:"Jan 5",livingCost:24000,rankings:{qs:5,times:3,shanghai:3},logo:"S",color:"#8C1515"},
+{id:4,name:"Oxford",full:"University of Oxford",country:"UK",flag:"🇬🇧",rank:3,acceptance:17,tuition:45280,ielts:7.5,gpa:3.7,scholarships:["Rhodes Scholarship","Clarendon","Chevening"],accreditation:"OfS",location:"Oxford, England",visa:"UK Student Visa (Tier 4)",workOpp:"20h/week during term",coopPrograms:false,appFee:75,feeWaiver:false,requirements:{gpa:3.7,extras:"Strong A-levels, interviews"},deadline:"Oct 15",livingCost:16000,rankings:{qs:3,times:1,shanghai:7},logo:"OX",color:"#002147"},
+{id:5,name:"Cambridge",full:"University of Cambridge",country:"UK",flag:"🇬🇧",rank:2,acceptance:21,tuition:40761,ielts:7.5,gpa:3.7,scholarships:["Cambridge Trust","Gates Cambridge","Chevening"],accreditation:"OfS",location:"Cambridge, England",visa:"UK Student Visa",workOpp:"20h/week",coopPrograms:false,appFee:75,feeWaiver:false,requirements:{gpa:3.7},deadline:"Oct 15",livingCost:15000,rankings:{qs:2,times:2,shanghai:4},logo:"CAM",color:"#003B71"},
+{id:6,name:"ETH Zurich",full:"ETH Zurich – Swiss Federal Institute of Technology",country:"Switzerland",flag:"🇨🇭",rank:7,acceptance:8,tuition:1500,ielts:7.0,gpa:3.5,scholarships:["Excellence Scholarship","ESOP"],accreditation:"AAQ",location:"Zurich",visa:"Switzerland Student Permit",workOpp:"15h/week",coopPrograms:true,appFee:150,feeWaiver:false,requirements:{gpa:3.5},deadline:"Dec 15",livingCost:23000,rankings:{qs:7,times:10,shanghai:20},logo:"ETH",color:"#1F407A"},
+{id:7,name:"UCL",full:"University College London",country:"UK",flag:"🇬🇧",rank:9,acceptance:63,tuition:28000,ielts:6.5,gpa:3.4,scholarships:["UCL Global Scholarship","Chevening"],accreditation:"OfS",location:"London, England",visa:"UK Student Visa",workOpp:"20h/week",coopPrograms:true,appFee:0,feeWaiver:true,requirements:{gpa:3.4},deadline:"Jan 26",livingCost:18000,rankings:{qs:9,times:22,shanghai:16},logo:"UCL",color:"#500778"},
+{id:8,name:"Imperial",full:"Imperial College London",country:"UK",flag:"🇬🇧",rank:8,acceptance:14,tuition:38500,ielts:6.5,gpa:3.6,scholarships:["President's Scholarship","Chevening"],accreditation:"OfS",location:"London",visa:"UK Student Visa",workOpp:"20h/week",coopPrograms:true,appFee:0,feeWaiver:true,requirements:{gpa:3.6},deadline:"Jan 15",livingCost:18000,rankings:{qs:8,times:13,shanghai:26},logo:"IC",color:"#003E74"},
+{id:9,name:"Chicago",full:"University of Chicago",country:"USA",flag:"🇺🇸",rank:11,acceptance:6,tuition:62241,ielts:7.0,gpa:3.85,scholarships:["Fullbright","Merit Scholarship"],accreditation:"HLC",location:"Chicago, IL",visa:"F-1",workOpp:"CPT/OPT",coopPrograms:false,appFee:75,feeWaiver:true,requirements:{gpa:3.85},deadline:"Jan 1",livingCost:19000,rankings:{qs:11,times:10,shanghai:9},logo:"UoC",color:"#800000"},
+{id:10,name:"NUS",full:"National University of Singapore",country:"Singapore",flag:"🇸🇬",rank:8,acceptance:5,tuition:18000,ielts:6.5,gpa:3.6,scholarships:["ASEAN Scholarship","NUS Research Scholarship"],accreditation:"MOE Singapore",location:"Singapore",visa:"Singapore Student Pass",workOpp:"16h/week",coopPrograms:true,appFee:20,feeWaiver:false,requirements:{gpa:3.6},deadline:"Feb 28",livingCost:14000,rankings:{qs:8,times:19,shanghai:80},logo:"NUS",color:"#003D7C"},
+{id:11,name:"Yale",full:"Yale University",country:"USA",flag:"🇺🇸",rank:12,acceptance:5,tuition:62250,ielts:7.0,gpa:3.9,scholarships:["Fullbright","Yale Financial Aid"],accreditation:"NEASC",location:"New Haven, CT",visa:"F-1",workOpp:"CPT/OPT",coopPrograms:false,appFee:80,feeWaiver:true,requirements:{gpa:3.9},deadline:"Jan 2",livingCost:20000,rankings:{qs:12,times:9,shanghai:11},logo:"Y",color:"#00356B"},
+{id:12,name:"Princeton",full:"Princeton University",country:"USA",flag:"🇺🇸",rank:13,acceptance:4,tuition:57690,ielts:7.0,gpa:3.9,scholarships:["Princeton Financial Aid","Fullbright"],accreditation:"MSCHE",location:"Princeton, NJ",visa:"F-1",workOpp:"CPT/OPT",coopPrograms:false,appFee:70,feeWaiver:true,requirements:{gpa:3.9},deadline:"Jan 1",livingCost:18000,rankings:{qs:13,times:7,shanghai:6},logo:"P",color:"#E77500"},
+{id:13,name:"Columbia",full:"Columbia University",country:"USA",flag:"🇺🇸",rank:22,acceptance:4,tuition:65524,ielts:7.0,gpa:3.87,scholarships:["Columbia Financial Aid","Fullbright"],accreditation:"MSCHE",location:"New York, NY",visa:"F-1",workOpp:"CPT/OPT",coopPrograms:false,appFee:85,feeWaiver:true,requirements:{gpa:3.87},deadline:"Jan 1",livingCost:26000,rankings:{qs:22,times:12,shanghai:8},logo:"CU",color:"#B9D9EB"},
+{id:14,name:"TU Munich",full:"Technical University of Munich",country:"Germany",flag:"🇩🇪",rank:37,acceptance:8,tuition:300,ielts:6.5,gpa:3.3,scholarships:["DAAD","Deutschland Stipendium","Bavarian Elite Aid"],accreditation:"FIBAA",location:"Munich",visa:"Germany National Visa (D)",workOpp:"20h/week",coopPrograms:true,appFee:0,feeWaiver:true,requirements:{gpa:3.3},deadline:"May 31",livingCost:10000,rankings:{qs:37,times:30,shanghai:52},logo:"TUM",color:"#0065BD"},
+{id:15,name:"LMU Munich",full:"Ludwig Maximilian University of Munich",country:"Germany",flag:"🇩🇪",rank:59,acceptance:15,tuition:300,ielts:6.5,gpa:3.2,scholarships:["DAAD","DFG","Excel"],accreditation:"German Accreditation Council",location:"Munich",visa:"Germany National Visa",workOpp:"20h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.2},deadline:"May 15",livingCost:10000,rankings:{qs:59,times:38,shanghai:55},logo:"LMU",color:"#009036"},
+{id:16,name:"Heidelberg",full:"Heidelberg University",country:"Germany",flag:"🇩🇪",rank:67,acceptance:20,tuition:300,ielts:6.5,gpa:3.2,scholarships:["DAAD","Heidelberg Graduate School"],accreditation:"ZEvA",location:"Heidelberg",visa:"Germany National Visa",workOpp:"20h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.2},deadline:"Jul 15",livingCost:9000,rankings:{qs:67,times:65,shanghai:47},logo:"HD",color:"#C1121F"},
+{id:17,name:"Toronto",full:"University of Toronto",country:"Canada",flag:"🇨🇦",rank:25,acceptance:43,tuition:52000,ielts:6.5,gpa:3.6,scholarships:["Lester B Pearson","UTSC International","Vanier"],accreditation:"MTCU",location:"Toronto, ON",visa:"Canadian Student Permit",workOpp:"20h/week",coopPrograms:true,appFee:220,feeWaiver:false,requirements:{gpa:3.6},deadline:"Jan 15",livingCost:16000,rankings:{qs:25,times:18,shanghai:24},logo:"UofT",color:"#002A5C"},
+{id:18,name:"McGill",full:"McGill University",country:"Canada",flag:"🇨🇦",rank:46,acceptance:40,tuition:24000,ielts:6.5,gpa:3.5,scholarships:["Entrance Scholarship","GREAT Awards","Fullbright"],accreditation:"AUCC",location:"Montreal, QC",visa:"Canadian Student Permit",workOpp:"20h/week",coopPrograms:true,appFee:117,feeWaiver:false,requirements:{gpa:3.5},deadline:"Jan 15",livingCost:14000,rankings:{qs:46,times:46,shanghai:66},logo:"MCG",color:"#ED1B2F"},
+{id:19,name:"Melbourne",full:"University of Melbourne",country:"Australia",flag:"🇦🇺",rank:33,acceptance:70,tuition:42000,ielts:6.5,gpa:3.3,scholarships:["Melbourne International","Graduate Scholarship"],accreditation:"TEQSA",location:"Melbourne, VIC",visa:"Australia Student Visa (500)",workOpp:"48h/fortnight",coopPrograms:true,appFee:0,feeWaiver:true,requirements:{gpa:3.3},deadline:"Oct 31",livingCost:18000,rankings:{qs:33,times:34,shanghai:34},logo:"UoM",color:"#002B5C"},
+{id:20,name:"EPFL",full:"École Polytechnique Fédérale de Lausanne",country:"Switzerland",flag:"🇨🇭",rank:16,acceptance:15,tuition:1600,ielts:7.0,gpa:3.5,scholarships:["EPFL Excellence","Swiss Gov Excellence"],accreditation:"AAQ",location:"Lausanne",visa:"Swiss Residence Permit",workOpp:"15h/week",coopPrograms:true,appFee:200,feeWaiver:false,requirements:{gpa:3.5},deadline:"Dec 15",livingCost:22000,rankings:{qs:16,times:14,shanghai:90},logo:"EPFL",color:"#E2001A"},
+{id:21,name:"Caltech",full:"California Institute of Technology",country:"USA",flag:"🇺🇸",rank:6,acceptance:3,tuition:60000,ielts:7.0,gpa:4.0,scholarships:["Fullbright","Caltech Merit"],accreditation:"WASC",location:"Pasadena, CA",visa:"F-1",workOpp:"CPT/OPT",coopPrograms:false,appFee:75,feeWaiver:true,requirements:{gpa:4.0},deadline:"Jan 3",livingCost:21000,rankings:{qs:6,times:4,shanghai:5},logo:"CIT",color:"#FF6C0C"},
+{id:22,name:"Johns Hopkins",full:"Johns Hopkins University",country:"USA",flag:"🇺🇸",rank:31,acceptance:9,tuition:60480,ielts:7.0,gpa:3.87,scholarships:["Fullbright","Bloomberg Scholarship"],accreditation:"MSCHE",location:"Baltimore, MD",visa:"F-1",workOpp:"CPT/OPT",coopPrograms:false,appFee:70,feeWaiver:true,requirements:{gpa:3.87},deadline:"Jan 2",livingCost:19000,rankings:{qs:31,times:14,shanghai:14},logo:"JHU",color:"#002D72"},
+{id:23,name:"Cornell",full:"Cornell University",country:"USA",flag:"🇺🇸",rank:20,acceptance:9,tuition:63200,ielts:7.0,gpa:3.8,scholarships:["Fullbright","Cornell Financial Aid"],accreditation:"MSCHE",location:"Ithaca, NY",visa:"F-1",workOpp:"CPT/OPT",coopPrograms:true,appFee:80,feeWaiver:true,requirements:{gpa:3.8},deadline:"Jan 2",livingCost:18000,rankings:{qs:20,times:28,shanghai:13},logo:"COR",color:"#B31B1B"},
+{id:24,name:"Edinburgh",full:"University of Edinburgh",country:"UK",flag:"🇬🇧",rank:22,acceptance:53,tuition:24200,ielts:6.5,gpa:3.5,scholarships:["Edinburgh Global","Chevening","Fullbright"],accreditation:"OfS",location:"Edinburgh, Scotland",visa:"UK Student Visa",workOpp:"20h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.5},deadline:"Jan 15",livingCost:14000,rankings:{qs:22,times:30,shanghai:51},logo:"UoE",color:"#041E42"},
+{id:25,name:"Tsinghua",full:"Tsinghua University",country:"China",flag:"🇨🇳",rank:25,acceptance:3,tuition:6600,ielts:6.5,gpa:3.8,scholarships:["CSC Scholarship","Tsinghua Scholarship"],accreditation:"MOE China",location:"Beijing",visa:"China X1 Student Visa",workOpp:"Limited",coopPrograms:true,appFee:55,feeWaiver:false,requirements:{gpa:3.8},deadline:"Feb 28",livingCost:7000,rankings:{qs:25,times:16,shanghai:30},logo:"THU",color:"#82318E"},
+{id:26,name:"Delft TU",full:"Delft University of Technology",country:"Netherlands",flag:"🇳🇱",rank:57,acceptance:52,tuition:18700,ielts:7.0,gpa:3.4,scholarships:["Holland Scholarship","TU Delft Excellence"],accreditation:"NVAO",location:"Delft",visa:"Dutch MVV + Residence Permit",workOpp:"16h/week",coopPrograms:true,appFee:75,feeWaiver:false,requirements:{gpa:3.4},deadline:"Apr 1",livingCost:11000,rankings:{qs:57,times:65,shanghai:77},logo:"TUD",color:"#00A6D6"},
+{id:27,name:"Amsterdam",full:"University of Amsterdam",country:"Netherlands",flag:"🇳🇱",rank:53,acceptance:55,tuition:17000,ielts:6.5,gpa:3.3,scholarships:["Holland Scholarship","Amsterdam Excellence"],accreditation:"NVAO",location:"Amsterdam",visa:"Dutch Residence Permit",workOpp:"16h/week",coopPrograms:true,appFee:100,feeWaiver:false,requirements:{gpa:3.3},deadline:"Apr 1",livingCost:12000,rankings:{qs:53,times:57,shanghai:85},logo:"UvA",color:"#BC0031"},
+{id:28,name:"Tokyo",full:"University of Tokyo",country:"Japan",flag:"🇯🇵",rank:28,acceptance:34,tuition:5360,ielts:6.5,gpa:3.5,scholarships:["MEXT Scholarship","JASSO"],accreditation:"NIAD-QE",location:"Tokyo",visa:"Japan Student Visa",workOpp:"28h/week",coopPrograms:false,appFee:30,feeWaiver:false,requirements:{gpa:3.5},deadline:"Nov 30",livingCost:11000,rankings:{qs:28,times:39,shanghai:24},logo:"UTok",color:"#8B0045"},
+{id:29,name:"Kyoto",full:"Kyoto University",country:"Japan",flag:"🇯🇵",rank:46,acceptance:38,tuition:5360,ielts:6.0,gpa:3.4,scholarships:["MEXT","Kyoto University Scholarship"],accreditation:"NIAD-QE",location:"Kyoto",visa:"Japan Student Visa",workOpp:"28h/week",coopPrograms:false,appFee:30,feeWaiver:false,requirements:{gpa:3.4},deadline:"Nov 30",livingCost:10000,rankings:{qs:46,times:55,shanghai:35},logo:"KU",color:"#9B1B30"},
+{id:30,name:"LSE",full:"London School of Economics",country:"UK",flag:"🇬🇧",rank:45,acceptance:13,tuition:27480,ielts:7.0,gpa:3.6,scholarships:["LSE Scholarship","Chevening","Fullbright"],accreditation:"OfS",location:"London",visa:"UK Student Visa",workOpp:"20h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.6},deadline:"Jan 26",livingCost:18000,rankings:{qs:45,times:28,shanghai:77},logo:"LSE",color:"#00263A"},
+{id:31,name:"KU Leuven",full:"KU Leuven",country:"Belgium",flag:"🇧🇪",rank:74,acceptance:65,tuition:14500,ielts:6.5,gpa:3.2,scholarships:["KU Leuven Scholarship","VLIR-UOS"],accreditation:"Accreditation Org Netherlands-Flanders",location:"Leuven",visa:"Belgium Annex 33",workOpp:"20h/week",coopPrograms:true,appFee:0,feeWaiver:true,requirements:{gpa:3.2},deadline:"Mar 1",livingCost:9000,rankings:{qs:74,times:42,shanghai:92},logo:"KUL",color:"#009FE3"},
+{id:32,name:"Copenhagen",full:"University of Copenhagen",country:"Denmark",flag:"🇩🇰",rank:97,acceptance:55,tuition:15000,ielts:6.5,gpa:3.3,scholarships:["Denmark Gov Scholarship","Nordic Scholarship"],accreditation:"Danish Accreditation Institution",location:"Copenhagen",visa:"Denmark Student Visa",workOpp:"20h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.3},deadline:"Mar 15",livingCost:13000,rankings:{qs:97,times:80,shanghai:79},logo:"KU",color:"#901A1E"},
+{id:33,name:"Helsinki",full:"University of Helsinki",country:"Finland",flag:"🇫🇮",rank:107,acceptance:60,tuition:14000,ielts:6.5,gpa:3.1,scholarships:["Finland Scholarship","HiLIFE"],accreditation:"FINEEC",location:"Helsinki",visa:"Finland Residence Permit",workOpp:"25h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.1},deadline:"Jan 10",livingCost:11000,rankings:{qs:107,times:100,shanghai:73},logo:"UH",color:"#003580"},
+{id:34,name:"Stockholm",full:"Stockholm University",country:"Sweden",flag:"🇸🇪",rank:171,acceptance:65,tuition:13000,ielts:6.5,gpa:3.0,scholarships:["Swedish Institute","SI Scholarship"],accreditation:"UKÄ",location:"Stockholm",visa:"Sweden Residence Permit",workOpp:"Unlimited",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.0},deadline:"Jan 15",livingCost:12000,rankings:{qs:171,times:180,shanghai:130},logo:"SU",color:"#002F6C"},
+{id:35,name:"Lund",full:"Lund University",country:"Sweden",flag:"🇸🇪",rank:100,acceptance:63,tuition:13000,ielts:6.5,gpa:3.1,scholarships:["Swedish Institute","Lund Scholarship"],accreditation:"UKÄ",location:"Lund",visa:"Sweden Residence Permit",workOpp:"Unlimited",coopPrograms:true,appFee:0,feeWaiver:true,requirements:{gpa:3.1},deadline:"Jan 15",livingCost:12000,rankings:{qs:100,times:90,shanghai:100},logo:"LU",color:"#5B1814"},
+{id:36,name:"Oslo",full:"University of Oslo",country:"Norway",flag:"🇳🇴",rank:179,acceptance:60,tuition:0,ielts:6.0,gpa:3.0,scholarships:["Lånekassen","Norway Government"],accreditation:"NOKUT",location:"Oslo",visa:"Norway Student Permit",workOpp:"20h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.0},deadline:"Mar 1",livingCost:18000,rankings:{qs:179,times:190,shanghai:125},logo:"UiO",color:"#004B87"},
+{id:37,name:"Vienna",full:"University of Vienna",country:"Austria",flag:"🇦🇹",rank:197,acceptance:65,tuition:730,ielts:6.5,gpa:3.0,scholarships:["OeAD Scholarship","Austria Gov"],accreditation:"AQ Austria",location:"Vienna",visa:"Austria Student Visa",workOpp:"20h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.0},deadline:"Sep 30",livingCost:11000,rankings:{qs:197,times:200,shanghai:165},logo:"UniWien",color:"#0F4880"},
+{id:38,name:"FU Berlin",full:"Free University of Berlin",country:"Germany",flag:"🇩🇪",rank:124,acceptance:25,tuition:300,ielts:6.5,gpa:3.2,scholarships:["DAAD","Berlin Scholarship","Erasmus+"],accreditation:"German Accreditation Council",location:"Berlin",visa:"Germany National Visa",workOpp:"20h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.2},deadline:"Jun 1",livingCost:11000,rankings:{qs:124,times:130,shanghai:101},logo:"FUB",color:"#336699"},
+{id:39,name:"ANU",full:"Australian National University",country:"Australia",flag:"🇦🇺",rank:34,acceptance:35,tuition:44000,ielts:6.5,gpa:3.4,scholarships:["ANU Chancellor's","Research Scholarship"],accreditation:"TEQSA",location:"Canberra, ACT",visa:"Australia Student Visa (500)",workOpp:"48h/fortnight",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.4},deadline:"Oct 31",livingCost:17000,rankings:{qs:34,times:59,shanghai:57},logo:"ANU",color:"#5D1725"},
+{id:40,name:"Sydney",full:"University of Sydney",country:"Australia",flag:"🇦🇺",rank:18,acceptance:35,tuition:46000,ielts:6.5,gpa:3.3,scholarships:["Vice-Chancellor Award","Research Training"],accreditation:"TEQSA",location:"Sydney, NSW",visa:"Australia Student Visa (500)",workOpp:"48h/fortnight",coopPrograms:true,appFee:0,feeWaiver:true,requirements:{gpa:3.3},deadline:"Oct 31",livingCost:20000,rankings:{qs:18,times:61,shanghai:79},logo:"USYD",color:"#003087"},
+{id:41,name:"Peking",full:"Peking University",country:"China",flag:"🇨🇳",rank:17,acceptance:5,tuition:6600,ielts:6.5,gpa:3.7,scholarships:["CSC Scholarship","PKU Scholarship"],accreditation:"MOE China",location:"Beijing",visa:"China X1 Visa",workOpp:"Limited",coopPrograms:false,appFee:55,feeWaiver:false,requirements:{gpa:3.7},deadline:"Mar 31",livingCost:7000,rankings:{qs:17,times:14,shanghai:54},logo:"PKU",color:"#8C0003"},
+{id:42,name:"KAIST",full:"Korea Advanced Institute of Science & Technology",country:"South Korea",flag:"🇰🇷",rank:65,acceptance:24,tuition:9000,ielts:6.5,gpa:3.5,scholarships:["KAIST Scholarship","Korean Gov GKS"],accreditation:"AACSB",location:"Daejeon",visa:"Korea D-2 Student Visa",workOpp:"20h/week",coopPrograms:true,appFee:40,feeWaiver:false,requirements:{gpa:3.5},deadline:"Sep 30",livingCost:8000,rankings:{qs:65,times:76,shanghai:200},logo:"KAIST",color:"#E61E2B"},
+{id:43,name:"SNU",full:"Seoul National University",country:"South Korea",flag:"🇰🇷",rank:41,acceptance:15,tuition:8000,ielts:6.5,gpa:3.5,scholarships:["Global Korea Scholarship","SNU Scholarship"],accreditation:"AACSB",location:"Seoul",visa:"Korea D-2 Visa",workOpp:"20h/week",coopPrograms:false,appFee:80,feeWaiver:false,requirements:{gpa:3.5},deadline:"Sep 30",livingCost:9000,rankings:{qs:41,times:52,shanghai:80},logo:"SNU",color:"#003876"},
+{id:44,name:"Bologna",full:"University of Bologna",country:"Italy",flag:"🇮🇹",rank:167,acceptance:55,tuition:2900,ielts:6.0,gpa:3.0,scholarships:["UNIBO Scholarship","DSU Scholarship"],accreditation:"ANVUR",location:"Bologna",visa:"Italy Student Visa",workOpp:"20h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.0},deadline:"Jul 15",livingCost:8000,rankings:{qs:167,times:201,shanghai:151},logo:"UNIBO",color:"#8B0000"},
+{id:45,name:"Bocconi",full:"Bocconi University",country:"Italy",flag:"🇮🇹",rank:7,acceptance:25,tuition:21000,ielts:7.0,gpa:3.5,scholarships:["Bocconi Merit Scholarship"],accreditation:"EQUIS/AACSB",location:"Milan",visa:"Italy Student Visa",workOpp:"20h/week",coopPrograms:false,appFee:50,feeWaiver:false,requirements:{gpa:3.5},deadline:"Jan 16",livingCost:14000,rankings:{qs:7,times:"N/A",shanghai:"N/A"},logo:"Boc",color:"#002B5C"},
+{id:46,name:"Sorbonne",full:"Sorbonne University",country:"France",flag:"🇫🇷",rank:59,acceptance:40,tuition:4000,ielts:6.5,gpa:3.2,scholarships:["Eiffel Scholarship","French Gov"],accreditation:"Hcéres",location:"Paris",visa:"France Long-Stay Student Visa (VLS-TS)",workOpp:"20h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.2},deadline:"Mar 15",livingCost:13000,rankings:{qs:59,times:83,shanghai:39},logo:"SU",color:"#000080"},
+{id:47,name:"Sciences Po",full:"Sciences Po Paris",country:"France",flag:"🇫🇷",rank:20,acceptance:25,tuition:16000,ielts:7.0,gpa:3.5,scholarships:["Eiffel Excellence","Sciences Po Bursary"],accreditation:"Hcéres",location:"Paris",visa:"France VLS-TS",workOpp:"20h/week",coopPrograms:false,appFee:60,feeWaiver:false,requirements:{gpa:3.5},deadline:"Jan 9",livingCost:14000,rankings:{qs:20,times:"N/A",shanghai:"N/A"},logo:"SciPo",color:"#C8102E"},
+{id:48,name:"Wageningen",full:"Wageningen University & Research",country:"Netherlands",flag:"🇳🇱",rank:64,acceptance:72,tuition:18600,ielts:6.5,gpa:3.2,scholarships:["Holland Scholarship","WUR Excellence"],accreditation:"NVAO",location:"Wageningen",visa:"Dutch Residence Permit",workOpp:"16h/week",coopPrograms:true,appFee:75,feeWaiver:false,requirements:{gpa:3.2},deadline:"Apr 1",livingCost:10000,rankings:{qs:64,times:120,shanghai:90},logo:"WUR",color:"#007B41"},
+{id:49,name:"Auckland",full:"University of Auckland",country:"New Zealand",flag:"🇳🇿",rank:68,acceptance:65,tuition:38000,ielts:6.5,gpa:3.3,scholarships:["New Zealand Scholarship","UoA Excellence"],accreditation:"TEC",location:"Auckland",visa:"NZ Student Visa",workOpp:"20h/week",coopPrograms:true,appFee:0,feeWaiver:true,requirements:{gpa:3.3},deadline:"Nov 30",livingCost:17000,rankings:{qs:68,times:201,shanghai:201},logo:"UoA",color:"#00467F"},
+{id:50,name:"Ghent",full:"Ghent University",country:"Belgium",flag:"🇧🇪",rank:75,acceptance:60,tuition:14000,ielts:6.5,gpa:3.2,scholarships:["UGent Scholarship","VLIR-UOS"],accreditation:"NVAO",location:"Ghent",visa:"Belgium Annex 33",workOpp:"20h/week",coopPrograms:true,appFee:0,feeWaiver:true,requirements:{gpa:3.2},deadline:"Mar 1",livingCost:9000,rankings:{qs:75,times:100,shanghai:92},logo:"UGent",color:"#1E64C8"},
+// Extra 20
+{id:51,name:"Leiden",full:"Leiden University",country:"Netherlands",flag:"🇳🇱",rank:93,acceptance:62,tuition:17000,ielts:6.5,gpa:3.2,scholarships:["Holland Scholarship","Leiden Excellence"],accreditation:"NVAO",location:"Leiden",visa:"Dutch Residence Permit",workOpp:"16h/week",coopPrograms:false,appFee:100,feeWaiver:false,requirements:{gpa:3.2},deadline:"Apr 1",livingCost:11000,rankings:{qs:93,times:100,shanghai:101},logo:"LEI",color:"#003B6F"},
+{id:52,name:"Uppsala",full:"Uppsala University",country:"Sweden",flag:"🇸🇪",rank:122,acceptance:65,tuition:13000,ielts:6.5,gpa:3.1,scholarships:["SI Scholarship","Uppsala Merit"],accreditation:"UKÄ",location:"Uppsala",visa:"Sweden Residence Permit",workOpp:"Unlimited",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.1},deadline:"Jan 15",livingCost:12000,rankings:{qs:122,times:125,shanghai:76},logo:"UU",color:"#990000"},
+{id:53,name:"Politecnico",full:"Politecnico di Milano",country:"Italy",flag:"🇮🇹",rank:139,acceptance:38,tuition:4200,ielts:6.5,gpa:3.3,scholarships:["PoliMi Scholarship","DSU"],accreditation:"ANVUR",location:"Milan",visa:"Italy Student Visa",workOpp:"20h/week",coopPrograms:true,appFee:30,feeWaiver:false,requirements:{gpa:3.3},deadline:"Mar 31",livingCost:13000,rankings:{qs:139,times:350,shanghai:401},logo:"PoliMi",color:"#003DA5"},
+{id:54,name:"Louvain",full:"UCLouvain",country:"Belgium",flag:"🇧🇪",rank:136,acceptance:66,tuition:11000,ielts:6.5,gpa:3.1,scholarships:["ARES Scholarship","UCLouvain Grant"],accreditation:"NVAO",location:"Louvain-la-Neuve",visa:"Belgium Annex 33",workOpp:"20h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.1},deadline:"Mar 1",livingCost:10000,rankings:{qs:136,times:150,shanghai:201},logo:"UCL",color:"#0F5BA1"},
+{id:55,name:"Trinity Dublin",full:"Trinity College Dublin",country:"Ireland",flag:"🇮🇪",rank:81,acceptance:52,tuition:24000,ielts:6.5,gpa:3.3,scholarships:["TCD Scholarship","Ireland Fellows"],accreditation:"QQI",location:"Dublin",visa:"Ireland Study Visa",workOpp:"20h/week",coopPrograms:false,appFee:55,feeWaiver:false,requirements:{gpa:3.3},deadline:"Feb 1",livingCost:16000,rankings:{qs:81,times:101,shanghai:201},logo:"TCD",color:"#003A71"},
+{id:56,name:"Manchester",full:"University of Manchester",country:"UK",flag:"🇬🇧",rank:34,acceptance:57,tuition:27500,ielts:6.5,gpa:3.4,scholarships:["Manchester Scholarship","CSC","Chevening"],accreditation:"OfS",location:"Manchester",visa:"UK Student Visa",workOpp:"20h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.4},deadline:"Jan 31",livingCost:13000,rankings:{qs:34,times:28,shanghai:36},logo:"UoM",color:"#660099"},
+{id:57,name:"Penn",full:"University of Pennsylvania",country:"USA",flag:"🇺🇸",rank:14,acceptance:6,tuition:63452,ielts:7.0,gpa:3.87,scholarships:["Fullbright","Penn Financial Aid"],accreditation:"MSCHE",location:"Philadelphia, PA",visa:"F-1",workOpp:"CPT/OPT",coopPrograms:false,appFee:75,feeWaiver:true,requirements:{gpa:3.87},deadline:"Jan 1",livingCost:22000,rankings:{qs:14,times:13,shanghai:17},logo:"UPENN",color:"#011F5B"},
+{id:58,name:"Duke",full:"Duke University",country:"USA",flag:"🇺🇸",rank:57,acceptance:8,tuition:62688,ielts:7.0,gpa:3.85,scholarships:["Fullbright","Bass Connections"],accreditation:"SACS",location:"Durham, NC",visa:"F-1",workOpp:"CPT/OPT",coopPrograms:false,appFee:85,feeWaiver:true,requirements:{gpa:3.85},deadline:"Jan 2",livingCost:20000,rankings:{qs:57,times:21,shanghai:21},logo:"DU",color:"#003087"},
+{id:59,name:"Northwestern",full:"Northwestern University",country:"USA",flag:"🇺🇸",rank:33,acceptance:7,tuition:63468,ielts:7.0,gpa:3.88,scholarships:["Fullbright","Northwestern Aid"],accreditation:"HLC",location:"Evanston, IL",visa:"F-1",workOpp:"CPT/OPT",coopPrograms:true,appFee:75,feeWaiver:true,requirements:{gpa:3.88},deadline:"Jan 3",livingCost:21000,rankings:{qs:33,times:30,shanghai:25},logo:"NU",color:"#4E2A84"},
+{id:60,name:"NYU",full:"New York University",country:"USA",flag:"🇺🇸",rank:38,acceptance:12,tuition:58168,ielts:6.5,gpa:3.7,scholarships:["NYU Scholarship","Fullbright"],accreditation:"MSCHE",location:"New York, NY",visa:"F-1",workOpp:"CPT/OPT",coopPrograms:true,appFee:80,feeWaiver:true,requirements:{gpa:3.7},deadline:"Jan 1",livingCost:25000,rankings:{qs:38,times:25,shanghai:31},logo:"NYU",color:"#57068C"},
+{id:61,name:"Charles Prague",full:"Charles University Prague",country:"Czech Republic",flag:"🇨🇿",rank:231,acceptance:50,tuition:3000,ielts:6.5,gpa:3.0,scholarships:["Czech Gov Scholarship","Erasmus+"],accreditation:"NAQA",location:"Prague",visa:"Czech Long-Stay Visa",workOpp:"20h/week",coopPrograms:false,appFee:20,feeWaiver:false,requirements:{gpa:3.0},deadline:"Feb 28",livingCost:8000,rankings:{qs:231,times:351,shanghai:301},logo:"CU",color:"#B22222"},
+{id:62,name:"Warsaw",full:"University of Warsaw",country:"Poland",flag:"🇵🇱",rank:371,acceptance:60,tuition:3000,ielts:6.0,gpa:2.8,scholarships:["Polish Gov Scholarship","Erasmus+"],accreditation:"PKA",location:"Warsaw",visa:"Poland National Visa D",workOpp:"20h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:2.8},deadline:"Jul 31",livingCost:7000,rankings:{qs:371,times:601,shanghai:501},logo:"UW",color:"#8B0000"},
+{id:63,name:"Budapest ELTE",full:"Eötvös Loránd University Budapest",country:"Hungary",flag:"🇭🇺",rank:551,acceptance:65,tuition:4500,ielts:5.5,gpa:2.8,scholarships:["Stipendium Hungaricum","ELTE Scholarship"],accreditation:"MAB",location:"Budapest",visa:"Hungary Student Visa",workOpp:"24h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:2.8},deadline:"Feb 15",livingCost:7000,rankings:{qs:551,times:601,shanghai:601},logo:"ELTE",color:"#003366"},
+{id:64,name:"Cape Town",full:"University of Cape Town",country:"South Africa",flag:"🇿🇦",rank:226,acceptance:45,tuition:9500,ielts:6.0,gpa:3.2,scholarships:["UCT Scholarship","Canon Collins"],accreditation:"CHE",location:"Cape Town",visa:"South Africa Study Permit",workOpp:"20h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.2},deadline:"Sep 30",livingCost:7000,rankings:{qs:226,times:351,shanghai:301},logo:"UCT",color:"#003B71"},
+{id:65,name:"Aix-Marseille",full:"Aix-Marseille University",country:"France",flag:"🇫🇷",rank:311,acceptance:65,tuition:3800,ielts:6.0,gpa:3.0,scholarships:["Eiffel Scholarship","Campus France"],accreditation:"Hcéres",location:"Marseille",visa:"France VLS-TS",workOpp:"20h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.0},deadline:"Mar 31",livingCost:9000,rankings:{qs:311,times:251,shanghai:101},logo:"AMU",color:"#003399"},
+{id:66,name:"Lausanne UNIL",full:"University of Lausanne",country:"Switzerland",flag:"🇨🇭",rank:186,acceptance:70,tuition:1500,ielts:6.5,gpa:3.2,scholarships:["Swiss Gov Excellence","UNIL Scholarship"],accreditation:"AAQ",location:"Lausanne",visa:"Swiss Residence Permit",workOpp:"15h/week",coopPrograms:false,appFee:150,feeWaiver:false,requirements:{gpa:3.2},deadline:"Dec 15",livingCost:22000,rankings:{qs:186,times:201,shanghai:201},logo:"UNIL",color:"#009FE3"},
+{id:67,name:"Queensland",full:"University of Queensland",country:"Australia",flag:"🇦🇺",rank:40,acceptance:60,tuition:42000,ielts:6.5,gpa:3.3,scholarships:["UQ Excellence","Research Training"],accreditation:"TEQSA",location:"Brisbane, QLD",visa:"Australia Student Visa (500)",workOpp:"48h/fortnight",coopPrograms:true,appFee:0,feeWaiver:true,requirements:{gpa:3.3},deadline:"Oct 31",livingCost:17000,rankings:{qs:40,times:67,shanghai:57},logo:"UQ",color:"#51247A"},
+{id:68,name:"Monash",full:"Monash University",country:"Australia",flag:"🇦🇺",rank:42,acceptance:70,tuition:39000,ielts:6.5,gpa:3.2,scholarships:["Monash International","Research Excellence"],accreditation:"TEQSA",location:"Melbourne, VIC",visa:"Australia Student Visa (500)",workOpp:"48h/fortnight",coopPrograms:true,appFee:0,feeWaiver:true,requirements:{gpa:3.2},deadline:"Oct 31",livingCost:17000,rankings:{qs:42,times:57,shanghai:90},logo:"MON",color:"#006DAE"},
+{id:69,name:"POSTECH",full:"Pohang University of Science and Technology",country:"South Korea",flag:"🇰🇷",rank:71,acceptance:20,tuition:8500,ielts:6.5,gpa:3.6,scholarships:["GKS Scholarship","POSTECH Grant"],accreditation:"AACSB",location:"Pohang",visa:"Korea D-2 Visa",workOpp:"20h/week",coopPrograms:true,appFee:40,feeWaiver:false,requirements:{gpa:3.6},deadline:"Sep 30",livingCost:8000,rankings:{qs:71,times:80,shanghai:250},logo:"POST",color:"#003087"},
+{id:70,name:"Georgia Tech",full:"Georgia Institute of Technology",country:"USA",flag:"🇺🇸",rank:36,acceptance:17,tuition:33794,ielts:7.0,gpa:3.8,scholarships:["Fullbright","GT Fellowship"],accreditation:"SACSCOC",location:"Atlanta, GA",visa:"F-1",workOpp:"CPT/OPT",coopPrograms:true,appFee:85,feeWaiver:true,requirements:{gpa:3.8},deadline:"Jan 1",livingCost:17000,rankings:{qs:36,times:38,shanghai:45},logo:"GT",color:"#B3A369"}
+];
+
+const countries = [
+{name:"USA",flag:"🇺🇸",tuition:"$25,000–$65,000/yr",living:"$15,000–$25,000/yr",partTime:"20h/week (on-campus)",visa:"F-1 Student Visa, takes 2-8 weeks",postStudy:"OPT 1yr (+2yr STEM)",lat:37.09,lng:-95.71},
+{name:"UK",flag:"🇬🇧",tuition:"£10,000–£38,000/yr",living:"£10,000–£18,000/yr",partTime:"20h/week",visa:"UK Student Visa (Tier 4), takes 3-4 weeks",postStudy:"Graduate Route Visa 2yr",lat:55.37,lng:-3.43},
+{name:"Germany",flag:"🇩🇪",tuition:"€0–€500/semester",living:"€800–€1,200/month",partTime:"20h/week",visa:"National Visa D, takes 4-6 weeks",postStudy:"18-month job-seeker visa",lat:51.16,lng:10.45},
+{name:"Canada",flag:"🇨🇦",tuition:"CAD $15,000–$55,000/yr",living:"CAD $12,000–$18,000/yr",partTime:"20h/week",visa:"Student Permit, takes 4-8 weeks",postStudy:"PGWP up to 3 years",lat:56.13,lng:-106.34},
+{name:"Australia",flag:"🇦🇺",tuition:"AUD $25,000–$55,000/yr",living:"AUD $18,000–$25,000/yr",partTime:"48h/fortnight",visa:"Student Visa (subclass 500), takes 4 weeks",postStudy:"Temporary Graduate Visa 2-4yr",lat:-25.27,lng:133.77},
+{name:"Netherlands",flag:"🇳🇱",tuition:"€2,200–$19,000/yr",living:"€900–€1,300/month",partTime:"16h/week",visa:"MVV + Residence Permit, takes 4 weeks",postStudy:"Orientation Visa 1yr",lat:52.13,lng:5.29},
+{name:"France",flag:"🇫🇷",tuition:"€0–$16,000/yr",living:"€800–€1,400/month",partTime:"20h/week",visa:"VLS-TS Long-Stay Student, takes 2-3 weeks",postStudy:"APS Visa 1yr",lat:46.22,lng:2.21},
+{name:"Japan",flag:"🇯🇵",tuition:"¥500,000–1,000,000/yr",living:"¥100,000–180,000/month",partTime:"28h/week",visa:"Student Visa, takes 2-4 weeks",postStudy:"Designated Activities Visa 1yr",lat:36.20,lng:138.25},
+{name:"Sweden",flag:"🇸🇪",tuition:"SEK 0–150,000/yr",living:"SEK 10,000–12,000/month",partTime:"Unlimited",visa:"Residence Permit, takes 2-4 weeks",postStudy:"Job-seeker extension",lat:60.12,lng:18.64},
+{name:"Switzerland",flag:"🇨🇭",tuition:"CHF 0–20,000/yr",living:"CHF 2,000–3,000/month",partTime:"15h/week",visa:"Residence Permit B, takes 3-4 weeks",postStudy:"6-month job-seeker extension",lat:46.81,lng:8.22},
+{name:"South Korea",flag:"🇰🇷",tuition:"₩4M–12M/semester",living:"₩600,000–1,200,000/month",partTime:"20h/week",visa:"D-2 Student Visa, takes 2 weeks",postStudy:"D-10 Job-seeker 1yr",lat:35.90,lng:127.76},
+{name:"Italy",flag:"🇮🇹",tuition:"€0–$21,000/yr",living:"€700–€1,200/month",partTime:"20h/week",visa:"Italy Student Visa, takes 4 weeks",postStudy:"1yr job-seeker visa",lat:41.87,lng:12.56},
+{name:"Belgium",flag:"🇧🇪",tuition:"€900–$14,000/yr",living:"€800–€1,200/month",partTime:"20h/week",visa:"Annex 33 Registration, takes 2 weeks",postStudy:"1yr extension possible",lat:50.85,lng:4.35},
+{name:"Denmark",flag:"🇩🇰",tuition:"DKK 0–80,000/yr",living:"DKK 8,000–12,000/month",partTime:"20h/week",visa:"Residence Permit, takes 2-4 weeks",postStudy:"6-month job-seeker permit",lat:56.26,lng:9.50},
+{name:"Norway",flag:"🇳🇴",tuition:"NOK 0/yr (public)",living:"NOK 12,000–16,000/month",partTime:"20h/week",visa:"Student Permit, takes 2 weeks",postStudy:"1yr job-seeker permit",lat:60.47,lng:8.46},
+{name:"Austria",flag:"🇦🇹",tuition:"€0–$730/semester",living:"€900–€1,300/month",partTime:"20h/week",visa:"Austria Student Visa, takes 4 weeks",postStudy:"6-month extension",lat:47.51,lng:14.55}
+];
+
+// ===================== LANGUAGE =====================
+const langs = ['EN','KG','RU'];
+let currentLang = 0;
+const i18n = {
+  EN: {nav_home:"Home",nav_unis:"Universities",nav_calc:"Calculator",nav_countries:"Countries",nav_timeline:"Timeline",nav_docs:"Documents",nav_test:"Test",nav_premium:"⭐ Premium $2",nav_pro:"💎 Pro $5",hero_badge:"Your Gateway to World-Class Education",hero_h1a:"Discover Your",hero_h1b:"Dream University",hero_h1c:"Abroad",hero_p:"AI-powered admission calculator, 70 top universities with real 2026 data, scholarships, visa guides and personalized roadmaps.",btn_explore:"Explore Universities",btn_calc:"AI Chance Calculator",stat1:"Universities",stat2:"Countries",stat3:"Scholarships",stat4:"Updated Data",tag_popular:"Popular Destinations",h_countries:"Study by Country",tag_top70:"Top 70 Universities 2026",h_unis:"World's Best Universities",p_unis:"Official verified data — rankings, scholarships, IELTS requirements, acceptance rates",lbl_search:"Search University",lbl_country:"Country",lbl_degree:"Degree",lbl_ielts:"Min IELTS",lbl_sort:"Sort by",showing:"Showing",h_calc:"Admission Chance Calculator",p_calc:"Enter your profile and see your admission probability",form_progress:"Profile completed:",lbl_gpa:"GPA (0–4.0)",lbl_activity:"Extracurriculars / Activities",lbl_rec:"Recommendation Letters",lbl_uni_target:"Target University",lbl_degree2:"Degree Program",btn_calculate:"Calculate My Chances",btn_timeline:"Generate Timeline",btn_consult:"Get Consultation",tag_countries:"Study Destinations",h_countries2:"Countries Guide 2026",p_countries:"Tuition fees, living costs, part-time work, and visa information",h_timeline:"Application Timeline Generator",p_timeline:"Select country and degree — get your personalized step-by-step roadmap",lbl_tl_country:"Target Country",lbl_tl_degree:"Degree",tag_docs:"Document Builder",h_docs:"Create Your Documents",p_docs:"SOP, CV, Motivation Letter, Visa Cover Letter — professional templates",btn_copy:"Copy Text",btn_download:"Download .txt",btn_premium_doc:"Premium Templates",locked_premium:"Premium Feature",locked_desc:"Unlock Europass CV, SOP templates + IELTS strategy plan",tag_test:"Knowledge Test",h_test:"Study Abroad Quiz",p_test:"Test your knowledge about studying abroad, universities, visas and scholarships",quiz_progress:"Progress:",tag_degree_filter:"Filter by Degree",wa_text:"Get Consultation"},
+  KG: {nav_home:"Башкы",nav_unis:"Университеттер",nav_calc:"Калькулятор",nav_countries:"Өлкөлөр",nav_timeline:"Жол картасы",nav_docs:"Документтер",nav_test:"Тест",nav_premium:"⭐ Премиум $2",nav_pro:"💎 Про $5",hero_badge:"Дүйнөлүк билимге жол",hero_h1a:"Кооз",hero_h1b:"Университетиңди",hero_h1c:"Тап",hero_p:"ЖИ менен кабыл алуу калькулятору, 70 топ университет, 2026 чыныгы маалымат, стипендиялар жана визалык нускамалар.",btn_explore:"Университеттерди Карап Чык",btn_calc:"ЖИ Шанс Калькулятору",stat1:"Университет",stat2:"Өлкө",stat3:"Стипендия",stat4:"Жаңы Маалымат",tag_popular:"Популярдуу Жерлер",h_countries:"Өлкө боюнча окуу",tag_top70:"Топ 70 Университет 2026",h_unis:"Дүйнөнүн Эң Мыкты Университеттери",p_unis:"Расмий текшерилген маалымат — рейтинг, стипендия, IELTS талаптары",lbl_search:"Университет Издөө",lbl_country:"Өлкө",lbl_degree:"Даража",lbl_ielts:"Min IELTS",lbl_sort:"Иреттөө",showing:"Көрсөтүлүүдө",h_calc:"Кабыл Алуу Мүмкүнчүлүгү Калькулятору",p_calc:"Профилиңизди киргизиңиз жана каалаган университетке кирүү мүмкүнчүлүгүңүздү билиңиз",form_progress:"Профиль толтурулду:",lbl_gpa:"GPA (0–4.0)",lbl_activity:"Активдүүлүк / Иш-аракет",lbl_rec:"Сунуш каттары",lbl_uni_target:"Максаттуу Университет",lbl_degree2:"Билим даражасы",btn_calculate:"Мүмкүнчүлүгүмдү Эсепте",btn_timeline:"Жол Картасын Жаса",btn_consult:"Консультация Алуу",tag_countries:"Окуу Орундары",h_countries2:"Өлкөлөр боюнча маалымат 2026",p_countries:"Окуу акысы, жашоо чыгымы, жарым ставка иш жана виза маалыматы",h_timeline:"Тапшыруу Жол Картасын Жаратуу",p_timeline:"Өлкө жана даража тандаңыз — жеке кадам-кадам жол картаңызды алыңыз",lbl_tl_country:"Максаттуу Өлкө",lbl_tl_degree:"Даража",tag_docs:"Документ Куруучу",h_docs:"Документтериңизди Жасаңыз",p_docs:"SOP, CV, Мотивациялык кат, Визалык кат — кесиптик шаблондор",btn_copy:"Текстти Копиялоо",btn_download:"Жүктөп алуу .txt",btn_premium_doc:"Премиум Шаблондор",locked_premium:"Премиум Функция",locked_desc:"Europass CV, SOP шаблондору + IELTS стратегиясын ачыңыз",tag_test:"Билим Тести",h_test:"Чет Элде Окуу Тести",p_test:"Чет элде окуу, университеттер, виза жана стипендия боюнча билимиңизди текшериңиз",quiz_progress:"Прогресс:",tag_degree_filter:"Даража боюнча чыпкалоо",wa_text:"Консультация Алуу"},
+  RU: {nav_home:"Главная",nav_unis:"Университеты",nav_calc:"Калькулятор",nav_countries:"Страны",nav_timeline:"Дорожная карта",nav_docs:"Документы",nav_test:"Тест",nav_premium:"⭐ Премиум $2",nav_pro:"💎 Про $5",hero_badge:"Ваш путь к мировому образованию",hero_h1a:"Найдите свой",hero_h1b:"Университет мечты",hero_h1c:"за рубежом",hero_p:"ИИ-калькулятор поступления, 70 лучших университетов с реальными данными 2026, стипендии, визовые гиды и персональные дорожные карты.",btn_explore:"Изучить Университеты",btn_calc:"ИИ Калькулятор Шансов",stat1:"Университетов",stat2:"Стран",stat3:"Стипендий",stat4:"Обновлено",tag_popular:"Популярные Направления",h_countries:"Учёба по странам",tag_top70:"Топ 70 Университетов 2026",h_unis:"Лучшие Университеты Мира",p_unis:"Официальные проверенные данные — рейтинги, стипендии, требования IELTS",lbl_search:"Поиск Университета",lbl_country:"Страна",lbl_degree:"Степень",lbl_ielts:"Min IELTS",lbl_sort:"Сортировать по",showing:"Показано",h_calc:"Калькулятор Шансов Поступления",p_calc:"Введите свой профиль и узнайте вероятность поступления в любой университет",form_progress:"Профиль заполнен:",lbl_gpa:"GPA (0–4.0)",lbl_activity:"Внеклассная деятельность",lbl_rec:"Рекомендательные письма",lbl_uni_target:"Целевой Университет",lbl_degree2:"Уровень образования",btn_calculate:"Рассчитать мои шансы",btn_timeline:"Создать дорожную карту",btn_consult:"Получить консультацию",tag_countries:"Направления для учёбы",h_countries2:"Гид по странам 2026",p_countries:"Стоимость обучения, проживание, подработка и визовая информация",h_timeline:"Генератор Дорожной Карты Поступления",p_timeline:"Выберите страну и степень — получите персональный пошаговый план",lbl_tl_country:"Целевая Страна",lbl_tl_degree:"Степень",tag_docs:"Конструктор Документов",h_docs:"Создайте Ваши Документы",p_docs:"SOP, CV, Мотивационное письмо, Визовое сопроводительное письмо — профессиональные шаблоны",btn_copy:"Копировать текст",btn_download:"Скачать .txt",btn_premium_doc:"Премиум шаблоны",locked_premium:"Премиум Функция",locked_desc:"Разблокируйте шаблоны Europass CV, SOP + план стратегии IELTS",tag_test:"Тест знаний",h_test:"Тест по учёбе за рубежом",p_test:"Проверьте свои знания об учёбе за рубежом, университетах, визах и стипендиях",quiz_progress:"Прогресс:",tag_degree_filter:"Фильтр по степени",wa_text:"Получить консультацию"}
+};
+
+function cycleLang(){
+  currentLang = (currentLang+1) % langs.length;
+  document.getElementById('langLabel').textContent = langs[currentLang];
+  applyLang();
+}
+function applyLang(){
+  const t = i18n[langs[currentLang]];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if(t[key]) el.textContent = t[key];
+  });
+}
+
+// ===================== PAGE ROUTING =====================
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-links button:not(.lang-btn):not(.btn-premium-nav)').forEach(b=>b.classList.remove('active'));
+  window.scrollTo(0,0);
+  if(id==='universities') renderUnis();
+  if(id==='countries'){renderCountries();initMap();}
+  if(id==='calculator'){populateUniSelect();}
+  if(id==='timeline'){generateTimeline();}
+  if(id==='test'){initQuiz();}
+}
+
+// ===================== UNIVERSITY RENDERING =====================
+function getChancePill(gpa, uni){
+  const diff = gpa - uni.gpa;
+  if(diff >= 0.1) return '<span class="chance-pill high">✓ High Chance</span>';
+  if(diff >= -0.3) return '<span class="chance-pill med">~ Medium Chance</span>';
+  return '<span class="chance-pill low">↑ Need Improvement</span>';
+}
+function getChanceColor(gpa, uni){
+  const diff = gpa - uni.gpa;
+  if(diff >= 0.1) return 'var(--green)';
+  if(diff >= -0.3) return 'var(--orange)';
+  return 'var(--red)';
+}
+
+let currentUnis = [...universities];
+function renderUnis(){
+  const grid = document.getElementById('uniGrid');
+  grid.innerHTML = '';
+  currentUnis.forEach(uni => {
+    const div = document.createElement('div');
+    div.className = 'uni-card';
+    div.innerHTML = `
+      <div class="uni-rank">#${uni.rank} QS</div>
+      <div class="uni-header">
+        <div class="uni-logo" style="background:linear-gradient(135deg,${uni.color}22,${uni.color}44);border-color:${uni.color}44;color:${uni.color};">${uni.logo}</div>
+        <div>
+          <div class="uni-name">${uni.name} <span class="verify-badge">✔ 2026</span></div>
+          <div class="uni-country">${uni.flag} ${uni.full}</div>
+        </div>
+      </div>
+      <div class="badge-verified">✔ Official Data Verified 2026 &nbsp;🎓 Accredited</div>
+      <div class="uni-stats">
+        <div class="uni-stat">
+          <div class="uni-stat-label">IELTS Required</div>
+          <div class="uni-stat-val" style="color:var(--gold)">${uni.ielts}</div>
+        </div>
+        <div class="uni-stat">
+          <div class="uni-stat-label">Acceptance Rate</div>
+          <div class="uni-stat-val">${uni.acceptance}%</div>
+        </div>
+        <div class="uni-stat">
+          <div class="uni-stat-label">Tuition/yr</div>
+          <div class="uni-stat-val">${uni.tuition < 1000 ? '€'+uni.tuition : (uni.country==='Japan'?'¥'+uni.tuition.toLocaleString():'$'+uni.tuition.toLocaleString())}</div>
+        </div>
+        <div class="uni-stat">
+          <div class="uni-stat-label">Min GPA</div>
+          <div class="uni-stat-val">${uni.gpa}</div>
+        </div>
+      </div>
+      <div>${uni.scholarships.map(s=>`<span class="schol-tag gold-tag">${s}</span>`).join('')}</div>
+      <div class="uni-card-actions">
+        <button class="btn-sm btn-sm-gold" onclick="openUniModal(${uni.id})">📖 Details</button>
+        <button class="btn-sm btn-sm-outline" onclick="event.stopPropagation();prefillCalc(${uni.id})">🤖 My Chance</button>
+        <a href="https://wa.me/996553373812" target="_blank" class="btn-sm btn-sm-outline" style="text-decoration:none;border:1px solid #25D366;color:#25D366;">💬 Consult</a>
+      </div>
+    `;
+    grid.appendChild(div);
+  });
+  document.getElementById('uniCount').textContent = currentUnis.length + ' universities';
+  document.getElementById('filterProgress').style.width = (currentUnis.length/universities.length*100)+'%';
+}
+
+function filterUnis(){
+  const s = document.getElementById('uniSearch').value.toLowerCase();
+  const c = document.getElementById('countryFilter').value;
+  const d = document.getElementById('degreeFilter').value;
+  const i = parseFloat(document.getElementById('ieltsFilter').value)||0;
+  const sort = document.getElementById('sortFilter').value;
+  currentUnis = universities.filter(u=>{
+    if(s && !u.name.toLowerCase().includes(s) && !u.full.toLowerCase().includes(s)) return false;
+    if(c && u.country!==c) return false;
+    if(i && u.ielts < i) return false;
+    return true;
+  });
+  if(sort==='rank') currentUnis.sort((a,b)=>a.rank-b.rank);
+  else if(sort==='acceptance') currentUnis.sort((a,b)=>b.acceptance-a.acceptance);
+  else if(sort==='tuition') currentUnis.sort((a,b)=>a.tuition-b.tuition);
+  renderUnis();
+}
+
+function filterByCountry(country){
+  showPage('universities');
+  document.getElementById('countryFilter').value = country;
+  filterUnis();
+}
+
+function openUniModal(id){
+  const u = universities.find(x=>x.id===id);
+  document.getElementById('modalUniName').textContent = u.full;
+  document.getElementById('modalBody').innerHTML = `
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+      <div class="uni-logo" style="width:60px;height:60px;font-size:1rem;border-radius:12px;background:linear-gradient(135deg,${u.color}22,${u.color}44);border:1px solid ${u.color}44;color:${u.color};display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;">${u.logo}</div>
+      <div>
+        <div style="font-size:0.85rem;color:var(--text-muted);">${u.flag} ${u.country} • ${u.location}</div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.3rem;">
+          <span class="schol-tag gold-tag">QS Rank: #${u.rankings.qs}</span>
+          <span class="schol-tag gold-tag">Times: #${u.rankings.times}</span>
+          <span class="schol-tag">Shanghai: #${u.rankings.shanghai}</span>
+        </div>
+      </div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>💰 Tuition Fee / Year</h4>
+        <p class="good">${u.tuition < 1000 ? '€'+u.tuition+' (Near Free!)' : (u.country==='Japan'?'¥'+u.tuition.toLocaleString():'$'+u.tuition.toLocaleString())}</p>
+      </div>
+      <div class="info-card">
+        <h4>🏠 Living Cost / Year</h4>
+        <p class="warn">~$${u.livingCost.toLocaleString()}</p>
+      </div>
+      <div class="info-card">
+        <h4>📊 Acceptance Rate</h4>
+        <p style="color:${u.acceptance<10?'var(--red)':u.acceptance<30?'var(--orange)':'var(--green)'}">${u.acceptance}%</p>
+        <div class="prog-bar-wrap"><div class="prog-bar-fill" style="width:${u.acceptance}%;background:${u.acceptance<10?'var(--red)':u.acceptance<30?'var(--orange)':'var(--green)'};"></div></div>
+      </div>
+      <div class="info-card">
+        <h4>📝 Min IELTS Score</h4>
+        <p style="color:var(--gold)">${u.ielts}</p>
+      </div>
+      <div class="info-card">
+        <h4>🎓 Min GPA Required</h4>
+        <p>${u.gpa} / 4.0</p>
+      </div>
+      <div class="info-card">
+        <h4>📅 Application Deadline</h4>
+        <p style="color:var(--orange)">${u.deadline}</p>
+      </div>
+      <div class="info-card">
+        <h4>💳 Application Fee</h4>
+        <p>${u.appFee === 0 ? '<span style="color:var(--green)">FREE ✓</span>' : '$'+u.appFee} ${u.feeWaiver?'<span style="color:var(--green);font-size:0.75rem;">(Fee Waiver Available)</span>':''}</p>
+      </div>
+      <div class="info-card">
+        <h4>🔬 Co-op Programs</h4>
+        <p class="${u.coopPrograms?'good':'warn'}">${u.coopPrograms?'✓ Available':'✗ Not Available'}</p>
+      </div>
+    </div>
+    <div style="margin-top:1.5rem;">
+      <h4 style="margin-bottom:0.8rem;font-size:0.85rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">🏆 Scholarships Available</h4>
+      <div>${u.scholarships.map(s=>`<span class="schol-tag gold-tag">${s}</span>`).join('')}</div>
+    </div>
+    <div class="info-grid" style="margin-top:1rem;">
+      <div class="info-card">
+        <h4>🌍 Visa Type</h4>
+        <p style="font-size:0.85rem;">${u.visa}</p>
+      </div>
+      <div class="info-card">
+        <h4>💼 Work Opportunities</h4>
+        <p style="font-size:0.85rem;color:var(--green);">${u.workOpp}</p>
+      </div>
+      <div class="info-card">
+        <h4>✅ Accreditation</h4>
+        <p style="font-size:0.85rem;">${u.accreditation}</p>
+      </div>
+      <div class="info-card">
+        <h4>📋 Full Grant Requirements</h4>
+        <p style="font-size:0.82rem;color:var(--text-muted);">GPA ${u.gpa}+, IELTS ${u.ielts}+, SOP, 2-3 Rec Letters, CV</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:0.7rem;margin-top:1.5rem;flex-wrap:wrap;">
+      <button class="btn btn-gold btn-sm" onclick="prefillCalc(${u.id});closeModal('uniModal');showPage('calculator')">🤖 Calculate My Chance</button>
+      <button class="btn btn-outline btn-sm" onclick="closeModal('uniModal');showPage('timeline')">📅 Application Timeline</button>
+      <a href="https://wa.me/996553373812" target="_blank" class="btn btn-sm" style="background:linear-gradient(135deg,#25D366,#128C7E);color:white;text-decoration:none;">💬 Get Help</a>
+    </div>
+  `;
+  document.getElementById('uniModal').classList.add('show');
+}
+
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+
+function prefillCalc(id){
+  showPage('calculator');
+  document.getElementById('calcUni').value = id;
+  updateCalcProgress();
+}
+
+function populateUniSelect(){
+  const sel = document.getElementById('calcUni');
+  sel.innerHTML = '<option value="">Choose university</option>';
+  universities.forEach(u=>{
+    const opt = document.createElement('option');
+    opt.value = u.id;
+    opt.textContent = `${u.name} (${u.country})`;
+    sel.appendChild(opt);
+  });
+}
+
+// ===================== CALCULATOR =====================
+function updateCalcProgress(){
+  const fields = ['calcGpa','calcIelts','calcActivity','calcRec','calcUni','calcDegree'];
+  const filled = fields.filter(id => document.getElementById(id).value !== '').length;
+  const pct = Math.round(filled/fields.length*100);
+  document.getElementById('calcProgress').style.width = pct+'%';
+  document.getElementById('calcProgressText').textContent = filled+'/'+fields.length;
+}
+
+function calculateChance(){
+  const gpa = parseFloat(document.getElementById('calcGpa').value);
+  const ielts = parseFloat(document.getElementById('calcIelts').value);
+  const act = parseInt(document.getElementById('calcActivity').value)||0;
+  const rec = parseInt(document.getElementById('calcRec').value)||0;
+  const uniId = parseInt(document.getElementById('calcUni').value);
+  const deg = document.getElementById('calcDegree').value;
+
+  if(!gpa || !ielts || !uniId || !deg){
+    showToast('⚠ Please fill all fields'); return;
+  }
+  const uni = universities.find(u=>u.id===uniId);
+  let score = 0;
+  // GPA weight 40%
+  const gpaRatio = Math.min(gpa / uni.gpa, 1.2);
+  score += gpaRatio * 40;
+  // IELTS weight 25%
+  const ieltsRatio = Math.min(ielts / uni.ielts, 1.2);
+  score += ieltsRatio * 25;
+  // Activity 15%
+  score += act * 5;
+  // Rec 15%
+  score += rec * 5;
+  // Base factor from acceptance rate
+  const baseFactor = Math.min(uni.acceptance / 10, 1) * 15;
+  score += baseFactor;
+
+  score = Math.min(Math.max(Math.round(score), 5), 95);
+
+  const box = document.getElementById('resultBox');
+  box.classList.add('show');
+  const circle = document.getElementById('chanceCircle');
+  circle.textContent = score+'%';
+  const deg360 = score / 100 * 360;
+  const col = score>=70?'var(--green)':score>=45?'var(--orange)':'var(--red)';
+  circle.style.background = `conic-gradient(${col} ${deg360}deg, var(--dark4) 0deg)`;
+
+  let title, desc;
+  if(score >= 70){title='🎉 High Admission Chance!';desc=`Your profile strongly matches ${uni.name}'s requirements. Apply with confidence!`;}
+  else if(score >= 45){title='📊 Medium Admission Chance';desc=`You have a real shot at ${uni.name}. A few improvements will boost your chances significantly.`;}
+  else{title='💪 Lower Chance — But Improvable!';desc=`Your current profile is below ${uni.name}'s typical requirements. Here's what to do:`;}
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultDesc').textContent = desc;
+
+  let tips = '';
+  if(gpa < uni.gpa) tips += `<div class="tip-item">📈 <span>GPA ${gpa.toFixed(1)} is below ${uni.name}'s requirement of ${uni.gpa}. Consider improving grades or taking additional courses.</span></div>`;
+  if(ielts < uni.ielts) tips += `<div class="tip-item">🗣 <span>IELTS ${ielts} is below required ${uni.ielts}. Target Band ${uni.ielts} — take preparation course first.</span></div>`;
+  if(act < 3) tips += `<div class="tip-item">🏆 <span>Add more extracurriculars: volunteer work, research, competitions, student government.</span></div>`;
+  if(rec < 3) tips += `<div class="tip-item">📬 <span>Strengthen recommendation letters — ask professors/managers who know your work deeply.</span></div>`;
+  if(score >= 70) tips += `<div class="tip-item">✅ <span>Write a compelling Statement of Purpose. Highlight research interests and achievements.</span></div>`;
+  tips += `<div class="tip-item">📅 <span>Application deadline: ${uni.deadline}. Start your application ${deg==='phd'?'12':'6'} months early.</span></div>`;
+  tips += `<div class="tip-item">💡 <span>Apply for: ${uni.scholarships.join(', ')} — these can cover tuition + living costs.</span></div>`;
+  document.getElementById('tipsList').innerHTML = tips;
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+// ===================== COUNTRIES =====================
+let mapInit = false;
+function initMap(){
+  if(mapInit) return;
+  mapInit = true;
+  setTimeout(()=>{
+    const map = L.map('map').setView([30,20],2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:18}).addTo(map);
+    countries.forEach(c=>{
+      if(!c.lat) return;
+      const unis = universities.filter(u=>u.country===c.name);
+      L.circleMarker([c.lat,c.lng],{radius:8,color:unis.length>3?'#C9A84C':'#4F8EF7',fillColor:unis.length>3?'#C9A84C':'#4F8EF7',fillOpacity:0.7,weight:2})
+        .addTo(map)
+        .bindPopup(`<b>${c.flag} ${c.name}</b><br>${unis.length} universities<br><small>${c.tuition}</small>`);
+    });
+    // Also add universities
+    universities.forEach(u=>{
+      const co = countries.find(c=>c.name===u.country);
+      if(!co) return;
+      const jitter = (Math.random()-0.5)*3;
+      L.circleMarker([co.lat+jitter,co.lng+jitter],{radius:5,color:u.color||'#C9A84C',fillColor:u.color||'#C9A84C',fillOpacity:0.6,weight:1})
+        .addTo(map)
+        .bindPopup(`<b>${u.name}</b><br>#${u.rank} QS Rank<br>Acceptance: ${u.acceptance}%<br>IELTS: ${u.ielts}`);
+    });
+  },300);
+}
+
+function renderCountries(){
+  const grid = document.getElementById('countryGrid');
+  grid.innerHTML = '';
+  countries.forEach(c=>{
+    const unis = universities.filter(u=>u.country===c.name);
+    const div = document.createElement('div');
+    div.className = 'country-card';
+    div.onclick = ()=>filterByCountry(c.name);
+    div.innerHTML = `
+      <div class="country-top">
+        <div class="country-flag">${c.flag}</div>
+        <div>
+          <div class="country-name">${c.name}</div>
+          <div class="country-uni-count">${unis.length} universities in our list</div>
+        </div>
+      </div>
+      <div class="country-info">
+        <div class="ci-row"><span class="ci-label">💰 Tuition</span><span class="ci-val">${c.tuition}</span></div>
+        <div class="ci-row"><span class="ci-label">🏠 Living Cost</span><span class="ci-val">${c.living}</span></div>
+        <div class="ci-row"><span class="ci-label">💼 Part-time Work</span><span class="ci-val" style="color:var(--green)">${c.partTime}</span></div>
+        <div class="ci-row"><span class="ci-label">🛂 Visa</span><span class="ci-val" style="font-size:0.8rem;text-align:right;max-width:160px;">${c.visa}</span></div>
+        <div class="ci-row"><span class="ci-label">🎓 Post-Study</span><span class="ci-val" style="color:var(--accent);font-size:0.82rem;">${c.postStudy}</span></div>
+      </div>
+    `;
+    grid.appendChild(div);
+  });
+}
+
+// ===================== TIMELINE =====================
+function generateTimeline(){
+  const country = document.getElementById('tlCountry').value;
+  const degree = document.getElementById('tlDegree').value;
+  const year = parseInt(document.getElementById('tlYear').value);
+  const intakeMonth = (country==='Germany'||country==='Netherlands'||country==='Sweden')?9:1;
+  const intake = intakeMonth===9?'September':'January';
+  const prevYear = year - 1;
+
+  const steps = [];
+  if(degree==='PhD'){
+    steps.push({month:`Jan–Mar ${prevYear}`,task:'Research Potential Supervisors',desc:'Email 5–10 professors about potential PhD projects and funding availability.',icon:'🔍'});
+    steps.push({month:`Apr ${prevYear}`,task:'IELTS Preparation',desc:`Target IELTS Band ${country==='Germany'||country==='Netherlands'?'6.5':'7.0'} — join preparation course.`,icon:'📝'});
+    steps.push({month:`Jun ${prevYear}`,task:'Write Research Proposal',desc:'Draft 2,000-word research proposal with methodology and literature review.',icon:'📄'});
+    steps.push({month:`Jul ${prevYear}`,task:'Request Recommendation Letters',desc:'Contact 3 referees (professors/supervisors) with detailed info about your research.',icon:'📬'});
+    steps.push({month:`Aug ${prevYear}`,task:'Take IELTS Exam',desc:'Book and take official IELTS exam. Ensure scores reach universities by October.',icon:'🗣'});
+    steps.push({month:`Sep–Oct ${prevYear}`,task:'Prepare Application Documents',desc:'CV, Transcripts, Research Proposal, SOP, Certificates, Passport copy.',icon:'📁'});
+    steps.push({month:`Oct–Nov ${prevYear}`,task:'Submit Applications',desc:`Most PhD applications due Oct–Dec for ${intake} ${year} intake.`,icon:'📤'});
+    steps.push({month:`Dec ${prevYear}`,task:'Funding Applications',desc:'Apply for DAAD, CSC, Fullbright, and university-specific scholarships.',icon:'💰'});
+    steps.push({month:`Jan–Mar ${year}`,task:'Interview Round',desc:'Prepare for supervisor interviews — know your research proposal deeply.',icon:'🎙'});
+    steps.push({month:`Apr ${year}`,task:'Apply for Student Visa',desc:`Start ${country} visa application after receiving admission letter.`,icon:'🛂'});
+    steps.push({month:`Jun ${year}`,task:'Visa Approved',desc:'Receive visa, book flights and accommodation.',icon:'✈'});
+    steps.push({month:`Sep ${year}`,task:'Arrival & Enrollment',desc:`Arrive in ${country}, attend orientation, register at university.`,icon:'🎓'});
+  } else if(degree==='Master'){
+    steps.push({month:`Jan–Mar ${prevYear}`,task:'Research Programs',desc:'Compare master programs, requirements, and scholarships across universities.',icon:'🔍'});
+    steps.push({month:`Apr ${prevYear}`,task:'IELTS Preparation',desc:`Target IELTS ${country==='UK'?'6.5–7.0':'6.5'} — start intensive preparation.`,icon:'📝'});
+    steps.push({month:`Jun ${prevYear}`,task:'Take IELTS Exam',desc:'Book official IELTS. Register early — test centres fill up quickly.',icon:'🗣'});
+    steps.push({month:`Jul–Aug ${prevYear}`,task:'Draft SOP & CV',desc:'Write Statement of Purpose (700–1,000 words). Tailor for each university.',icon:'📄'});
+    steps.push({month:`Sep ${prevYear}`,task:'Request Recommendation Letters',desc:'Ask 2–3 referees. Give them your CV and SOP draft to reference.',icon:'📬'});
+    steps.push({month:`Oct–Nov ${prevYear}`,task:'Submit Applications',desc:`Apply to 5–8 universities. ${country==='Germany'?'Use uni-assist.de for Germany.':'Use university portals directly.'}`,icon:'📤'});
+    steps.push({month:`Nov–Dec ${prevYear}`,task:'Apply for Scholarships',desc:`Apply for: ${country==='Germany'?'DAAD Scholarship':country==='Netherlands'?'Holland Scholarship':country==='Sweden'?'Swedish Institute':'Chevening/Fullbright'} and university merit awards.`,icon:'💰'});
+    steps.push({month:`Feb–Apr ${year}`,task:'Receive Offers',desc:'Review admission offers. Compare scholarship packages carefully before accepting.',icon:'📨'});
+    steps.push({month:`Apr–May ${year}`,task:'Apply for Student Visa',desc:`Gather all documents and apply for ${country} student visa/permit.`,icon:'🛂'});
+    steps.push({month:`Jun–Jul ${year}`,task:'Visa & Housing',desc:'Confirm visa approval. Book student housing or find accommodation.',icon:'🏠'});
+    steps.push({month:`Aug ${year}`,task:'Final Preparation',desc:'Attend pre-departure orientation, arrange travel insurance, open bank account.',icon:'✈'});
+    steps.push({month:`Sep ${year}`,task:'Arrival',desc:`Welcome to ${country}! Register at university, attend orientation week.`,icon:'🎓'});
+  } else {
+    steps.push({month:`Jan–Apr ${prevYear}`,task:'School Research & Shortlist',desc:'Research bachelor programs, entry requirements, and scholarships.',icon:'🔍'});
+    steps.push({month:`May ${prevYear}`,task:'IELTS / A-Level Preparation',desc:`Start IELTS preparation targeting ${country==='UK'?'6.0–6.5':'6.5'}.`,icon:'📝'});
+    steps.push({month:`Aug ${prevYear}`,task:'Take Standardized Tests',desc:'IELTS, SAT (for US/Canada), or language proficiency tests.',icon:'🗣'});
+    steps.push({month:`Sep–Oct ${prevYear}`,task:'Prepare Documents',desc:'Transcripts, diplomas, personal statement, recommendation letters.',icon:'📄'});
+    steps.push({month:`Oct–Dec ${prevYear}`,task:'Submit Applications',desc:`Apply to chosen universities before deadline. ${country==='UK'?'Use UCAS portal.':country==='Germany'?'Use uni-assist.de.':'Apply directly via university websites.'}`,icon:'📤'});
+    steps.push({month:`Jan–Mar ${year}`,task:'Scholarship Applications',desc:'Apply for scholarships — many have separate deadlines from admissions.',icon:'💰'});
+    steps.push({month:`Mar–Apr ${year}`,task:'Receive Decisions',desc:'Compare offers and scholarship packages. Accept your top choice.',icon:'📨'});
+    steps.push({month:`May ${year}`,task:'Apply for Student Visa',desc:`Submit student visa application with admission letter and financial documents.`,icon:'🛂'});
+    steps.push({month:`Jul ${year}`,task:'Pre-Departure Prep',desc:'Arrange housing, health insurance, pack, attend info sessions.',icon:'🏠'});
+    steps.push({month:`Sep ${year}`,task:'Start University',desc:`Begin your bachelor studies in ${country}!`,icon:'🎓'});
+  }
+
+  document.getElementById('timelineContent').innerHTML = steps.map((s,i)=>`
+    <div class="tl-item">
+      <div class="tl-dot">${s.icon}</div>
+      <div class="tl-content">
+        <div class="tl-month">${s.month}</div>
+        <div class="tl-task">${s.task}</div>
+        <div class="tl-desc">${s.desc}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ===================== DOCS =====================
+const docTemplates = {
+  sop: `STATEMENT OF PURPOSE
+
+[Your Name]
+[Email] | [Phone] | [LinkedIn]
+Date: [Date]
+
+To the Admissions Committee,
+[University Name], [Program Name]
+
+I am writing to express my strong interest in the [Master's/Bachelor's/PhD] program in [Field] at [University Name]. With a GPA of [X.X] and [X years] of academic and professional experience in [Field], I am confident that this program aligns perfectly with my academic goals and career aspirations.
+
+ACADEMIC BACKGROUND
+[Describe your undergraduate/graduate studies, key achievements, relevant coursework, thesis if any]
+
+PROFESSIONAL EXPERIENCE
+[Describe relevant internships, research, work experience — 2-3 paragraphs]
+
+WHY THIS UNIVERSITY / PROGRAM
+[Specific reasons why this program fits your goals, mention professors/research groups/facilities]
+
+CAREER GOALS
+[Describe your short-term and long-term career goals after graduation]
+
+CONCLUSION
+I am excited about the opportunity to contribute to [University Name]'s research community. I look forward to bringing my unique perspective and dedication to your program.
+
+Thank you for considering my application.
+
+Sincerely,
+[Your Name]`,
+
+  cv: `CURRICULUM VITAE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PERSONAL INFORMATION
+Name: [Full Name]
+Date of Birth: [DD/MM/YYYY]
+Nationality: [Country]
+Email: [email@example.com]
+Phone: [+XXX XX XXX XXXX]
+LinkedIn: [linkedin.com/in/yourname]
+Address: [City, Country]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EDUCATION
+[YEAR] – Present
+[University Name], [City, Country]
+[Degree], [Field of Study]
+GPA: [X.X/4.0] | Relevant courses: [List 3-4]
+
+[YEAR] – [YEAR]
+[Previous School], [City, Country]
+[High School Diploma / Bachelor's]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WORK EXPERIENCE
+[Month YEAR] – [Month YEAR]
+[Job Title] | [Company Name] | [City, Country]
+• [Key responsibility / achievement 1]
+• [Key responsibility / achievement 2]
+• [Key responsibility / achievement 3]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SKILLS
+Technical: [Programming languages, tools, software]
+Languages: [Language 1 (Native), Language 2 (IELTS X.X), Language 3 (Basic)]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AWARDS & ACHIEVEMENTS
+• [Award Name], [Issuing Organization], [Year]
+• [Scholarship / Competition / Honor]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXTRACURRICULAR ACTIVITIES
+• [Club / Organization / Volunteer work]
+• [Leadership role or project]`,
+
+  motivation: `MOTIVATION LETTER
+
+[Your Name]
+[Address], [City, Country]
+[Email] | [Phone]
+[Date]
+
+[University Name]
+Admissions Office
+[University Address]
+
+Dear Admissions Committee,
+
+I am applying for the [Program Name] at [University Name], and I am deeply motivated to contribute to your academic community.
+
+My passion for [Field] was sparked by [specific experience/event]. During my studies at [Previous University], I developed expertise in [relevant skills/topics] and achieved [notable achievement].
+
+What excites me most about [University Name] specifically is [specific program feature, professor, research group, or opportunity]. I believe this environment will allow me to [specific goal].
+
+Beyond academics, I have demonstrated leadership through [extracurricular activity]. I volunteered at [organization], where I [specific achievement with impact].
+
+I am confident that my academic background, IELTS score of [X.X], and passion for [field] make me a strong candidate. I look forward to contributing to [University Name]'s vibrant international community.
+
+Thank you sincerely for considering my application.
+
+Warmest regards,
+[Your Name]`,
+
+  visa: `VISA COVER LETTER
+
+[Your Name]
+[Your Address]
+[City, Country, Postal Code]
+[Email Address]
+[Phone Number]
+[Date]
+
+To: [Country] Embassy / Consulate
+Re: Student Visa Application — [University Name]
+
+Dear Visa Officer,
+
+I, [Your Full Name], passport number [XXXXXXXX], am writing to request a student visa to study [Program Name] at [University Name], [City, Country].
+
+PROGRAM DETAILS:
+• University: [University Name]
+• Program: [Degree Level] in [Field of Study]
+• Duration: [Start Date] to [Expected End Date]
+• Student ID / Reference: [XXXXXXXX]
+
+FINANCIAL DOCUMENTATION:
+I have sufficient funds to support my studies and living expenses:
+• Tuition Fee: [Amount per year]
+• Living Costs: [Amount per year]
+• Source of Funding: [Personal savings / Family support / Scholarship — specify]
+• Bank statements and scholarship letters are attached.
+
+TIES TO HOME COUNTRY:
+I intend to return to [Home Country] upon completion of my studies to [career goal]. My strong ties to my home country include [family/job offer/business].
+
+I respectfully request that you consider my visa application favorably. All required documents are enclosed.
+
+Sincerely,
+[Your Full Name]
+[Signature]`
+};
+
+function switchDoc(type, btn){
+  document.querySelectorAll('.doc-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('docText').value = docTemplates[type];
+}
+
+function docAction(type){
+  const ta = document.getElementById('docText');
+  if(type==='clear'){ta.value='';return;}
+  const placeholders = {name:'[Your Name]',uni:'[University Name]',program:'[Program Name]',year:new Date().getFullYear()};
+  const val = prompt('Enter '+type+':');
+  if(val) ta.value = ta.value.replace(new RegExp('\\['+type.charAt(0).toUpperCase()+type.slice(1)+' '+type.charAt(0).toUpperCase()+'\\w+\\]','g'),val);
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('docText').value = docTemplates.sop;
+});
+
+function copyDoc(){
+  navigator.clipboard.writeText(document.getElementById('docText').value);
+  showToast('✅ Copied to clipboard!');
+}
+function downloadDoc(){
+  const text = document.getElementById('docText').value;
+  const blob = new Blob([text],{type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'document.txt';
+  a.click();
+}
+
+// ===================== QUIZ =====================
+const quizQuestions = [
+  {q:'What does IELTS stand for?',opts:['International English Language Testing System','International English Language Training Service','Integrated English Learning Testing System','International Education Language Test Standards'],ans:0},
+  {q:'Which university has the lowest acceptance rate among these?',opts:['Oxford (17%)','Harvard (3%)','Melbourne (70%)','Copenhagen (55%)'],ans:1},
+  {q:'German public universities charge approximately how much per semester?',opts:['€5,000','€500–€800 (admin fee only)','€2,000','Free'],ans:1},
+  {q:'What visa type do international students need for the USA?',opts:['H-1B','B-2 Tourist','F-1 Student Visa','J-1 Exchange'],ans:2},
+  {q:'The Fullbright Scholarship is offered by which country?',opts:['UK','Germany','USA','Australia'],ans:2},
+  {q:'DAAD Scholarship is primarily for studying in which country?',opts:['Denmark','Germany','Netherlands','Austria'],ans:1},
+  {q:'What is the minimum IELTS score typically required by MIT?',opts:['5.5','6.0','7.0','8.0'],ans:2},
+  {q:'Which Australian visa allows 48 hours of work per fortnight?',opts:['Subclass 500','Subclass 485','Subclass 600','Work Permit 482'],ans:0},
+  {q:'QS World University Rankings #1 for 2025–2026 is:',opts:['Harvard','Oxford','MIT','Stanford'],ans:2},
+  {q:'A strong Statement of Purpose (SOP) should typically be how long?',opts:['150-200 words','500–1,000 words','2,000–3,000 words','100 words'],ans:1}
+];
+let qIdx=0, qScore=0;
+function initQuiz(){
+  qIdx=0;qScore=0;
+  document.getElementById('quizCard').style.display='block';
+  document.getElementById('quizResult').style.display='none';
+  renderQuestion();
+}
+function renderQuestion(){
+  const q = quizQuestions[qIdx];
+  document.getElementById('quizQuestion').textContent = `Q${qIdx+1}. ${q.q}`;
+  document.getElementById('quizOptions').innerHTML = q.opts.map((o,i)=>`<div class="quiz-opt" onclick="selectOpt(this,${i},${q.ans})">${String.fromCharCode(65+i)}. ${o}</div>`).join('');
+  document.getElementById('quizScore').textContent = `Score: ${qScore}/${qIdx}`;
+  document.getElementById('quizNext').style.display='none';
+  document.getElementById('quizProgress').style.width = ((qIdx)/quizQuestions.length*100)+'%';
+  document.getElementById('quizProgressText').textContent = `${qIdx}/${quizQuestions.length}`;
+}
+function selectOpt(el,chosen,correct){
+  document.querySelectorAll('.quiz-opt').forEach(o=>o.style.pointerEvents='none');
+  if(chosen===correct){el.classList.add('correct');qScore++;}
+  else{el.classList.add('wrong');document.querySelectorAll('.quiz-opt')[correct].classList.add('correct');}
+  document.getElementById('quizNext').style.display='inline-flex';
+  document.getElementById('quizScore').textContent = `Score: ${qScore}/${qIdx+1}`;
+}
+function nextQuestion(){
+  qIdx++;
+  if(qIdx>=quizQuestions.length){showQuizResult();return;}
+  renderQuestion();
+}
+function showQuizResult(){
+  document.getElementById('quizCard').style.display='none';
+  const r = document.getElementById('quizResult');
+  r.style.display='block';
+  const pct = Math.round(qScore/quizQuestions.length*100);
+  document.getElementById('quizEmoji').textContent = pct>=80?'🏆':pct>=60?'🎓':'📚';
+  document.getElementById('quizFinalTitle').textContent = `${qScore}/${quizQuestions.length} — ${pct>=80?'Excellent!':pct>=60?'Good Job!':'Keep Learning!'}`;
+  document.getElementById('quizFinalDesc').textContent = pct>=80?'You know a lot about studying abroad! Ready to apply?':pct>=60?'Solid knowledge. Review the details and apply soon!':'Study our university guides to improve your knowledge.';
+  document.getElementById('quizProgress').style.width='100%';
+  document.getElementById('quizProgressText').textContent = `${quizQuestions.length}/${quizQuestions.length}`;
+}
+function restartQuiz(){initQuiz();}
+function filterDegree(deg,btn){
+  document.querySelectorAll('.tab').forEach(t=>{if(['All','Bachelor','Master','PhD / Doctorate'].includes(t.textContent.trim()))t.classList.remove('active')});
+  btn.classList.add('active');
+}
+
+// ===================== PAYMENT =====================
+let currentPlan = 'premium';
+function showPayment(plan){
+  currentPlan = plan;
+  const t = i18n[langs[currentLang]];
+  const features = {
+    premium: {
+      title: '⭐ Premium Plan — $2/month',
+      items: ['✓ Germany step-by-step application roadmap','✓ 5 University shortlist (researched for you)','✓ SOP writing structure + example template','✓ Europass CV template + guide','✓ IELTS strategy plan (Band 7–8)','✓ Visa document checklist','✓ Priority WhatsApp support']
+    },
+    pro: {
+      title: '💎 Pro Plan — $5/month',
+      items: ['✓ All Premium features','✓ 10 university analysis + acceptance chance rating','✓ Individual motivation strategy','✓ SOP idea brainstorming session','✓ Interview preparation questions','✓ Scholarship finding roadmap','✓ Visa cover letter template','✓ 1-on-1 WhatsApp consultation (1hr/month)']
+    }
+  };
+  const f = features[plan];
+  document.getElementById('payTitle').textContent = f.title;
+  document.getElementById('payBtnText').textContent = `Subscribe to ${plan==='premium'?'Premium $2':'Pro $5'}/month`;
+  document.getElementById('payFeatures').innerHTML = `<div style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:1rem;">${f.items.map(i=>`<div style="padding:0.35rem 0;font-size:0.88rem;color:var(--text);display:flex;gap:0.5rem;"><span style="color:var(--green)">✓</span><span>${i.replace('✓ ','')}</span></div>`).join('')}</div>`;
+  document.getElementById('payModal').classList.add('show');
+}
+function selectPayMethod(el,method){
+  document.querySelectorAll('.pay-method').forEach(m=>m.classList.remove('active'));
+  el.classList.add('active');
+  const cardForm = document.getElementById('cardForm');
+  cardForm.style.display = method==='card' ? 'block' : 'none';
+}
+function formatCard(el){
+  let v = el.value.replace(/\D/g,'').substring(0,16);
+  el.value = v.replace(/(.{4})/g,'$1 ').trim();
+}
+function processPayment(){
+  const btn = document.getElementById('payBtn');
+  btn.textContent = '⏳ Processing...';
+  btn.disabled = true;
+  setTimeout(()=>{
+    closeModal('payModal');
+    btn.textContent = document.getElementById('payBtnText').textContent;
+    btn.disabled = false;
+    showToast('✅ Thank you! Payment successful. Check WhatsApp for access: +996553373812');
+    setTimeout(()=>{window.open('https://wa.me/996553373812?text=Hello!+I+just+subscribed+to+'+currentPlan+'+plan+on+EduPath+Global','_blank')},1500);
+  },2000);
+}
+
+// ===================== TOAST =====================
+function showToast(msg){
+  const t = document.createElement('div');
+  t.className='toast';t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),3500);
+}
+
+// ===================== PRICING PAGE =====================
+// Inline pricing in home (shown on scroll)
+
+// ===================== INIT =====================
+window.addEventListener('DOMContentLoaded',()=>{
+  renderUnis();
+  renderCountries();
+  populateUniSelect();
+  generateTimeline();
+  initQuiz();
+  applyLang();
+  // Close modals on overlay click
+  document.querySelectorAll('.modal-overlay').forEach(m=>{
+    m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show');});
+  });
+});
+</script>
+
+<!-- PRICING SECTION on Home Page (appended) -->
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const homeExtra = document.createElement('section');
+  homeExtra.style = 'padding:5rem 2rem;background:linear-gradient(180deg,var(--dark) 0%,var(--dark2) 100%);';
+  homeExtra.innerHTML = `
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Pricing Plans</div>
+      <h2 style="font-family:'Playfair Display',serif;">Choose Your Plan</h2>
+      <p style="color:var(--text-muted);">Affordable plans for students from every country. One-time access, worldwide payments accepted.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Free</div>
+        <div class="price-amount">$0<span>/forever</span></div>
+        <ul class="price-features">
+          <li class="included"><span class="check">✓</span> 70 University database</li>
+          <li class="included"><span class="check">✓</span> AI Chance Calculator</li>
+          <li class="included"><span class="check">✓</span> Country guides</li>
+          <li class="included"><span class="check">✓</span> Basic document templates</li>
+          <li class="included"><span class="check">✓</span> Application timeline</li>
+          <li><span style="color:var(--text-muted)">✗</span> Personalized roadmap</li>
+          <li><span style="color:var(--text-muted)">✗</span> CV Europass template</li>
+        </ul>
+        <button class="btn btn-outline" style="width:100%;justify-content:center;" onclick="showPage('universities')">Get Started Free</button>
+      </div>
+      <div class="price-card featured">
+        <div class="price-name">Premium</div>
+        <div class="price-amount">$2<span>/month</span></div>
+        <ul class="price-features">
+          <li class="included"><span class="check">✓</span> Everything in Free</li>
+          <li class="included"><span class="check">✓</span> Germany step-by-step roadmap</li>
+          <li class="included"><span class="check">✓</span> 5 University shortlist</li>
+          <li class="included"><span class="check">✓</span> SOP structure + example</li>
+          <li class="included"><span class="check">✓</span> Europass CV template</li>
+          <li class="included"><span class="check">✓</span> IELTS strategy Band 7–8</li>
+          <li class="included"><span class="check">✓</span> Visa document checklist</li>
+        </ul>
+        <button class="btn btn-gold" style="width:100%;justify-content:center;" onclick="showPayment('premium')">⭐ Get Premium $2/mo</button>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Pro</div>
+        <div class="price-amount">$5<span>/month</span></div>
+        <ul class="price-features">
+          <li class="included"><span class="check">✓</span> Everything in Premium</li>
+          <li class="included"><span class="check">✓</span> 10 university analysis</li>
+          <li class="included"><span class="check">✓</span> Individual motivation strategy</li>
+          <li class="included"><span class="check">✓</span> SOP brainstorming session</li>
+          <li class="included"><span class="check">✓</span> Interview prep questions</li>
+          <li class="included"><span class="check">✓</span> Visa cover letter template</li>
+          <li class="included"><span class="check">✓</span> 1-on-1 WhatsApp 1hr/month</li>
+        </ul>
+        <button class="btn" style="width:100%;justify-content:center;background:linear-gradient(135deg,#1A3A5C,#0A2040);border:1px solid var(--accent);color:var(--accent);" onclick="showPayment('pro')">💎 Get Pro $5/mo</button>
+      </div>
+    </div>
+    <p style="text-align:center;color:var(--text-muted);font-size:0.82rem;margin-top:2rem;">🌍 Accepts Visa, Mastercard, PayPal, MBank, Elsom, Crypto • 30-day money back guarantee • WhatsApp: +996553373812</p>
+  </div>`;
+  document.getElementById('page-home').appendChild(homeExtra);
+});
+</script>
+</body>
+</html>
