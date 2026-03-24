@@ -27,20 +27,17 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
-/* Scrollbar */
 ::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:var(--dark2);} ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px;}
 
-/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,12,18,0.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;}
 .logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--gold);letter-spacing:-0.5px;cursor:pointer;}
 .logo span{color:var(--text);}
-.nav-links{display:flex;gap:0.5rem;align-items:center;}
+.nav-links{display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap;}
 .nav-links button{background:none;border:none;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:0.85rem;padding:0.4rem 0.8rem;border-radius:8px;cursor:pointer;transition:all 0.2s;}
 .nav-links button:hover,.nav-links button.active{color:var(--gold);background:rgba(201,168,76,0.1);}
 .lang-btn{background:rgba(201,168,76,0.15)!important;color:var(--gold)!important;border:1px solid var(--border)!important;font-weight:600!important;}
-.btn-premium-nav{background:linear-gradient(135deg,#2A1F0A,#4A3510)!important;border:1px solid var(--gold)!important;color:var(--gold)!important;font-weight:600!important;}
+.btn-profile-nav{background:linear-gradient(135deg,#1A2040,#2A3060)!important;border:1px solid var(--accent)!important;color:var(--accent)!important;font-weight:600!important;}
 
-/* HERO */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 2rem 4rem;position:relative;overflow:hidden;}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(201,168,76,0.08) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 20% 80%,rgba(79,142,247,0.06) 0%,transparent 60%),linear-gradient(180deg,var(--dark) 0%,var(--dark2) 100%);}
 .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px);background-size:60px 60px;}
@@ -60,7 +57,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,12,18,0.
 .stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold);}
 .stat-label{font-size:0.8rem;color:var(--text-muted);margin-top:0.2rem;}
 
-/* SECTIONS */
 section{padding:5rem 2rem;}
 .section-header{text-align:center;margin-bottom:3rem;}
 .section-header h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;margin-bottom:0.75rem;}
@@ -68,12 +64,10 @@ section{padding:5rem 2rem;}
 .section-tag{display:inline-block;background:rgba(201,168,76,0.1);color:var(--gold);font-size:0.75rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:0.3rem 0.8rem;border-radius:6px;margin-bottom:0.75rem;}
 .container{max-width:1300px;margin:0 auto;}
 
-/* TABS */
 .tabs{display:flex;gap:0.5rem;justify-content:center;margin-bottom:2.5rem;flex-wrap:wrap;}
 .tab{background:var(--dark3);border:1px solid var(--border);color:var(--text-muted);padding:0.6rem 1.2rem;border-radius:10px;cursor:pointer;font-size:0.85rem;font-weight:500;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
 .tab:hover,.tab.active{background:rgba(201,168,76,0.15);border-color:var(--gold);color:var(--gold);}
 
-/* UNIVERSITY CARDS */
 .uni-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
 .uni-card{background:var(--dark2);border:1px solid var(--border);border-radius:16px;padding:1.5rem;transition:all 0.3s;cursor:pointer;position:relative;overflow:hidden;}
 .uni-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--accent));opacity:0;transition:opacity 0.3s;}
@@ -89,17 +83,20 @@ section{padding:5rem 2rem;}
 .uni-stat-label{font-size:0.7rem;color:var(--text-muted);}
 .uni-stat-val{font-size:0.85rem;font-weight:600;color:var(--text);margin-top:0.1rem;}
 .badge-verified{display:inline-flex;align-items:center;gap:0.3rem;background:rgba(61,214,140,0.1);border:1px solid rgba(61,214,140,0.3);border-radius:6px;padding:0.2rem 0.5rem;font-size:0.7rem;color:var(--green);margin-bottom:0.8rem;}
-.uni-card-actions{display:flex;gap:0.5rem;margin-top:1rem;}
+.uni-card-actions{display:flex;gap:0.5rem;margin-top:1rem;flex-wrap:wrap;}
 .btn-sm{padding:0.5rem 1rem;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
 .btn-sm-gold{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#0A0C12;}
 .btn-sm-outline{background:transparent;border:1px solid var(--border);color:var(--text-muted);}
 .btn-sm-outline:hover{border-color:var(--gold);color:var(--gold);}
+.btn-sm-fav{background:transparent;border:1px solid rgba(247,111,111,0.3);color:var(--red);}
+.btn-sm-fav:hover{background:rgba(247,111,111,0.1);}
+.btn-sm-fav.saved{background:rgba(247,111,111,0.15);border-color:var(--red);}
+
 .chance-pill{display:inline-flex;align-items:center;gap:0.3rem;border-radius:100px;padding:0.25rem 0.7rem;font-size:0.75rem;font-weight:600;margin-top:0.5rem;}
 .high{background:rgba(61,214,140,0.12);color:var(--green);}
 .med{background:rgba(247,169,79,0.12);color:var(--orange);}
 .low{background:rgba(247,111,111,0.12);color:var(--red);}
 
-/* SEARCH & FILTER */
 .search-bar{background:var(--dark2);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:2rem;display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;}
 .filter-group{flex:1;min-width:160px;}
 .filter-group label{display:block;font-size:0.78rem;color:var(--text-muted);margin-bottom:0.5rem;font-weight:500;}
@@ -107,7 +104,6 @@ section{padding:5rem 2rem;}
 .filter-group input:focus,.filter-group select:focus{border-color:var(--gold);}
 .filter-group select option{background:var(--dark3);}
 
-/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:2000;align-items:center;justify-content:center;padding:1rem;}
 .modal-overlay.show{display:flex;}
 .modal{background:var(--dark2);border:1px solid var(--border);border-radius:20px;width:100%;max-width:750px;max-height:90vh;overflow-y:auto;animation:modalIn 0.3s ease;}
@@ -126,7 +122,6 @@ section{padding:5rem 2rem;}
 .prog-bar-wrap{background:var(--dark3);border-radius:100px;height:8px;margin-top:0.5rem;overflow:hidden;}
 .prog-bar-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--gold),var(--gold-light));transition:width 0.8s ease;}
 
-/* CALCULATOR */
 .calc-section{background:var(--dark2);border:1px solid var(--border);border-radius:20px;padding:2rem;max-width:700px;margin:0 auto;}
 .calc-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
 .input-wrap{position:relative;}
@@ -139,14 +134,12 @@ section{padding:5rem 2rem;}
 .tips-list{text-align:left;margin-top:1rem;}
 .tip-item{background:var(--dark4);border-radius:8px;padding:0.7rem 1rem;margin-bottom:0.5rem;font-size:0.85rem;display:flex;gap:0.5rem;align-items:flex-start;}
 
-/* PROGRESS */
 .progress-header{background:var(--dark2);border:1px solid var(--border);border-radius:14px;padding:1rem 1.5rem;margin-bottom:2rem;display:flex;align-items:center;gap:1.5rem;}
 .progress-label{font-size:0.85rem;color:var(--text-muted);white-space:nowrap;}
 .progress-track{flex:1;height:8px;background:var(--dark3);border-radius:100px;overflow:hidden;}
 .progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--accent));border-radius:100px;transition:width 0.5s ease;}
 .progress-count{font-size:0.85rem;color:var(--gold);font-weight:600;white-space:nowrap;}
 
-/* COUNTRY CARDS */
 .country-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;}
 .country-card{background:var(--dark2);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all 0.3s;cursor:pointer;}
 .country-card:hover{border-color:rgba(201,168,76,0.4);transform:translateY(-3px);}
@@ -160,7 +153,6 @@ section{padding:5rem 2rem;}
 .ci-label{color:var(--text-muted);}
 .ci-val{font-weight:500;}
 
-/* TIMELINE */
 .timeline{position:relative;max-width:600px;margin:0 auto;}
 .timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--gold),var(--accent));}
 .tl-item{display:flex;gap:1.5rem;margin-bottom:1.5rem;position:relative;}
@@ -170,24 +162,9 @@ section{padding:5rem 2rem;}
 .tl-task{font-size:0.9rem;font-weight:500;}
 .tl-desc{font-size:0.8rem;color:var(--text-muted);margin-top:0.3rem;}
 
-/* MAP */
 #map{height:450px;border-radius:16px;border:1px solid var(--border);overflow:hidden;}
 .leaflet-tile-pane img{filter:brightness(0.6) saturate(0.5);}
 
-/* PRICING */
-.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;max-width:900px;margin:0 auto;}
-.price-card{background:var(--dark2);border:1px solid var(--border);border-radius:20px;padding:2rem;position:relative;overflow:hidden;transition:all 0.3s;}
-.price-card.featured{border-color:var(--gold);background:linear-gradient(135deg,var(--dark2),rgba(201,168,76,0.05));}
-.price-card.featured::before{content:'POPULAR';position:absolute;top:1.5rem;right:1.5rem;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#0A0C12;font-size:0.65rem;font-weight:700;padding:0.25rem 0.6rem;border-radius:100px;letter-spacing:0.5px;}
-.price-name{font-size:0.8rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.5rem;}
-.price-amount{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:var(--gold);margin-bottom:0.3rem;}
-.price-amount span{font-size:1rem;font-family:'DM Sans',sans-serif;color:var(--text-muted);}
-.price-features{list-style:none;margin:1.5rem 0;}
-.price-features li{display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;padding:0.4rem 0;color:var(--text-muted);}
-.price-features li .check{color:var(--green);font-size:1rem;}
-.price-features li.included{color:var(--text);}
-
-/* DOC BUILDER */
 .doc-tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;}
 .doc-tab{background:var(--dark3);border:1px solid var(--border);color:var(--text-muted);padding:0.5rem 1rem;border-radius:8px;cursor:pointer;font-size:0.85rem;font-weight:500;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
 .doc-tab:hover,.doc-tab.active{background:rgba(201,168,76,0.15);border-color:var(--gold);color:var(--gold);}
@@ -197,15 +174,6 @@ section{padding:5rem 2rem;}
 .doc-tool{background:var(--dark4);border:1px solid var(--border);color:var(--text-muted);padding:0.4rem 0.8rem;border-radius:6px;cursor:pointer;font-size:0.78rem;font-weight:500;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
 .doc-tool:hover{border-color:var(--gold);color:var(--gold);}
 
-/* PAYMENT MODAL */
-.payment-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
-.payment-form input{width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:0.7rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;}
-.payment-form input:focus{border-color:var(--gold);}
-.payment-methods{display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;}
-.pay-method{background:var(--dark3);border:2px solid var(--border);border-radius:10px;padding:0.7rem 1.2rem;cursor:pointer;font-size:0.85rem;font-weight:500;transition:all 0.2s;display:flex;align-items:center;gap:0.4rem;}
-.pay-method.active{border-color:var(--gold);color:var(--gold);}
-
-/* QUIZ / TEST PAGE */
 .quiz-section{max-width:700px;margin:0 auto;}
 .quiz-card{background:var(--dark2);border:1px solid var(--border);border-radius:20px;padding:2rem;}
 .quiz-question{font-size:1.1rem;font-weight:600;margin-bottom:1.5rem;line-height:1.5;}
@@ -217,50 +185,66 @@ section{padding:5rem 2rem;}
 .quiz-opt.wrong{border-color:var(--red);background:rgba(247,111,111,0.1);color:var(--red);}
 .quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;}
 
-/* NOTIFY */
+/* PROFILE / DATABASE PAGE */
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.db-card{background:var(--dark2);border:1px solid var(--border);border-radius:16px;padding:1.5rem;}
+.db-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:0.5rem;}
+.db-field{margin-bottom:0.9rem;}
+.db-field label{display:block;font-size:0.75rem;color:var(--text-muted);margin-bottom:0.35rem;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;}
+.db-field input,.db-field select,.db-field textarea{width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:0.65rem 0.9rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;resize:vertical;}
+.db-field input:focus,.db-field select:focus,.db-field textarea:focus{border-color:var(--gold);}
+.db-field select option{background:var(--dark3);}
+.fav-list{display:flex;flex-direction:column;gap:0.6rem;max-height:320px;overflow-y:auto;}
+.fav-item{background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:0.8rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:0.5rem;}
+.fav-item-name{font-size:0.9rem;font-weight:500;}
+.fav-item-sub{font-size:0.75rem;color:var(--text-muted);}
+.fav-remove{background:none;border:none;color:var(--red);cursor:pointer;font-size:0.85rem;padding:0.2rem 0.5rem;border-radius:6px;transition:background 0.2s;}
+.fav-remove:hover{background:rgba(247,111,111,0.1);}
+.history-list{display:flex;flex-direction:column;gap:0.6rem;max-height:280px;overflow-y:auto;}
+.history-item{background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:0.8rem 1rem;}
+.history-item-title{font-size:0.85rem;font-weight:600;}
+.history-item-sub{font-size:0.75rem;color:var(--text-muted);margin-top:0.2rem;}
+.history-item-score{font-size:0.85rem;font-weight:700;margin-top:0.3rem;}
+.notes-area{width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;line-height:1.6;resize:vertical;outline:none;min-height:120px;}
+.notes-area:focus{border-color:var(--gold);}
+.save-indicator{font-size:0.75rem;color:var(--green);margin-top:0.4rem;display:none;}
+.save-indicator.show{display:block;}
+.db-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0.7rem;margin-bottom:1rem;}
+.db-stat-box{background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:0.9rem;text-align:center;}
+.db-stat-box .num{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--gold);font-weight:700;}
+.db-stat-box .lbl{font-size:0.72rem;color:var(--text-muted);margin-top:0.1rem;}
+.empty-state{text-align:center;padding:2rem;color:var(--text-muted);font-size:0.9rem;}
+.loading-db{display:flex;align-items:center;justify-content:center;gap:0.5rem;color:var(--text-muted);font-size:0.85rem;padding:1rem;}
+
 .toast{position:fixed;bottom:2rem;right:2rem;background:var(--dark2);border:1px solid var(--gold);border-radius:12px;padding:1rem 1.5rem;z-index:3000;animation:slideUp 0.3s ease;font-size:0.9rem;max-width:320px;}
 @keyframes slideUp{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
-
-/* ANIMATIONS */
 @keyframes fadeInDown{from{opacity:0;transform:translateY(-15px);}to{opacity:1;transform:translateY(0);}}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(15px);}to{opacity:1;transform:translateY(0);}}
 
-/* WHATSAPP */
 .wa-float{position:fixed;bottom:2rem;left:2rem;z-index:999;display:flex;align-items:center;gap:0.7rem;background:linear-gradient(135deg,#25D366,#128C7E);border-radius:100px;padding:0.7rem 1.2rem;cursor:pointer;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s;}
 .wa-float:hover{transform:scale(1.05);}
 .wa-float svg{width:22px;height:22px;fill:white;flex-shrink:0;}
 .wa-float span{color:white;font-size:0.85rem;font-weight:600;}
 
-/* VERIFY BADGE */
 .verify-badge{display:inline-flex;align-items:center;gap:0.3rem;background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.3);border-radius:6px;padding:0.2rem 0.5rem;font-size:0.68rem;color:var(--accent);margin-left:0.5rem;}
-
-/* PAGE SECTIONS */
 .page{display:none;}
 .page.active{display:block;}
 
-/* RESPONSIVE */
-@media(max-width:768px){
-  .calc-row{grid-template-columns:1fr;}
-  .info-grid{grid-template-columns:1fr;}
-  .payment-form .form-row{grid-template-columns:1fr;}
-  .nav-links .nav-link-text{display:none;}
-  .hero h1{font-size:2.2rem;}
-}
-
-/* SCHOLARSHIP TAGS */
 .schol-tag{display:inline-block;background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.3);border-radius:6px;padding:0.2rem 0.5rem;font-size:0.72rem;color:var(--accent);margin:0.15rem;}
 .schol-tag.gold-tag{background:rgba(201,168,76,0.1);border-color:var(--border);color:var(--gold);}
 
-/* SECTION DIVIDER */
-.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:2rem 0;}
-
-/* HIGHLIGHT */
-mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;padding:0 3px;}
+@media(max-width:768px){
+  .calc-row{grid-template-columns:1fr;}
+  .info-grid{grid-template-columns:1fr;}
+  .profile-grid{grid-template-columns:1fr;}
+  .nav-links .nav-link-text{display:none;}
+  .hero h1{font-size:2.2rem;}
+  .db-stat-row{grid-template-columns:1fr 1fr;}
+}
 </style>
 </head>
 <body>
 
-<!-- NAVIGATION -->
 <nav id="mainNav">
   <div class="logo" onclick="showPage('home')">EduPath<span>Global</span></div>
   <div class="nav-links">
@@ -271,8 +255,7 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
     <button onclick="showPage('timeline')" data-i18n="nav_timeline">Timeline</button>
     <button onclick="showPage('docs')" data-i18n="nav_docs">Docs</button>
     <button onclick="showPage('test')" data-i18n="nav_test">Test</button>
-    <button class="btn-premium-nav" onclick="showPayment('premium')" data-i18n="nav_premium">⭐ Premium $2</button>
-    <button class="btn-premium-nav" style="background:linear-gradient(135deg,#0A2040,#1A3A5C)!important;border-color:var(--accent)!important;color:var(--accent)!important;" onclick="showPayment('pro')" data-i18n="nav_pro">💎 Pro $5</button>
+    <button class="btn-profile-nav" onclick="showPage('profile')">👤 <span data-i18n="nav_profile">My Profile</span></button>
     <button class="lang-btn" onclick="cycleLang()">🌐 <span id="langLabel">EN</span></button>
   </div>
 </nav>
@@ -289,6 +272,7 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
     <div class="hero-actions">
       <button class="btn btn-gold" onclick="showPage('universities')">🎓 <span data-i18n="btn_explore">Explore Universities</span></button>
       <button class="btn btn-outline" onclick="showPage('calculator')">🤖 <span data-i18n="btn_calc">AI Chance Calculator</span></button>
+      <button class="btn btn-outline" onclick="showPage('profile')" style="border-color:var(--accent);color:var(--accent);">👤 <span data-i18n="btn_profile">My Profile</span></button>
     </div>
     <div class="hero-stats">
       <div class="stat"><div class="stat-num">70+</div><div class="stat-label" data-i18n="stat1">Universities</div></div>
@@ -299,7 +283,6 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
   </div>
 </div>
 
-<!-- Featured Countries Quick Pick -->
 <section style="padding:3rem 2rem;">
   <div class="container">
     <div class="section-header">
@@ -331,8 +314,6 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
       <h2 data-i18n="h_unis">World's Best Universities</h2>
       <p data-i18n="p_unis">Official verified data — rankings, scholarships, IELTS requirements, acceptance rates</p>
     </div>
-
-    <!-- FILTERS -->
     <div class="search-bar">
       <div class="filter-group" style="flex:2;">
         <label data-i18n="lbl_search">Search University</label>
@@ -347,13 +328,6 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
           <option>Netherlands</option><option>Sweden</option><option>China</option><option>Singapore</option>
           <option>South Korea</option><option>Belgium</option><option>Denmark</option><option>Finland</option>
           <option>Austria</option><option>Italy</option><option>Norway</option><option>New Zealand</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label data-i18n="lbl_degree">Degree</label>
-        <select id="degreeFilter" onchange="filterUnis()">
-          <option value="">All Degrees</option>
-          <option>Bachelor</option><option>Master</option><option>PhD</option>
         </select>
       </div>
       <div class="filter-group">
@@ -373,13 +347,11 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
         </select>
       </div>
     </div>
-
     <div class="progress-header">
       <span class="progress-label" data-i18n="showing">Showing</span>
       <div class="progress-track"><div class="progress-fill" id="filterProgress" style="width:100%"></div></div>
       <span class="progress-count" id="uniCount">70 universities</span>
     </div>
-
     <div class="uni-grid" id="uniGrid"></div>
   </div>
 </section>
@@ -394,29 +366,26 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
       <h2 data-i18n="h_calc">Admission Chance Calculator</h2>
       <p data-i18n="p_calc">Enter your profile and see your admission probability for any university</p>
     </div>
-
-    <!-- Progress for quiz form -->
     <div class="progress-header" style="max-width:700px;margin:0 auto 1.5rem;">
       <span class="progress-label" data-i18n="form_progress">Profile completed:</span>
       <div class="progress-track"><div class="progress-fill" id="calcProgress" style="width:0%"></div></div>
       <span class="progress-count" id="calcProgressText">0/6</span>
     </div>
-
     <div class="calc-section">
       <div class="calc-row">
         <div class="input-wrap">
           <label data-i18n="lbl_gpa">GPA (0-4.0)</label>
-          <input type="number" id="calcGpa" min="0" max="4" step="0.1" placeholder="3.5" oninput="updateCalcProgress()">
+          <input type="number" id="calcGpa" min="0" max="4" step="0.1" placeholder="3.5" oninput="updateCalcProgress();autoSaveProfile()">
         </div>
         <div class="input-wrap">
           <label>IELTS Score</label>
-          <input type="number" id="calcIelts" min="0" max="9" step="0.5" placeholder="6.5" oninput="updateCalcProgress()">
+          <input type="number" id="calcIelts" min="0" max="9" step="0.5" placeholder="6.5" oninput="updateCalcProgress();autoSaveProfile()">
         </div>
       </div>
       <div class="calc-row">
         <div class="input-wrap">
           <label data-i18n="lbl_activity">Extracurriculars / Activities</label>
-          <select id="calcActivity" onchange="updateCalcProgress()">
+          <select id="calcActivity" onchange="updateCalcProgress();autoSaveProfile()">
             <option value="">Select level</option>
             <option value="3">Many (5+ activities)</option>
             <option value="2">Some (2-4)</option>
@@ -425,7 +394,7 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
         </div>
         <div class="input-wrap">
           <label data-i18n="lbl_rec">Recommendation Letters</label>
-          <select id="calcRec" onchange="updateCalcProgress()">
+          <select id="calcRec" onchange="updateCalcProgress();autoSaveProfile()">
             <option value="">Select</option>
             <option value="3">Strong (Professor/Manager)</option>
             <option value="2">Average</option>
@@ -451,7 +420,6 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
         </div>
       </div>
       <button class="btn btn-gold" style="width:100%;justify-content:center;" onclick="calculateChance()">🤖 <span data-i18n="btn_calculate">Calculate My Chances</span></button>
-
       <div class="result-box" id="resultBox">
         <div class="chance-circle" id="chanceCircle">72%</div>
         <h3 id="resultTitle" style="font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:0.5rem;"></h3>
@@ -459,7 +427,7 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
         <div class="tips-list" id="tipsList"></div>
         <div style="margin-top:1.5rem;display:flex;gap:0.7rem;flex-wrap:wrap;justify-content:center;">
           <button class="btn btn-gold btn-sm" onclick="showPage('timeline')">📅 <span data-i18n="btn_timeline">Generate Timeline</span></button>
-          <a href="https://wa.me/996553373812" target="_blank" class="btn btn-outline btn-sm">💬 <span data-i18n="btn_consult">Get Consultation</span></a>
+          <button class="btn btn-outline btn-sm" onclick="showPage('profile')">👤 View My Profile</button>
         </div>
       </div>
     </div>
@@ -476,10 +444,7 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
       <h2 data-i18n="h_countries2">Countries Guide 2026</h2>
       <p data-i18n="p_countries">Tuition fees, living costs, part-time work, and visa information</p>
     </div>
-
-    <!-- MAP -->
     <div id="map" style="margin-bottom:3rem;"></div>
-
     <div class="country-grid" id="countryGrid"></div>
   </div>
 </section>
@@ -494,7 +459,6 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
       <h2 data-i18n="h_timeline">Application Timeline Generator</h2>
       <p data-i18n="p_timeline">Select country and degree — get your personalized step-by-step roadmap</p>
     </div>
-
     <div style="max-width:600px;margin:0 auto 3rem;">
       <div class="search-bar" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;">
         <div class="filter-group">
@@ -527,7 +491,6 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
         </div>
       </div>
     </div>
-
     <div class="timeline" id="timelineContent"></div>
   </div>
 </section>
@@ -542,14 +505,12 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
       <h2 data-i18n="h_docs">Create Your Documents</h2>
       <p data-i18n="p_docs">SOP, CV, Motivation Letter, Visa Cover Letter — professional templates</p>
     </div>
-
     <div class="doc-tabs">
       <button class="doc-tab active" onclick="switchDoc('sop',this)">📝 Statement of Purpose</button>
       <button class="doc-tab" onclick="switchDoc('cv',this)">📄 CV / Resume</button>
       <button class="doc-tab" onclick="switchDoc('motivation',this)">💌 Motivation Letter</button>
       <button class="doc-tab" onclick="switchDoc('visa',this)">🛂 Visa Cover Letter</button>
     </div>
-
     <div class="doc-editor" id="docEditor">
       <div class="doc-toolbar">
         <button class="doc-tool" onclick="docAction('name')">+ Your Name</button>
@@ -557,27 +518,15 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
         <button class="doc-tool" onclick="docAction('program')">+ Program</button>
         <button class="doc-tool" onclick="docAction('year')">+ Year</button>
         <button class="doc-tool" onclick="docAction('clear')">🗑 Clear</button>
+        <button class="doc-tool" onclick="saveDocToDB()" style="color:var(--green);border-color:rgba(61,214,140,0.3);">💾 Save</button>
       </div>
-      <textarea id="docText" placeholder="Your document will appear here..."></textarea>
+      <textarea id="docText" placeholder="Your document will appear here..." oninput="scheduleDocSave()"></textarea>
     </div>
-
     <div style="display:flex;gap:1rem;margin-top:1rem;flex-wrap:wrap;">
       <button class="btn btn-gold" onclick="copyDoc()">📋 <span data-i18n="btn_copy">Copy Text</span></button>
       <button class="btn btn-outline" onclick="downloadDoc()">⬇ <span data-i18n="btn_download">Download .txt</span></button>
-      <button class="btn btn-outline" style="border-color:var(--accent);color:var(--accent);" onclick="showPayment('premium')">⭐ <span data-i18n="btn_premium_doc">Premium Templates</span></button>
     </div>
-
-    <!-- Premium locked section -->
-    <div style="margin-top:3rem;background:linear-gradient(135deg,rgba(201,168,76,0.05),rgba(201,168,76,0.02));border:1px solid var(--border);border-radius:20px;padding:2rem;position:relative;overflow:hidden;">
-      <div style="position:absolute;inset:0;backdrop-filter:blur(3px);background:rgba(10,12,18,0.6);display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:20px;z-index:2;">
-        <div style="font-size:2rem;margin-bottom:0.5rem;">🔒</div>
-        <p style="font-weight:600;margin-bottom:0.3rem;" data-i18n="locked_premium">Premium Feature</p>
-        <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1rem;text-align:center;" data-i18n="locked_desc">Unlock Europass CV, SOP templates + IELTS strategy plan</p>
-        <button class="btn btn-gold btn-sm" onclick="showPayment('premium')">⭐ Unlock for $2</button>
-      </div>
-      <h3 style="font-family:'Playfair Display',serif;margin-bottom:1rem;">Premium Templates</h3>
-      <p>Europass CV Template • SOP Structure + Example • IELTS Strategy Plan (Band 7-8) • Visa Document Checklist</p>
-    </div>
+    <div id="docSaveIndicator" style="font-size:0.75rem;color:var(--green);margin-top:0.5rem;display:none;">✓ Auto-saved to your profile</div>
   </div>
 </section>
 </div>
@@ -591,14 +540,11 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
       <h2 data-i18n="h_test">Study Abroad Quiz</h2>
       <p data-i18n="p_test">Test your knowledge about studying abroad, universities, visas and scholarships</p>
     </div>
-
-    <!-- Progress -->
     <div class="progress-header" style="max-width:700px;margin:0 auto 2rem;">
       <span class="progress-label" data-i18n="quiz_progress">Progress:</span>
       <div class="progress-track"><div class="progress-fill" id="quizProgress" style="width:0%"></div></div>
       <span class="progress-count" id="quizProgressText">0/10</span>
     </div>
-
     <div class="quiz-section">
       <div class="quiz-card" id="quizCard">
         <div class="quiz-question" id="quizQuestion"></div>
@@ -608,8 +554,7 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
           <button class="btn btn-gold btn-sm" id="quizNext" onclick="nextQuestion()" style="display:none;">Next →</button>
         </div>
       </div>
-
-      <div id="quizResult" style="display:none;" class="quiz-card" style="text-align:center;">
+      <div id="quizResult" style="display:none;" class="quiz-card">
         <div style="text-align:center;padding:2rem;">
           <div style="font-size:3rem;margin-bottom:1rem;" id="quizEmoji">🎓</div>
           <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:0.5rem;" id="quizFinalTitle"></h3>
@@ -617,20 +562,152 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
           <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
             <button class="btn btn-gold" onclick="restartQuiz()">🔄 Retry</button>
             <button class="btn btn-outline" onclick="showPage('calculator')">🤖 Try Calculator</button>
-            <a href="https://wa.me/996553373812" target="_blank" class="btn btn-outline" style="border-color:#25D366;color:#25D366;">💬 Consult</a>
+            <button class="btn btn-outline" onclick="showPage('profile')" style="border-color:var(--accent);color:var(--accent);">👤 View Profile</button>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</section>
+</div>
 
-    <!-- Extra study areas for test page -->
-    <div style="margin-top:3rem;max-width:700px;margin-left:auto;margin-right:auto;">
-      <div class="section-tag" style="margin-bottom:1rem;" data-i18n="tag_degree_filter">Filter by Degree</div>
-      <div style="display:flex;gap:0.7rem;flex-wrap:wrap;">
-        <button class="tab active" onclick="filterDegree('all',this)">All</button>
-        <button class="tab" onclick="filterDegree('bachelor',this)">🎓 Bachelor</button>
-        <button class="tab" onclick="filterDegree('master',this)">🎓 Master</button>
-        <button class="tab" onclick="filterDegree('phd',this)">🔬 PhD / Doctorate</button>
+<!-- PROFILE / DATABASE PAGE -->
+<div id="page-profile" class="page" style="padding-top:80px;">
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Personal Database</div>
+      <h2 data-i18n="h_profile">My Profile & Data</h2>
+      <p data-i18n="p_profile">All your data is saved automatically and persists across sessions</p>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="db-stat-row" style="max-width:600px;margin:0 auto 2rem;">
+      <div class="db-stat-box">
+        <div class="num" id="statFavCount">—</div>
+        <div class="lbl">Saved Universities</div>
+      </div>
+      <div class="db-stat-box">
+        <div class="num" id="statQuizBest">—</div>
+        <div class="lbl">Best Quiz Score</div>
+      </div>
+      <div class="db-stat-box">
+        <div class="num" id="statCalcCount">—</div>
+        <div class="lbl">Calculations Done</div>
+      </div>
+    </div>
+
+    <div class="profile-grid">
+      <!-- Personal Info -->
+      <div class="db-card">
+        <h3>👤 Personal Information</h3>
+        <div class="db-field">
+          <label>Full Name</label>
+          <input type="text" id="dbName" placeholder="Your full name" oninput="scheduleProfileSave()">
+        </div>
+        <div class="db-field">
+          <label>Email</label>
+          <input type="email" id="dbEmail" placeholder="your@email.com" oninput="scheduleProfileSave()">
+        </div>
+        <div class="db-field">
+          <label>Country of Origin</label>
+          <input type="text" id="dbCountryOrigin" placeholder="e.g. Kyrgyzstan" oninput="scheduleProfileSave()">
+        </div>
+        <div class="db-field">
+          <label>Target Degree</label>
+          <select id="dbDegree" onchange="scheduleProfileSave()">
+            <option value="">Select degree</option>
+            <option value="bachelor">Bachelor</option>
+            <option value="master">Master</option>
+            <option value="phd">PhD</option>
+          </select>
+        </div>
+        <div class="db-field">
+          <label>Target Country</label>
+          <select id="dbTargetCountry" onchange="scheduleProfileSave()">
+            <option value="">Select country</option>
+            <option>Germany</option><option>USA</option><option>UK</option><option>Canada</option>
+            <option>Australia</option><option>Netherlands</option><option>Japan</option><option>France</option>
+            <option>Switzerland</option><option>Sweden</option><option>South Korea</option><option>Singapore</option>
+          </select>
+        </div>
+        <div id="profileSaveIndicator" class="save-indicator">✓ Saved automatically</div>
+      </div>
+
+      <!-- Academic Profile -->
+      <div class="db-card">
+        <h3>🎓 Academic Profile</h3>
+        <div class="db-field">
+          <label>Current GPA (0–4.0)</label>
+          <input type="number" id="dbGpa" min="0" max="4" step="0.1" placeholder="e.g. 3.5" oninput="scheduleProfileSave()">
+        </div>
+        <div class="db-field">
+          <label>IELTS Score</label>
+          <input type="number" id="dbIelts" min="0" max="9" step="0.5" placeholder="e.g. 6.5" oninput="scheduleProfileSave()">
+        </div>
+        <div class="db-field">
+          <label>Field of Study</label>
+          <input type="text" id="dbField" placeholder="e.g. Computer Science" oninput="scheduleProfileSave()">
+        </div>
+        <div class="db-field">
+          <label>Graduation Year</label>
+          <input type="number" id="dbGradYear" placeholder="e.g. 2025" oninput="scheduleProfileSave()">
+        </div>
+        <div class="db-field">
+          <label>Target Application Year</label>
+          <select id="dbApplyYear" onchange="scheduleProfileSave()">
+            <option value="">Select</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+          </select>
+        </div>
+        <div id="academicSaveIndicator" class="save-indicator">✓ Saved automatically</div>
+      </div>
+
+      <!-- Saved Universities (Favorites) -->
+      <div class="db-card">
+        <h3>❤️ Saved Universities <span id="favBadge" style="background:rgba(201,168,76,0.15);border:1px solid var(--border);border-radius:100px;padding:0.1rem 0.6rem;font-size:0.75rem;color:var(--gold);font-weight:600;font-family:'DM Sans',sans-serif;"></span></h3>
+        <div id="favListContainer">
+          <div class="loading-db">⏳ Loading saved universities...</div>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="showPage('universities')" style="width:100%;justify-content:center;margin-top:1rem;">+ Browse Universities</button>
+      </div>
+
+      <!-- Calculation History -->
+      <div class="db-card">
+        <h3>📊 Calculation History</h3>
+        <div id="historyContainer">
+          <div class="loading-db">⏳ Loading history...</div>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="clearHistory()" style="width:100%;justify-content:center;margin-top:1rem;border-color:var(--red);color:var(--red);">🗑 Clear History</button>
+      </div>
+
+      <!-- Quiz Scores -->
+      <div class="db-card">
+        <h3>🧠 Quiz Score History</h3>
+        <div id="quizHistoryContainer">
+          <div class="loading-db">⏳ Loading quiz scores...</div>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="showPage('test')" style="width:100%;justify-content:center;margin-top:1rem;">▶ Take Quiz</button>
+      </div>
+
+      <!-- Notes -->
+      <div class="db-card">
+        <h3>📝 My Notes</h3>
+        <textarea class="notes-area" id="dbNotes" placeholder="Write your application notes, ideas, deadlines..." oninput="scheduleNotesSave()"></textarea>
+        <div id="notesSaveIndicator" class="save-indicator">✓ Notes saved</div>
+        <div style="margin-top:0.8rem;font-size:0.78rem;color:var(--text-muted);">💡 Tip: Note down deadlines, scholarship names, interview prep points, etc.</div>
+      </div>
+    </div>
+
+    <!-- Data Management -->
+    <div class="db-card" style="margin-top:1.5rem;">
+      <h3>⚙️ Data Management</h3>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
+        <button class="btn btn-gold btn-sm" onclick="exportData()">⬇ Export My Data (JSON)</button>
+        <button class="btn btn-outline btn-sm" onclick="clearAllData()" style="border-color:var(--red);color:var(--red);">🗑 Clear All Data</button>
+        <span style="font-size:0.78rem;color:var(--text-muted);">All data is stored in your browser and persists between sessions.</span>
       </div>
     </div>
   </div>
@@ -654,48 +731,284 @@ mark{background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;paddin
   </div>
 </div>
 
-<!-- PAYMENT MODAL -->
-<div class="modal-overlay" id="payModal">
-  <div class="modal" style="max-width:520px;">
-    <div class="modal-header">
-      <div class="modal-title" id="payTitle">Subscribe to Premium</div>
-      <button class="modal-close" onclick="closeModal('payModal')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div id="payFeatures" style="margin-bottom:1.5rem;"></div>
-      <div class="payment-methods" id="payMethods">
-        <div class="pay-method active" onclick="selectPayMethod(this,'card')">💳 Card</div>
-        <div class="pay-method" onclick="selectPayMethod(this,'paypal')">🅿 PayPal</div>
-        <div class="pay-method" onclick="selectPayMethod(this,'mbank')">📱 MBank</div>
-        <div class="pay-method" onclick="selectPayMethod(this,'elsom')">📱 Elsom</div>
-        <div class="pay-method" onclick="selectPayMethod(this,'crypto')">₿ Crypto</div>
-      </div>
-      <div class="payment-form" id="cardForm">
-        <div class="form-row">
-          <input type="text" placeholder="Card Number (4 × 4 digits)" maxlength="19" id="cardNum" oninput="formatCard(this)">
-          <input type="text" placeholder="MM/YY" maxlength="5">
-        </div>
-        <div class="form-row">
-          <input type="text" placeholder="Cardholder Name">
-          <input type="text" placeholder="CVV" maxlength="3">
-        </div>
-        <input type="email" placeholder="Email" style="width:100%;margin-bottom:1rem;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:0.7rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;">
-      </div>
-      <p style="color:var(--text-muted);font-size:0.78rem;margin-bottom:1rem;">🔒 Secure payment • 30-day money back guarantee • Worldwide payment accepted</p>
-      <button class="btn btn-gold" style="width:100%;justify-content:center;" onclick="processPayment()" id="payBtn">
-        💳 <span id="payBtnText">Subscribe Now</span>
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- WHATSAPP FLOAT -->
 <a href="https://wa.me/996553373812" target="_blank" class="wa-float">
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   <span data-i18n="wa_text">Get Consultation</span>
 </a>
 
 <script>
+// ===================== DATABASE (localStorage-based persistent storage) =====================
+const DB_KEYS = {
+  profile: 'edupathglobal:profile',
+  favorites: 'edupathglobal:favorites',
+  calcHistory: 'edupathglobal:calc-history',
+  quizHistory: 'edupathglobal:quiz-history',
+  notes: 'edupathglobal:notes',
+  docDraft: 'edupathglobal:doc-draft',
+};
+
+const DB = {
+  get(key) {
+    try { return JSON.parse(localStorage.getItem(key)); } catch { return null; }
+  },
+  set(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch { return false; }
+  },
+  delete(key) {
+    try { localStorage.removeItem(key); return true; } catch { return false; }
+  }
+};
+
+// Profile
+function loadProfile() {
+  const p = DB.get(DB_KEYS.profile) || {};
+  document.getElementById('dbName').value = p.name || '';
+  document.getElementById('dbEmail').value = p.email || '';
+  document.getElementById('dbCountryOrigin').value = p.countryOrigin || '';
+  document.getElementById('dbDegree').value = p.degree || '';
+  document.getElementById('dbTargetCountry').value = p.targetCountry || '';
+  document.getElementById('dbGpa').value = p.gpa || '';
+  document.getElementById('dbIelts').value = p.ielts || '';
+  document.getElementById('dbField').value = p.field || '';
+  document.getElementById('dbGradYear').value = p.gradYear || '';
+  document.getElementById('dbApplyYear').value = p.applyYear || '';
+
+  // Prefill calculator from saved profile
+  if (p.gpa) document.getElementById('calcGpa').value = p.gpa;
+  if (p.ielts) document.getElementById('calcIelts').value = p.ielts;
+}
+
+function saveProfile() {
+  const p = {
+    name: document.getElementById('dbName').value,
+    email: document.getElementById('dbEmail').value,
+    countryOrigin: document.getElementById('dbCountryOrigin').value,
+    degree: document.getElementById('dbDegree').value,
+    targetCountry: document.getElementById('dbTargetCountry').value,
+    gpa: document.getElementById('dbGpa').value,
+    ielts: document.getElementById('dbIelts').value,
+    field: document.getElementById('dbField').value,
+    gradYear: document.getElementById('dbGradYear').value,
+    applyYear: document.getElementById('dbApplyYear').value,
+    updatedAt: new Date().toISOString()
+  };
+  DB.set(DB_KEYS.profile, p);
+  ['profileSaveIndicator','academicSaveIndicator'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el){ el.style.display='block'; setTimeout(()=>el.style.display='none', 2000); }
+  });
+}
+
+let profileSaveTimer = null;
+function scheduleProfileSave() {
+  clearTimeout(profileSaveTimer);
+  profileSaveTimer = setTimeout(saveProfile, 800);
+}
+
+function autoSaveProfile() {
+  const p = DB.get(DB_KEYS.profile) || {};
+  p.gpa = document.getElementById('calcGpa').value;
+  p.ielts = document.getElementById('calcIelts').value;
+  p.updatedAt = new Date().toISOString();
+  DB.set(DB_KEYS.profile, p);
+  // Sync to profile page if visible
+  const gpaEl = document.getElementById('dbGpa');
+  const ieltsEl = document.getElementById('dbIelts');
+  if (gpaEl && p.gpa) gpaEl.value = p.gpa;
+  if (ieltsEl && p.ielts) ieltsEl.value = p.ielts;
+}
+
+// Favorites
+function loadFavorites() {
+  return DB.get(DB_KEYS.favorites) || [];
+}
+function saveFavorite(uniId) {
+  let favs = loadFavorites();
+  if (!favs.includes(uniId)) {
+    favs.push(uniId);
+    DB.set(DB_KEYS.favorites, favs);
+    showToast('❤️ University saved to your profile!');
+    renderUnis(); // refresh heart buttons
+  } else {
+    favs = favs.filter(id => id !== uniId);
+    DB.set(DB_KEYS.favorites, favs);
+    showToast('💔 Removed from saved universities');
+    renderUnis();
+  }
+}
+function renderFavoritesList() {
+  const favs = loadFavorites();
+  const container = document.getElementById('favListContainer');
+  const badge = document.getElementById('favBadge');
+  if (badge) badge.textContent = favs.length;
+  if (!favs.length) {
+    container.innerHTML = '<div class="empty-state">No saved universities yet.<br>Browse universities and click ❤️ to save them.</div>';
+    return;
+  }
+  container.innerHTML = '<div class="fav-list">' + favs.map(id => {
+    const u = universities.find(x => x.id === id);
+    if (!u) return '';
+    return `<div class="fav-item">
+      <div>
+        <div class="fav-item-name">${u.flag || ''} ${u.name}</div>
+        <div class="fav-item-sub">#${u.rank} QS • IELTS ${u.ielts} • ${u.acceptance}% acceptance</div>
+      </div>
+      <button class="fav-remove" onclick="saveFavorite(${u.id});renderFavoritesList()">✕ Remove</button>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+// Calculation History
+function addCalcHistory(uni, score, gpa, ielts, degree) {
+  let history = DB.get(DB_KEYS.calcHistory) || [];
+  history.unshift({
+    uniId: uni.id,
+    uniName: uni.name,
+    uniCountry: uni.country,
+    score,
+    gpa,
+    ielts,
+    degree,
+    date: new Date().toLocaleDateString()
+  });
+  if (history.length > 20) history = history.slice(0, 20);
+  DB.set(DB_KEYS.calcHistory, history);
+}
+function renderCalcHistory() {
+  const history = DB.get(DB_KEYS.calcHistory) || [];
+  const container = document.getElementById('historyContainer');
+  if (!history.length) {
+    container.innerHTML = '<div class="empty-state">No calculations yet.<br>Use the AI Calculator to get started.</div>';
+    return;
+  }
+  container.innerHTML = '<div class="history-list">' + history.map(h => {
+    const col = h.score >= 70 ? 'var(--green)' : h.score >= 45 ? 'var(--orange)' : 'var(--red)';
+    return `<div class="history-item">
+      <div class="history-item-title">${h.uniName} (${h.uniCountry})</div>
+      <div class="history-item-sub">${h.degree} • GPA ${h.gpa} • IELTS ${h.ielts} • ${h.date}</div>
+      <div class="history-item-score" style="color:${col}">${h.score}% chance</div>
+    </div>`;
+  }).join('') + '</div>';
+}
+function clearHistory() {
+  if (confirm('Clear all calculation history?')) {
+    DB.delete(DB_KEYS.calcHistory);
+    renderCalcHistory();
+    updateProfileStats();
+    showToast('🗑 History cleared');
+  }
+}
+
+// Quiz History
+function addQuizScore(score, total) {
+  let history = DB.get(DB_KEYS.quizHistory) || [];
+  history.unshift({
+    score,
+    total,
+    pct: Math.round(score / total * 100),
+    date: new Date().toLocaleDateString()
+  });
+  if (history.length > 10) history = history.slice(0, 10);
+  DB.set(DB_KEYS.quizHistory, history);
+}
+function renderQuizHistory() {
+  const history = DB.get(DB_KEYS.quizHistory) || [];
+  const container = document.getElementById('quizHistoryContainer');
+  if (!history.length) {
+    container.innerHTML = '<div class="empty-state">No quiz attempts yet.<br>Take the quiz to track your progress.</div>';
+    return;
+  }
+  container.innerHTML = '<div class="history-list">' + history.map(h => {
+    const col = h.pct >= 80 ? 'var(--green)' : h.pct >= 60 ? 'var(--orange)' : 'var(--red)';
+    const emoji = h.pct >= 80 ? '🏆' : h.pct >= 60 ? '🎓' : '📚';
+    return `<div class="history-item">
+      <div class="history-item-title">${emoji} Quiz Attempt</div>
+      <div class="history-item-sub">${h.date}</div>
+      <div class="history-item-score" style="color:${col}">${h.score}/${h.total} — ${h.pct}%</div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+// Notes
+function loadNotes() {
+  const notes = DB.get(DB_KEYS.notes);
+  document.getElementById('dbNotes').value = notes || '';
+}
+let notesSaveTimer = null;
+function scheduleNotesSave() {
+  clearTimeout(notesSaveTimer);
+  notesSaveTimer = setTimeout(() => {
+    DB.set(DB_KEYS.notes, document.getElementById('dbNotes').value);
+    const ind = document.getElementById('notesSaveIndicator');
+    if (ind) { ind.style.display = 'block'; setTimeout(() => ind.style.display = 'none', 1500); }
+  }, 800);
+}
+
+// Doc Draft
+function saveDocToDB() {
+  DB.set(DB_KEYS.docDraft, document.getElementById('docText').value);
+  const ind = document.getElementById('docSaveIndicator');
+  if (ind) { ind.style.display = 'block'; setTimeout(() => ind.style.display = 'none', 2000); }
+  showToast('💾 Document saved to your profile!');
+}
+let docSaveTimer = null;
+function scheduleDocSave() {
+  clearTimeout(docSaveTimer);
+  docSaveTimer = setTimeout(() => {
+    DB.set(DB_KEYS.docDraft, document.getElementById('docText').value);
+    const ind = document.getElementById('docSaveIndicator');
+    if (ind) { ind.style.display = 'block'; setTimeout(() => ind.style.display = 'none', 1500); }
+  }, 1200);
+}
+function loadDocDraft() {
+  const draft = DB.get(DB_KEYS.docDraft);
+  if (draft) document.getElementById('docText').value = draft;
+}
+
+function updateProfileStats() {
+  const favs = loadFavorites();
+  const history = DB.get(DB_KEYS.calcHistory) || [];
+  const quizHistory = DB.get(DB_KEYS.quizHistory) || [];
+  const bestQuiz = quizHistory.length ? Math.max(...quizHistory.map(h => h.pct)) : null;
+
+  const favEl = document.getElementById('statFavCount');
+  const quizEl = document.getElementById('statQuizBest');
+  const calcEl = document.getElementById('statCalcCount');
+  if (favEl) favEl.textContent = favs.length;
+  if (quizEl) quizEl.textContent = bestQuiz !== null ? bestQuiz + '%' : '—';
+  if (calcEl) calcEl.textContent = history.length;
+}
+
+function exportData() {
+  const data = {
+    profile: DB.get(DB_KEYS.profile),
+    favorites: loadFavorites().map(id => universities.find(u => u.id === id)?.name),
+    calcHistory: DB.get(DB_KEYS.calcHistory),
+    quizHistory: DB.get(DB_KEYS.quizHistory),
+    notes: DB.get(DB_KEYS.notes),
+    exportedAt: new Date().toISOString()
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'edupath-my-data.json';
+  a.click();
+  showToast('✅ Data exported successfully!');
+}
+
+function clearAllData() {
+  if (confirm('Are you sure? This will delete all your saved data permanently.')) {
+    Object.values(DB_KEYS).forEach(k => DB.delete(k));
+    loadProfile();
+    loadNotes();
+    renderFavoritesList();
+    renderCalcHistory();
+    renderQuizHistory();
+    updateProfileStats();
+    showToast('🗑 All data cleared');
+  }
+}
+
 // ===================== DATA =====================
 const universities = [
 {id:1,name:"MIT",full:"Massachusetts Institute of Technology",country:"USA",flag:"🇺🇸",rank:1,acceptance:4,tuition:57986,ielts:7.0,gpa:3.9,scholarships:["Fullbright","MIT Fellowship","MISTI"],accreditation:"NEASC",location:"Cambridge, MA",visa:"F-1 Student Visa",workOpp:"CPT/OPT up to 3 years",coopPrograms:true,appFee:75,feeWaiver:true,requirements:{gpa:3.9,sat:"1500+",toefl:100,extras:"Research, publications"},deadline:"Jan 1",livingCost:22000,rankings:{qs:1,times:2,shanghai:1},logo:"MIT",color:"#8B0000"},
@@ -728,7 +1041,7 @@ const universities = [
 {id:28,name:"Tokyo",full:"University of Tokyo",country:"Japan",flag:"🇯🇵",rank:28,acceptance:34,tuition:5360,ielts:6.5,gpa:3.5,scholarships:["MEXT Scholarship","JASSO"],accreditation:"NIAD-QE",location:"Tokyo",visa:"Japan Student Visa",workOpp:"28h/week",coopPrograms:false,appFee:30,feeWaiver:false,requirements:{gpa:3.5},deadline:"Nov 30",livingCost:11000,rankings:{qs:28,times:39,shanghai:24},logo:"UTok",color:"#8B0045"},
 {id:29,name:"Kyoto",full:"Kyoto University",country:"Japan",flag:"🇯🇵",rank:46,acceptance:38,tuition:5360,ielts:6.0,gpa:3.4,scholarships:["MEXT","Kyoto University Scholarship"],accreditation:"NIAD-QE",location:"Kyoto",visa:"Japan Student Visa",workOpp:"28h/week",coopPrograms:false,appFee:30,feeWaiver:false,requirements:{gpa:3.4},deadline:"Nov 30",livingCost:10000,rankings:{qs:46,times:55,shanghai:35},logo:"KU",color:"#9B1B30"},
 {id:30,name:"LSE",full:"London School of Economics",country:"UK",flag:"🇬🇧",rank:45,acceptance:13,tuition:27480,ielts:7.0,gpa:3.6,scholarships:["LSE Scholarship","Chevening","Fullbright"],accreditation:"OfS",location:"London",visa:"UK Student Visa",workOpp:"20h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.6},deadline:"Jan 26",livingCost:18000,rankings:{qs:45,times:28,shanghai:77},logo:"LSE",color:"#00263A"},
-{id:31,name:"KU Leuven",full:"KU Leuven",country:"Belgium",flag:"🇧🇪",rank:74,acceptance:65,tuition:14500,ielts:6.5,gpa:3.2,scholarships:["KU Leuven Scholarship","VLIR-UOS"],accreditation:"Accreditation Org Netherlands-Flanders",location:"Leuven",visa:"Belgium Annex 33",workOpp:"20h/week",coopPrograms:true,appFee:0,feeWaiver:true,requirements:{gpa:3.2},deadline:"Mar 1",livingCost:9000,rankings:{qs:74,times:42,shanghai:92},logo:"KUL",color:"#009FE3"},
+{id:31,name:"KU Leuven",full:"KU Leuven",country:"Belgium",flag:"🇧🇪",rank:74,acceptance:65,tuition:14500,ielts:6.5,gpa:3.2,scholarships:["KU Leuven Scholarship","VLIR-UOS"],accreditation:"NVAO",location:"Leuven",visa:"Belgium Annex 33",workOpp:"20h/week",coopPrograms:true,appFee:0,feeWaiver:true,requirements:{gpa:3.2},deadline:"Mar 1",livingCost:9000,rankings:{qs:74,times:42,shanghai:92},logo:"KUL",color:"#009FE3"},
 {id:32,name:"Copenhagen",full:"University of Copenhagen",country:"Denmark",flag:"🇩🇰",rank:97,acceptance:55,tuition:15000,ielts:6.5,gpa:3.3,scholarships:["Denmark Gov Scholarship","Nordic Scholarship"],accreditation:"Danish Accreditation Institution",location:"Copenhagen",visa:"Denmark Student Visa",workOpp:"20h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.3},deadline:"Mar 15",livingCost:13000,rankings:{qs:97,times:80,shanghai:79},logo:"KU",color:"#901A1E"},
 {id:33,name:"Helsinki",full:"University of Helsinki",country:"Finland",flag:"🇫🇮",rank:107,acceptance:60,tuition:14000,ielts:6.5,gpa:3.1,scholarships:["Finland Scholarship","HiLIFE"],accreditation:"FINEEC",location:"Helsinki",visa:"Finland Residence Permit",workOpp:"25h/week",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.1},deadline:"Jan 10",livingCost:11000,rankings:{qs:107,times:100,shanghai:73},logo:"UH",color:"#003580"},
 {id:34,name:"Stockholm",full:"Stockholm University",country:"Sweden",flag:"🇸🇪",rank:171,acceptance:65,tuition:13000,ielts:6.5,gpa:3.0,scholarships:["Swedish Institute","SI Scholarship"],accreditation:"UKÄ",location:"Stockholm",visa:"Sweden Residence Permit",workOpp:"Unlimited",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.0},deadline:"Jan 15",livingCost:12000,rankings:{qs:171,times:180,shanghai:130},logo:"SU",color:"#002F6C"},
@@ -748,7 +1061,6 @@ const universities = [
 {id:48,name:"Wageningen",full:"Wageningen University & Research",country:"Netherlands",flag:"🇳🇱",rank:64,acceptance:72,tuition:18600,ielts:6.5,gpa:3.2,scholarships:["Holland Scholarship","WUR Excellence"],accreditation:"NVAO",location:"Wageningen",visa:"Dutch Residence Permit",workOpp:"16h/week",coopPrograms:true,appFee:75,feeWaiver:false,requirements:{gpa:3.2},deadline:"Apr 1",livingCost:10000,rankings:{qs:64,times:120,shanghai:90},logo:"WUR",color:"#007B41"},
 {id:49,name:"Auckland",full:"University of Auckland",country:"New Zealand",flag:"🇳🇿",rank:68,acceptance:65,tuition:38000,ielts:6.5,gpa:3.3,scholarships:["New Zealand Scholarship","UoA Excellence"],accreditation:"TEC",location:"Auckland",visa:"NZ Student Visa",workOpp:"20h/week",coopPrograms:true,appFee:0,feeWaiver:true,requirements:{gpa:3.3},deadline:"Nov 30",livingCost:17000,rankings:{qs:68,times:201,shanghai:201},logo:"UoA",color:"#00467F"},
 {id:50,name:"Ghent",full:"Ghent University",country:"Belgium",flag:"🇧🇪",rank:75,acceptance:60,tuition:14000,ielts:6.5,gpa:3.2,scholarships:["UGent Scholarship","VLIR-UOS"],accreditation:"NVAO",location:"Ghent",visa:"Belgium Annex 33",workOpp:"20h/week",coopPrograms:true,appFee:0,feeWaiver:true,requirements:{gpa:3.2},deadline:"Mar 1",livingCost:9000,rankings:{qs:75,times:100,shanghai:92},logo:"UGent",color:"#1E64C8"},
-// Extra 20
 {id:51,name:"Leiden",full:"Leiden University",country:"Netherlands",flag:"🇳🇱",rank:93,acceptance:62,tuition:17000,ielts:6.5,gpa:3.2,scholarships:["Holland Scholarship","Leiden Excellence"],accreditation:"NVAO",location:"Leiden",visa:"Dutch Residence Permit",workOpp:"16h/week",coopPrograms:false,appFee:100,feeWaiver:false,requirements:{gpa:3.2},deadline:"Apr 1",livingCost:11000,rankings:{qs:93,times:100,shanghai:101},logo:"LEI",color:"#003B6F"},
 {id:52,name:"Uppsala",full:"Uppsala University",country:"Sweden",flag:"🇸🇪",rank:122,acceptance:65,tuition:13000,ielts:6.5,gpa:3.1,scholarships:["SI Scholarship","Uppsala Merit"],accreditation:"UKÄ",location:"Uppsala",visa:"Sweden Residence Permit",workOpp:"Unlimited",coopPrograms:false,appFee:0,feeWaiver:true,requirements:{gpa:3.1},deadline:"Jan 15",livingCost:12000,rankings:{qs:122,times:125,shanghai:76},logo:"UU",color:"#990000"},
 {id:53,name:"Politecnico",full:"Politecnico di Milano",country:"Italy",flag:"🇮🇹",rank:139,acceptance:38,tuition:4200,ielts:6.5,gpa:3.3,scholarships:["PoliMi Scholarship","DSU"],accreditation:"ANVUR",location:"Milan",visa:"Italy Student Visa",workOpp:"20h/week",coopPrograms:true,appFee:30,feeWaiver:false,requirements:{gpa:3.3},deadline:"Mar 31",livingCost:13000,rankings:{qs:139,times:350,shanghai:401},logo:"PoliMi",color:"#003DA5"},
@@ -794,59 +1106,57 @@ const countries = [
 const langs = ['EN','KG','RU'];
 let currentLang = 0;
 const i18n = {
-  EN: {nav_home:"Home",nav_unis:"Universities",nav_calc:"Calculator",nav_countries:"Countries",nav_timeline:"Timeline",nav_docs:"Documents",nav_test:"Test",nav_premium:"⭐ Premium $2",nav_pro:"💎 Pro $5",hero_badge:"Your Gateway to World-Class Education",hero_h1a:"Discover Your",hero_h1b:"Dream University",hero_h1c:"Abroad",hero_p:"AI-powered admission calculator, 70 top universities with real 2026 data, scholarships, visa guides and personalized roadmaps.",btn_explore:"Explore Universities",btn_calc:"AI Chance Calculator",stat1:"Universities",stat2:"Countries",stat3:"Scholarships",stat4:"Updated Data",tag_popular:"Popular Destinations",h_countries:"Study by Country",tag_top70:"Top 70 Universities 2026",h_unis:"World's Best Universities",p_unis:"Official verified data — rankings, scholarships, IELTS requirements, acceptance rates",lbl_search:"Search University",lbl_country:"Country",lbl_degree:"Degree",lbl_ielts:"Min IELTS",lbl_sort:"Sort by",showing:"Showing",h_calc:"Admission Chance Calculator",p_calc:"Enter your profile and see your admission probability",form_progress:"Profile completed:",lbl_gpa:"GPA (0–4.0)",lbl_activity:"Extracurriculars / Activities",lbl_rec:"Recommendation Letters",lbl_uni_target:"Target University",lbl_degree2:"Degree Program",btn_calculate:"Calculate My Chances",btn_timeline:"Generate Timeline",btn_consult:"Get Consultation",tag_countries:"Study Destinations",h_countries2:"Countries Guide 2026",p_countries:"Tuition fees, living costs, part-time work, and visa information",h_timeline:"Application Timeline Generator",p_timeline:"Select country and degree — get your personalized step-by-step roadmap",lbl_tl_country:"Target Country",lbl_tl_degree:"Degree",tag_docs:"Document Builder",h_docs:"Create Your Documents",p_docs:"SOP, CV, Motivation Letter, Visa Cover Letter — professional templates",btn_copy:"Copy Text",btn_download:"Download .txt",btn_premium_doc:"Premium Templates",locked_premium:"Premium Feature",locked_desc:"Unlock Europass CV, SOP templates + IELTS strategy plan",tag_test:"Knowledge Test",h_test:"Study Abroad Quiz",p_test:"Test your knowledge about studying abroad, universities, visas and scholarships",quiz_progress:"Progress:",tag_degree_filter:"Filter by Degree",wa_text:"Get Consultation"},
-  KG: {nav_home:"Башкы",nav_unis:"Университеттер",nav_calc:"Калькулятор",nav_countries:"Өлкөлөр",nav_timeline:"Жол картасы",nav_docs:"Документтер",nav_test:"Тест",nav_premium:"⭐ Премиум $2",nav_pro:"💎 Про $5",hero_badge:"Дүйнөлүк билимге жол",hero_h1a:"Кооз",hero_h1b:"Университетиңди",hero_h1c:"Тап",hero_p:"ЖИ менен кабыл алуу калькулятору, 70 топ университет, 2026 чыныгы маалымат, стипендиялар жана визалык нускамалар.",btn_explore:"Университеттерди Карап Чык",btn_calc:"ЖИ Шанс Калькулятору",stat1:"Университет",stat2:"Өлкө",stat3:"Стипендия",stat4:"Жаңы Маалымат",tag_popular:"Популярдуу Жерлер",h_countries:"Өлкө боюнча окуу",tag_top70:"Топ 70 Университет 2026",h_unis:"Дүйнөнүн Эң Мыкты Университеттери",p_unis:"Расмий текшерилген маалымат — рейтинг, стипендия, IELTS талаптары",lbl_search:"Университет Издөө",lbl_country:"Өлкө",lbl_degree:"Даража",lbl_ielts:"Min IELTS",lbl_sort:"Иреттөө",showing:"Көрсөтүлүүдө",h_calc:"Кабыл Алуу Мүмкүнчүлүгү Калькулятору",p_calc:"Профилиңизди киргизиңиз жана каалаган университетке кирүү мүмкүнчүлүгүңүздү билиңиз",form_progress:"Профиль толтурулду:",lbl_gpa:"GPA (0–4.0)",lbl_activity:"Активдүүлүк / Иш-аракет",lbl_rec:"Сунуш каттары",lbl_uni_target:"Максаттуу Университет",lbl_degree2:"Билим даражасы",btn_calculate:"Мүмкүнчүлүгүмдү Эсепте",btn_timeline:"Жол Картасын Жаса",btn_consult:"Консультация Алуу",tag_countries:"Окуу Орундары",h_countries2:"Өлкөлөр боюнча маалымат 2026",p_countries:"Окуу акысы, жашоо чыгымы, жарым ставка иш жана виза маалыматы",h_timeline:"Тапшыруу Жол Картасын Жаратуу",p_timeline:"Өлкө жана даража тандаңыз — жеке кадам-кадам жол картаңызды алыңыз",lbl_tl_country:"Максаттуу Өлкө",lbl_tl_degree:"Даража",tag_docs:"Документ Куруучу",h_docs:"Документтериңизди Жасаңыз",p_docs:"SOP, CV, Мотивациялык кат, Визалык кат — кесиптик шаблондор",btn_copy:"Текстти Копиялоо",btn_download:"Жүктөп алуу .txt",btn_premium_doc:"Премиум Шаблондор",locked_premium:"Премиум Функция",locked_desc:"Europass CV, SOP шаблондору + IELTS стратегиясын ачыңыз",tag_test:"Билим Тести",h_test:"Чет Элде Окуу Тести",p_test:"Чет элде окуу, университеттер, виза жана стипендия боюнча билимиңизди текшериңиз",quiz_progress:"Прогресс:",tag_degree_filter:"Даража боюнча чыпкалоо",wa_text:"Консультация Алуу"},
-  RU: {nav_home:"Главная",nav_unis:"Университеты",nav_calc:"Калькулятор",nav_countries:"Страны",nav_timeline:"Дорожная карта",nav_docs:"Документы",nav_test:"Тест",nav_premium:"⭐ Премиум $2",nav_pro:"💎 Про $5",hero_badge:"Ваш путь к мировому образованию",hero_h1a:"Найдите свой",hero_h1b:"Университет мечты",hero_h1c:"за рубежом",hero_p:"ИИ-калькулятор поступления, 70 лучших университетов с реальными данными 2026, стипендии, визовые гиды и персональные дорожные карты.",btn_explore:"Изучить Университеты",btn_calc:"ИИ Калькулятор Шансов",stat1:"Университетов",stat2:"Стран",stat3:"Стипендий",stat4:"Обновлено",tag_popular:"Популярные Направления",h_countries:"Учёба по странам",tag_top70:"Топ 70 Университетов 2026",h_unis:"Лучшие Университеты Мира",p_unis:"Официальные проверенные данные — рейтинги, стипендии, требования IELTS",lbl_search:"Поиск Университета",lbl_country:"Страна",lbl_degree:"Степень",lbl_ielts:"Min IELTS",lbl_sort:"Сортировать по",showing:"Показано",h_calc:"Калькулятор Шансов Поступления",p_calc:"Введите свой профиль и узнайте вероятность поступления в любой университет",form_progress:"Профиль заполнен:",lbl_gpa:"GPA (0–4.0)",lbl_activity:"Внеклассная деятельность",lbl_rec:"Рекомендательные письма",lbl_uni_target:"Целевой Университет",lbl_degree2:"Уровень образования",btn_calculate:"Рассчитать мои шансы",btn_timeline:"Создать дорожную карту",btn_consult:"Получить консультацию",tag_countries:"Направления для учёбы",h_countries2:"Гид по странам 2026",p_countries:"Стоимость обучения, проживание, подработка и визовая информация",h_timeline:"Генератор Дорожной Карты Поступления",p_timeline:"Выберите страну и степень — получите персональный пошаговый план",lbl_tl_country:"Целевая Страна",lbl_tl_degree:"Степень",tag_docs:"Конструктор Документов",h_docs:"Создайте Ваши Документы",p_docs:"SOP, CV, Мотивационное письмо, Визовое сопроводительное письмо — профессиональные шаблоны",btn_copy:"Копировать текст",btn_download:"Скачать .txt",btn_premium_doc:"Премиум шаблоны",locked_premium:"Премиум Функция",locked_desc:"Разблокируйте шаблоны Europass CV, SOP + план стратегии IELTS",tag_test:"Тест знаний",h_test:"Тест по учёбе за рубежом",p_test:"Проверьте свои знания об учёбе за рубежом, университетах, визах и стипендиях",quiz_progress:"Прогресс:",tag_degree_filter:"Фильтр по степени",wa_text:"Получить консультацию"}
+  EN:{nav_home:"Home",nav_unis:"Universities",nav_calc:"Calculator",nav_countries:"Countries",nav_timeline:"Timeline",nav_docs:"Documents",nav_test:"Test",nav_profile:"My Profile",hero_badge:"Your Gateway to World-Class Education",hero_h1a:"Discover Your",hero_h1b:"Dream University",hero_h1c:"Abroad",hero_p:"AI-powered admission calculator, 70 top universities with real 2026 data, scholarships, visa guides and personalized roadmaps.",btn_explore:"Explore Universities",btn_calc:"AI Chance Calculator",btn_profile:"My Profile",stat1:"Universities",stat2:"Countries",stat3:"Scholarships",stat4:"Updated Data",tag_popular:"Popular Destinations",h_countries:"Study by Country",tag_top70:"Top 70 Universities 2026",h_unis:"World's Best Universities",p_unis:"Official verified data — rankings, scholarships, IELTS requirements, acceptance rates",lbl_search:"Search University",lbl_country:"Country",lbl_ielts:"Min IELTS",lbl_sort:"Sort by",showing:"Showing",h_calc:"Admission Chance Calculator",p_calc:"Enter your profile and see your admission probability",form_progress:"Profile completed:",lbl_gpa:"GPA (0–4.0)",lbl_activity:"Extracurriculars / Activities",lbl_rec:"Recommendation Letters",lbl_uni_target:"Target University",lbl_degree2:"Degree Program",btn_calculate:"Calculate My Chances",btn_timeline:"Generate Timeline",tag_countries:"Study Destinations",h_countries2:"Countries Guide 2026",p_countries:"Tuition fees, living costs, part-time work, and visa information",h_timeline:"Application Timeline Generator",p_timeline:"Select country and degree — get your personalized step-by-step roadmap",lbl_tl_country:"Target Country",lbl_tl_degree:"Degree",tag_docs:"Document Builder",h_docs:"Create Your Documents",p_docs:"SOP, CV, Motivation Letter, Visa Cover Letter — professional templates",btn_copy:"Copy Text",btn_download:"Download .txt",tag_test:"Knowledge Test",h_test:"Study Abroad Quiz",p_test:"Test your knowledge about studying abroad, universities, visas and scholarships",quiz_progress:"Progress:",h_profile:"My Profile & Data",p_profile:"All your data is saved automatically and persists across sessions",wa_text:"Get Consultation"},
+  KG:{nav_home:"Башкы",nav_unis:"Университеттер",nav_calc:"Калькулятор",nav_countries:"Өлкөлөр",nav_timeline:"Жол картасы",nav_docs:"Документтер",nav_test:"Тест",nav_profile:"Менин Профилим",hero_badge:"Дүйнөлүк билимге жол",hero_h1a:"Кооз",hero_h1b:"Университетиңди",hero_h1c:"Тап",hero_p:"ЖИ менен кабыл алуу калькулятору, 70 топ университет, 2026 чыныгы маалымат.",btn_explore:"Университеттерди Карап Чык",btn_calc:"ЖИ Шанс Калькулятору",btn_profile:"Менин Профилим",stat1:"Университет",stat2:"Өлкө",stat3:"Стипендия",stat4:"Жаңы Маалымат",tag_popular:"Популярдуу Жерлер",h_countries:"Өлкө боюнча окуу",tag_top70:"Топ 70 Университет 2026",h_unis:"Дүйнөнүн Эң Мыкты Университеттери",p_unis:"Расмий текшерилген маалымат",lbl_search:"Университет Издөө",lbl_country:"Өлкө",lbl_ielts:"Min IELTS",lbl_sort:"Иреттөө",showing:"Көрсөтүлүүдө",h_calc:"Кабыл Алуу Мүмкүнчүлүгү Калькулятору",p_calc:"Профилиңизди киргизиңиз",form_progress:"Профиль толтурулду:",lbl_gpa:"GPA (0–4.0)",lbl_activity:"Активдүүлүк",lbl_rec:"Сунуш каттары",lbl_uni_target:"Максаттуу Университет",lbl_degree2:"Билим даражасы",btn_calculate:"Мүмкүнчүлүгүмдү Эсепте",btn_timeline:"Жол Картасын Жаса",tag_countries:"Окуу Орундары",h_countries2:"Өлкөлөр боюнча маалымат 2026",p_countries:"Окуу акысы, жашоо чыгымы",h_timeline:"Тапшыруу Жол Картасын Жаратуу",p_timeline:"Өлкө жана даража тандаңыз",lbl_tl_country:"Максаттуу Өлкө",lbl_tl_degree:"Даража",tag_docs:"Документ Куруучу",h_docs:"Документтериңизди Жасаңыз",p_docs:"SOP, CV, Мотивациялык кат, Визалык кат",btn_copy:"Текстти Копиялоо",btn_download:"Жүктөп алуу .txt",tag_test:"Билим Тести",h_test:"Чет Элде Окуу Тести",p_test:"Билимиңизди текшериңиз",quiz_progress:"Прогресс:",h_profile:"Менин Профилим жана Маалыматтарым",p_profile:"Бардык маалыматтарыңыз автоматтык түрдө сакталат",wa_text:"Консультация Алуу"},
+  RU:{nav_home:"Главная",nav_unis:"Университеты",nav_calc:"Калькулятор",nav_countries:"Страны",nav_timeline:"Дорожная карта",nav_docs:"Документы",nav_test:"Тест",nav_profile:"Мой Профиль",hero_badge:"Ваш путь к мировому образованию",hero_h1a:"Найдите свой",hero_h1b:"Университет мечты",hero_h1c:"за рубежом",hero_p:"ИИ-калькулятор поступления, 70 лучших университетов с реальными данными 2026.",btn_explore:"Изучить Университеты",btn_calc:"ИИ Калькулятор Шансов",btn_profile:"Мой Профиль",stat1:"Университетов",stat2:"Стран",stat3:"Стипендий",stat4:"Обновлено",tag_popular:"Популярные Направления",h_countries:"Учёба по странам",tag_top70:"Топ 70 Университетов 2026",h_unis:"Лучшие Университеты Мира",p_unis:"Официальные проверенные данные",lbl_search:"Поиск Университета",lbl_country:"Страна",lbl_ielts:"Min IELTS",lbl_sort:"Сортировать по",showing:"Показано",h_calc:"Калькулятор Шансов Поступления",p_calc:"Введите свой профиль и узнайте вероятность поступления",form_progress:"Профиль заполнен:",lbl_gpa:"GPA (0–4.0)",lbl_activity:"Внеклассная деятельность",lbl_rec:"Рекомендательные письма",lbl_uni_target:"Целевой Университет",lbl_degree2:"Уровень образования",btn_calculate:"Рассчитать мои шансы",btn_timeline:"Создать дорожную карту",tag_countries:"Направления для учёбы",h_countries2:"Гид по странам 2026",p_countries:"Стоимость обучения, проживание",h_timeline:"Генератор Дорожной Карты",p_timeline:"Выберите страну и степень",lbl_tl_country:"Целевая Страна",lbl_tl_degree:"Степень",tag_docs:"Конструктор Документов",h_docs:"Создайте Ваши Документы",p_docs:"SOP, CV, Мотивационное письмо, Визовое письмо",btn_copy:"Копировать текст",btn_download:"Скачать .txt",tag_test:"Тест знаний",h_test:"Тест по учёбе за рубежом",p_test:"Проверьте свои знания",quiz_progress:"Прогресс:",h_profile:"Мой Профиль и Данные",p_profile:"Все данные сохраняются автоматически",wa_text:"Получить консультацию"}
 };
-
 function cycleLang(){
-  currentLang = (currentLang+1) % langs.length;
-  document.getElementById('langLabel').textContent = langs[currentLang];
+  currentLang=(currentLang+1)%langs.length;
+  document.getElementById('langLabel').textContent=langs[currentLang];
   applyLang();
 }
 function applyLang(){
-  const t = i18n[langs[currentLang]];
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if(t[key]) el.textContent = t[key];
-  });
+  const t=i18n[langs[currentLang]];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t[k])el.textContent=t[k];});
 }
 
 // ===================== PAGE ROUTING =====================
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  document.querySelectorAll('.nav-links button:not(.lang-btn):not(.btn-premium-nav)').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.nav-links button:not(.lang-btn):not(.btn-profile-nav)').forEach(b=>b.classList.remove('active'));
   window.scrollTo(0,0);
   if(id==='universities') renderUnis();
   if(id==='countries'){renderCountries();initMap();}
-  if(id==='calculator'){populateUniSelect();}
-  if(id==='timeline'){generateTimeline();}
-  if(id==='test'){initQuiz();}
+  if(id==='calculator') populateUniSelect();
+  if(id==='timeline') generateTimeline();
+  if(id==='test') initQuiz();
+  if(id==='profile') {
+    loadProfile();
+    loadNotes();
+    renderFavoritesList();
+    renderCalcHistory();
+    renderQuizHistory();
+    updateProfileStats();
+  }
+  if(id==='docs') {
+    const draft = DB.get(DB_KEYS.docDraft);
+    if(draft) document.getElementById('docText').value = draft;
+    else document.getElementById('docText').value = docTemplates.sop;
+  }
 }
 
 // ===================== UNIVERSITY RENDERING =====================
-function getChancePill(gpa, uni){
-  const diff = gpa - uni.gpa;
-  if(diff >= 0.1) return '<span class="chance-pill high">✓ High Chance</span>';
-  if(diff >= -0.3) return '<span class="chance-pill med">~ Medium Chance</span>';
-  return '<span class="chance-pill low">↑ Need Improvement</span>';
-}
-function getChanceColor(gpa, uni){
-  const diff = gpa - uni.gpa;
-  if(diff >= 0.1) return 'var(--green)';
-  if(diff >= -0.3) return 'var(--orange)';
-  return 'var(--red)';
-}
-
-let currentUnis = [...universities];
+let currentUnis=[...universities];
 function renderUnis(){
-  const grid = document.getElementById('uniGrid');
-  grid.innerHTML = '';
-  currentUnis.forEach(uni => {
-    const div = document.createElement('div');
-    div.className = 'uni-card';
-    div.innerHTML = `
+  const favs = loadFavorites();
+  const grid=document.getElementById('uniGrid');
+  grid.innerHTML='';
+  currentUnis.forEach(uni=>{
+    const isFav = favs.includes(uni.id);
+    const div=document.createElement('div');
+    div.className='uni-card';
+    div.innerHTML=`
       <div class="uni-rank">#${uni.rank} QS</div>
       <div class="uni-header">
         <div class="uni-logo" style="background:linear-gradient(135deg,${uni.color}22,${uni.color}44);border-color:${uni.color}44;color:${uni.color};">${uni.logo}</div>
@@ -857,46 +1167,33 @@ function renderUnis(){
       </div>
       <div class="badge-verified">✔ Official Data Verified 2026 &nbsp;🎓 Accredited</div>
       <div class="uni-stats">
-        <div class="uni-stat">
-          <div class="uni-stat-label">IELTS Required</div>
-          <div class="uni-stat-val" style="color:var(--gold)">${uni.ielts}</div>
-        </div>
-        <div class="uni-stat">
-          <div class="uni-stat-label">Acceptance Rate</div>
-          <div class="uni-stat-val">${uni.acceptance}%</div>
-        </div>
-        <div class="uni-stat">
-          <div class="uni-stat-label">Tuition/yr</div>
-          <div class="uni-stat-val">${uni.tuition < 1000 ? '€'+uni.tuition : (uni.country==='Japan'?'¥'+uni.tuition.toLocaleString():'$'+uni.tuition.toLocaleString())}</div>
-        </div>
-        <div class="uni-stat">
-          <div class="uni-stat-label">Min GPA</div>
-          <div class="uni-stat-val">${uni.gpa}</div>
-        </div>
+        <div class="uni-stat"><div class="uni-stat-label">IELTS Required</div><div class="uni-stat-val" style="color:var(--gold)">${uni.ielts}</div></div>
+        <div class="uni-stat"><div class="uni-stat-label">Acceptance Rate</div><div class="uni-stat-val">${uni.acceptance}%</div></div>
+        <div class="uni-stat"><div class="uni-stat-label">Tuition/yr</div><div class="uni-stat-val">${uni.tuition<1000?'€'+uni.tuition:(uni.country==='Japan'?'¥'+uni.tuition.toLocaleString():'$'+uni.tuition.toLocaleString())}</div></div>
+        <div class="uni-stat"><div class="uni-stat-label">Min GPA</div><div class="uni-stat-val">${uni.gpa}</div></div>
       </div>
       <div>${uni.scholarships.map(s=>`<span class="schol-tag gold-tag">${s}</span>`).join('')}</div>
       <div class="uni-card-actions">
         <button class="btn-sm btn-sm-gold" onclick="openUniModal(${uni.id})">📖 Details</button>
         <button class="btn-sm btn-sm-outline" onclick="event.stopPropagation();prefillCalc(${uni.id})">🤖 My Chance</button>
-        <a href="https://wa.me/996553373812" target="_blank" class="btn-sm btn-sm-outline" style="text-decoration:none;border:1px solid #25D366;color:#25D366;">💬 Consult</a>
+        <button class="btn-sm btn-sm-fav ${isFav?'saved':''}" onclick="event.stopPropagation();saveFavorite(${uni.id})" title="${isFav?'Remove from saved':'Save university'}">${isFav?'❤️ Saved':'🤍 Save'}</button>
       </div>
     `;
     grid.appendChild(div);
   });
-  document.getElementById('uniCount').textContent = currentUnis.length + ' universities';
-  document.getElementById('filterProgress').style.width = (currentUnis.length/universities.length*100)+'%';
+  document.getElementById('uniCount').textContent=currentUnis.length+' universities';
+  document.getElementById('filterProgress').style.width=(currentUnis.length/universities.length*100)+'%';
 }
 
 function filterUnis(){
-  const s = document.getElementById('uniSearch').value.toLowerCase();
-  const c = document.getElementById('countryFilter').value;
-  const d = document.getElementById('degreeFilter').value;
-  const i = parseFloat(document.getElementById('ieltsFilter').value)||0;
-  const sort = document.getElementById('sortFilter').value;
-  currentUnis = universities.filter(u=>{
-    if(s && !u.name.toLowerCase().includes(s) && !u.full.toLowerCase().includes(s)) return false;
-    if(c && u.country!==c) return false;
-    if(i && u.ielts < i) return false;
+  const s=document.getElementById('uniSearch').value.toLowerCase();
+  const c=document.getElementById('countryFilter').value;
+  const i=parseFloat(document.getElementById('ieltsFilter').value)||0;
+  const sort=document.getElementById('sortFilter').value;
+  currentUnis=universities.filter(u=>{
+    if(s&&!u.name.toLowerCase().includes(s)&&!u.full.toLowerCase().includes(s)) return false;
+    if(c&&u.country!==c) return false;
+    if(i&&u.ielts<i) return false;
     return true;
   });
   if(sort==='rank') currentUnis.sort((a,b)=>a.rank-b.rank);
@@ -907,14 +1204,15 @@ function filterUnis(){
 
 function filterByCountry(country){
   showPage('universities');
-  document.getElementById('countryFilter').value = country;
+  document.getElementById('countryFilter').value=country;
   filterUnis();
 }
 
 function openUniModal(id){
-  const u = universities.find(x=>x.id===id);
-  document.getElementById('modalUniName').textContent = u.full;
-  document.getElementById('modalBody').innerHTML = `
+  const u=universities.find(x=>x.id===id);
+  const isFav = loadFavorites().includes(u.id);
+  document.getElementById('modalUniName').textContent=u.full;
+  document.getElementById('modalBody').innerHTML=`
     <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
       <div class="uni-logo" style="width:60px;height:60px;font-size:1rem;border-radius:12px;background:linear-gradient(135deg,${u.color}22,${u.color}44);border:1px solid ${u.color}44;color:${u.color};display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;">${u.logo}</div>
       <div>
@@ -927,198 +1225,150 @@ function openUniModal(id){
       </div>
     </div>
     <div class="info-grid">
-      <div class="info-card">
-        <h4>💰 Tuition Fee / Year</h4>
-        <p class="good">${u.tuition < 1000 ? '€'+u.tuition+' (Near Free!)' : (u.country==='Japan'?'¥'+u.tuition.toLocaleString():'$'+u.tuition.toLocaleString())}</p>
-      </div>
-      <div class="info-card">
-        <h4>🏠 Living Cost / Year</h4>
-        <p class="warn">~$${u.livingCost.toLocaleString()}</p>
-      </div>
+      <div class="info-card"><h4>💰 Tuition Fee / Year</h4><p class="good">${u.tuition<1000?'€'+u.tuition+' (Near Free!)':(u.country==='Japan'?'¥'+u.tuition.toLocaleString():'$'+u.tuition.toLocaleString())}</p></div>
+      <div class="info-card"><h4>🏠 Living Cost / Year</h4><p class="warn">~$${u.livingCost.toLocaleString()}</p></div>
       <div class="info-card">
         <h4>📊 Acceptance Rate</h4>
         <p style="color:${u.acceptance<10?'var(--red)':u.acceptance<30?'var(--orange)':'var(--green)'}">${u.acceptance}%</p>
         <div class="prog-bar-wrap"><div class="prog-bar-fill" style="width:${u.acceptance}%;background:${u.acceptance<10?'var(--red)':u.acceptance<30?'var(--orange)':'var(--green)'};"></div></div>
       </div>
-      <div class="info-card">
-        <h4>📝 Min IELTS Score</h4>
-        <p style="color:var(--gold)">${u.ielts}</p>
-      </div>
-      <div class="info-card">
-        <h4>🎓 Min GPA Required</h4>
-        <p>${u.gpa} / 4.0</p>
-      </div>
-      <div class="info-card">
-        <h4>📅 Application Deadline</h4>
-        <p style="color:var(--orange)">${u.deadline}</p>
-      </div>
-      <div class="info-card">
-        <h4>💳 Application Fee</h4>
-        <p>${u.appFee === 0 ? '<span style="color:var(--green)">FREE ✓</span>' : '$'+u.appFee} ${u.feeWaiver?'<span style="color:var(--green);font-size:0.75rem;">(Fee Waiver Available)</span>':''}</p>
-      </div>
-      <div class="info-card">
-        <h4>🔬 Co-op Programs</h4>
-        <p class="${u.coopPrograms?'good':'warn'}">${u.coopPrograms?'✓ Available':'✗ Not Available'}</p>
-      </div>
+      <div class="info-card"><h4>📝 Min IELTS Score</h4><p style="color:var(--gold)">${u.ielts}</p></div>
+      <div class="info-card"><h4>🎓 Min GPA Required</h4><p>${u.gpa} / 4.0</p></div>
+      <div class="info-card"><h4>📅 Application Deadline</h4><p style="color:var(--orange)">${u.deadline}</p></div>
+      <div class="info-card"><h4>💳 Application Fee</h4><p>${u.appFee===0?'<span style="color:var(--green)">FREE ✓</span>':'$'+u.appFee} ${u.feeWaiver?'<span style="color:var(--green);font-size:0.75rem;">(Fee Waiver Available)</span>':''}</p></div>
+      <div class="info-card"><h4>🔬 Co-op Programs</h4><p class="${u.coopPrograms?'good':'warn'}">${u.coopPrograms?'✓ Available':'✗ Not Available'}</p></div>
     </div>
     <div style="margin-top:1.5rem;">
       <h4 style="margin-bottom:0.8rem;font-size:0.85rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">🏆 Scholarships Available</h4>
       <div>${u.scholarships.map(s=>`<span class="schol-tag gold-tag">${s}</span>`).join('')}</div>
     </div>
     <div class="info-grid" style="margin-top:1rem;">
-      <div class="info-card">
-        <h4>🌍 Visa Type</h4>
-        <p style="font-size:0.85rem;">${u.visa}</p>
-      </div>
-      <div class="info-card">
-        <h4>💼 Work Opportunities</h4>
-        <p style="font-size:0.85rem;color:var(--green);">${u.workOpp}</p>
-      </div>
-      <div class="info-card">
-        <h4>✅ Accreditation</h4>
-        <p style="font-size:0.85rem;">${u.accreditation}</p>
-      </div>
-      <div class="info-card">
-        <h4>📋 Full Grant Requirements</h4>
-        <p style="font-size:0.82rem;color:var(--text-muted);">GPA ${u.gpa}+, IELTS ${u.ielts}+, SOP, 2-3 Rec Letters, CV</p>
-      </div>
+      <div class="info-card"><h4>🌍 Visa Type</h4><p style="font-size:0.85rem;">${u.visa}</p></div>
+      <div class="info-card"><h4>💼 Work Opportunities</h4><p style="font-size:0.85rem;color:var(--green);">${u.workOpp}</p></div>
+      <div class="info-card"><h4>✅ Accreditation</h4><p style="font-size:0.85rem;">${u.accreditation}</p></div>
+      <div class="info-card"><h4>📋 Requirements Summary</h4><p style="font-size:0.82rem;color:var(--text-muted);">GPA ${u.gpa}+, IELTS ${u.ielts}+, SOP, 2-3 Rec Letters, CV</p></div>
     </div>
     <div style="display:flex;gap:0.7rem;margin-top:1.5rem;flex-wrap:wrap;">
       <button class="btn btn-gold btn-sm" onclick="prefillCalc(${u.id});closeModal('uniModal');showPage('calculator')">🤖 Calculate My Chance</button>
       <button class="btn btn-outline btn-sm" onclick="closeModal('uniModal');showPage('timeline')">📅 Application Timeline</button>
-      <a href="https://wa.me/996553373812" target="_blank" class="btn btn-sm" style="background:linear-gradient(135deg,#25D366,#128C7E);color:white;text-decoration:none;">💬 Get Help</a>
+      <button class="btn btn-sm ${isFav?'btn-sm-fav saved':'btn-sm-outline'}" onclick="saveFavorite(${u.id});this.textContent=loadFavorites().includes(${u.id})?'❤️ Saved':'🤍 Save';this.className='btn-sm '+(loadFavorites().includes(${u.id})?'btn-sm-fav saved':'btn-sm-outline')">${isFav?'❤️ Saved':'🤍 Save'}</button>
     </div>
   `;
   document.getElementById('uniModal').classList.add('show');
 }
-
 function closeModal(id){document.getElementById(id).classList.remove('show');}
-
 function prefillCalc(id){
   showPage('calculator');
-  document.getElementById('calcUni').value = id;
+  document.getElementById('calcUni').value=id;
   updateCalcProgress();
 }
-
 function populateUniSelect(){
-  const sel = document.getElementById('calcUni');
-  sel.innerHTML = '<option value="">Choose university</option>';
+  const sel=document.getElementById('calcUni');
+  const cur = sel.value;
+  sel.innerHTML='<option value="">Choose university</option>';
   universities.forEach(u=>{
-    const opt = document.createElement('option');
-    opt.value = u.id;
-    opt.textContent = `${u.name} (${u.country})`;
+    const opt=document.createElement('option');
+    opt.value=u.id;
+    opt.textContent=`${u.name} (${u.country})`;
     sel.appendChild(opt);
   });
+  if (cur) sel.value = cur;
+
+  // Pre-fill from saved profile
+  const p = DB.get(DB_KEYS.profile) || {};
+  if (p.gpa && !document.getElementById('calcGpa').value) document.getElementById('calcGpa').value = p.gpa;
+  if (p.ielts && !document.getElementById('calcIelts').value) document.getElementById('calcIelts').value = p.ielts;
 }
 
 // ===================== CALCULATOR =====================
 function updateCalcProgress(){
-  const fields = ['calcGpa','calcIelts','calcActivity','calcRec','calcUni','calcDegree'];
-  const filled = fields.filter(id => document.getElementById(id).value !== '').length;
-  const pct = Math.round(filled/fields.length*100);
-  document.getElementById('calcProgress').style.width = pct+'%';
-  document.getElementById('calcProgressText').textContent = filled+'/'+fields.length;
+  const fields=['calcGpa','calcIelts','calcActivity','calcRec','calcUni','calcDegree'];
+  const filled=fields.filter(id=>document.getElementById(id).value!=='').length;
+  const pct=Math.round(filled/fields.length*100);
+  document.getElementById('calcProgress').style.width=pct+'%';
+  document.getElementById('calcProgressText').textContent=filled+'/'+fields.length;
 }
-
 function calculateChance(){
-  const gpa = parseFloat(document.getElementById('calcGpa').value);
-  const ielts = parseFloat(document.getElementById('calcIelts').value);
-  const act = parseInt(document.getElementById('calcActivity').value)||0;
-  const rec = parseInt(document.getElementById('calcRec').value)||0;
-  const uniId = parseInt(document.getElementById('calcUni').value);
-  const deg = document.getElementById('calcDegree').value;
+  const gpa=parseFloat(document.getElementById('calcGpa').value);
+  const ielts=parseFloat(document.getElementById('calcIelts').value);
+  const act=parseInt(document.getElementById('calcActivity').value)||0;
+  const rec=parseInt(document.getElementById('calcRec').value)||0;
+  const uniId=parseInt(document.getElementById('calcUni').value);
+  const deg=document.getElementById('calcDegree').value;
+  if(!gpa||!ielts||!uniId||!deg){showToast('⚠ Please fill all fields');return;}
+  const uni=universities.find(u=>u.id===uniId);
+  let score=0;
+  score+=Math.min(gpa/uni.gpa,1.2)*40;
+  score+=Math.min(ielts/uni.ielts,1.2)*25;
+  score+=act*5;
+  score+=rec*5;
+  score+=Math.min(uni.acceptance/10,1)*15;
+  score=Math.min(Math.max(Math.round(score),5),95);
 
-  if(!gpa || !ielts || !uniId || !deg){
-    showToast('⚠ Please fill all fields'); return;
-  }
-  const uni = universities.find(u=>u.id===uniId);
-  let score = 0;
-  // GPA weight 40%
-  const gpaRatio = Math.min(gpa / uni.gpa, 1.2);
-  score += gpaRatio * 40;
-  // IELTS weight 25%
-  const ieltsRatio = Math.min(ielts / uni.ielts, 1.2);
-  score += ieltsRatio * 25;
-  // Activity 15%
-  score += act * 5;
-  // Rec 15%
-  score += rec * 5;
-  // Base factor from acceptance rate
-  const baseFactor = Math.min(uni.acceptance / 10, 1) * 15;
-  score += baseFactor;
+  // Save to history
+  addCalcHistory(uni, score, gpa, ielts, deg);
 
-  score = Math.min(Math.max(Math.round(score), 5), 95);
-
-  const box = document.getElementById('resultBox');
+  const box=document.getElementById('resultBox');
   box.classList.add('show');
-  const circle = document.getElementById('chanceCircle');
-  circle.textContent = score+'%';
-  const deg360 = score / 100 * 360;
-  const col = score>=70?'var(--green)':score>=45?'var(--orange)':'var(--red)';
-  circle.style.background = `conic-gradient(${col} ${deg360}deg, var(--dark4) 0deg)`;
-
-  let title, desc;
-  if(score >= 70){title='🎉 High Admission Chance!';desc=`Your profile strongly matches ${uni.name}'s requirements. Apply with confidence!`;}
-  else if(score >= 45){title='📊 Medium Admission Chance';desc=`You have a real shot at ${uni.name}. A few improvements will boost your chances significantly.`;}
+  const circle=document.getElementById('chanceCircle');
+  circle.textContent=score+'%';
+  const deg360=score/100*360;
+  const col=score>=70?'var(--green)':score>=45?'var(--orange)':'var(--red)';
+  circle.style.background=`conic-gradient(${col} ${deg360}deg, var(--dark4) 0deg)`;
+  let title,desc;
+  if(score>=70){title='🎉 High Admission Chance!';desc=`Your profile strongly matches ${uni.name}'s requirements. Apply with confidence!`;}
+  else if(score>=45){title='📊 Medium Admission Chance';desc=`You have a real shot at ${uni.name}. A few improvements will boost your chances significantly.`;}
   else{title='💪 Lower Chance — But Improvable!';desc=`Your current profile is below ${uni.name}'s typical requirements. Here's what to do:`;}
-  document.getElementById('resultTitle').textContent = title;
-  document.getElementById('resultDesc').textContent = desc;
-
-  let tips = '';
-  if(gpa < uni.gpa) tips += `<div class="tip-item">📈 <span>GPA ${gpa.toFixed(1)} is below ${uni.name}'s requirement of ${uni.gpa}. Consider improving grades or taking additional courses.</span></div>`;
-  if(ielts < uni.ielts) tips += `<div class="tip-item">🗣 <span>IELTS ${ielts} is below required ${uni.ielts}. Target Band ${uni.ielts} — take preparation course first.</span></div>`;
-  if(act < 3) tips += `<div class="tip-item">🏆 <span>Add more extracurriculars: volunteer work, research, competitions, student government.</span></div>`;
-  if(rec < 3) tips += `<div class="tip-item">📬 <span>Strengthen recommendation letters — ask professors/managers who know your work deeply.</span></div>`;
-  if(score >= 70) tips += `<div class="tip-item">✅ <span>Write a compelling Statement of Purpose. Highlight research interests and achievements.</span></div>`;
-  tips += `<div class="tip-item">📅 <span>Application deadline: ${uni.deadline}. Start your application ${deg==='phd'?'12':'6'} months early.</span></div>`;
-  tips += `<div class="tip-item">💡 <span>Apply for: ${uni.scholarships.join(', ')} — these can cover tuition + living costs.</span></div>`;
-  document.getElementById('tipsList').innerHTML = tips;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultDesc').textContent=desc;
+  let tips='';
+  if(gpa<uni.gpa) tips+=`<div class="tip-item">📈 <span>GPA ${gpa.toFixed(1)} is below ${uni.name}'s requirement of ${uni.gpa}. Consider improving grades or additional courses.</span></div>`;
+  if(ielts<uni.ielts) tips+=`<div class="tip-item">🗣 <span>IELTS ${ielts} is below required ${uni.ielts}. Target Band ${uni.ielts} — take a preparation course first.</span></div>`;
+  if(act<3) tips+=`<div class="tip-item">🏆 <span>Add more extracurriculars: volunteer work, research, competitions, student government.</span></div>`;
+  if(rec<3) tips+=`<div class="tip-item">📬 <span>Strengthen recommendation letters — ask professors/managers who know your work deeply.</span></div>`;
+  if(score>=70) tips+=`<div class="tip-item">✅ <span>Write a compelling Statement of Purpose. Highlight research interests and achievements.</span></div>`;
+  tips+=`<div class="tip-item">📅 <span>Application deadline: ${uni.deadline}. Start your application ${deg==='phd'?'12':'6'} months early.</span></div>`;
+  tips+=`<div class="tip-item">💡 <span>Apply for: ${uni.scholarships.join(', ')} — these can cover tuition + living costs.</span></div>`;
+  document.getElementById('tipsList').innerHTML=tips;
   box.scrollIntoView({behavior:'smooth',block:'center'});
+  showToast('💾 Result saved to your profile history');
 }
 
 // ===================== COUNTRIES =====================
-let mapInit = false;
+let mapInit=false;
 function initMap(){
-  if(mapInit) return;
-  mapInit = true;
+  if(mapInit)return;
+  mapInit=true;
   setTimeout(()=>{
-    const map = L.map('map').setView([30,20],2);
+    const map=L.map('map').setView([30,20],2);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:18}).addTo(map);
     countries.forEach(c=>{
-      if(!c.lat) return;
-      const unis = universities.filter(u=>u.country===c.name);
+      if(!c.lat)return;
+      const unis=universities.filter(u=>u.country===c.name);
       L.circleMarker([c.lat,c.lng],{radius:8,color:unis.length>3?'#C9A84C':'#4F8EF7',fillColor:unis.length>3?'#C9A84C':'#4F8EF7',fillOpacity:0.7,weight:2})
         .addTo(map)
         .bindPopup(`<b>${c.flag} ${c.name}</b><br>${unis.length} universities<br><small>${c.tuition}</small>`);
     });
-    // Also add universities
     universities.forEach(u=>{
-      const co = countries.find(c=>c.name===u.country);
-      if(!co) return;
-      const jitter = (Math.random()-0.5)*3;
+      const co=countries.find(c=>c.name===u.country);
+      if(!co)return;
+      const jitter=(Math.random()-0.5)*3;
       L.circleMarker([co.lat+jitter,co.lng+jitter],{radius:5,color:u.color||'#C9A84C',fillColor:u.color||'#C9A84C',fillOpacity:0.6,weight:1})
         .addTo(map)
         .bindPopup(`<b>${u.name}</b><br>#${u.rank} QS Rank<br>Acceptance: ${u.acceptance}%<br>IELTS: ${u.ielts}`);
     });
   },300);
 }
-
 function renderCountries(){
-  const grid = document.getElementById('countryGrid');
-  grid.innerHTML = '';
+  const grid=document.getElementById('countryGrid');
+  grid.innerHTML='';
   countries.forEach(c=>{
-    const unis = universities.filter(u=>u.country===c.name);
-    const div = document.createElement('div');
-    div.className = 'country-card';
-    div.onclick = ()=>filterByCountry(c.name);
-    div.innerHTML = `
-      <div class="country-top">
-        <div class="country-flag">${c.flag}</div>
-        <div>
-          <div class="country-name">${c.name}</div>
-          <div class="country-uni-count">${unis.length} universities in our list</div>
-        </div>
-      </div>
+    const unis=universities.filter(u=>u.country===c.name);
+    const div=document.createElement('div');
+    div.className='country-card';
+    div.onclick=()=>filterByCountry(c.name);
+    div.innerHTML=`
+      <div class="country-top"><div class="country-flag">${c.flag}</div><div><div class="country-name">${c.name}</div><div class="country-uni-count">${unis.length} universities in our list</div></div></div>
       <div class="country-info">
         <div class="ci-row"><span class="ci-label">💰 Tuition</span><span class="ci-val">${c.tuition}</span></div>
         <div class="ci-row"><span class="ci-label">🏠 Living Cost</span><span class="ci-val">${c.living}</span></div>
@@ -1133,54 +1383,56 @@ function renderCountries(){
 
 // ===================== TIMELINE =====================
 function generateTimeline(){
-  const country = document.getElementById('tlCountry').value;
-  const degree = document.getElementById('tlDegree').value;
-  const year = parseInt(document.getElementById('tlYear').value);
-  const intakeMonth = (country==='Germany'||country==='Netherlands'||country==='Sweden')?9:1;
-  const intake = intakeMonth===9?'September':'January';
-  const prevYear = year - 1;
-
-  const steps = [];
+  const country=document.getElementById('tlCountry').value;
+  const degree=document.getElementById('tlDegree').value;
+  const year=parseInt(document.getElementById('tlYear').value);
+  const prevYear=year-1;
+  let steps=[];
   if(degree==='PhD'){
-    steps.push({month:`Jan–Mar ${prevYear}`,task:'Research Potential Supervisors',desc:'Email 5–10 professors about potential PhD projects and funding availability.',icon:'🔍'});
-    steps.push({month:`Apr ${prevYear}`,task:'IELTS Preparation',desc:`Target IELTS Band ${country==='Germany'||country==='Netherlands'?'6.5':'7.0'} — join preparation course.`,icon:'📝'});
-    steps.push({month:`Jun ${prevYear}`,task:'Write Research Proposal',desc:'Draft 2,000-word research proposal with methodology and literature review.',icon:'📄'});
-    steps.push({month:`Jul ${prevYear}`,task:'Request Recommendation Letters',desc:'Contact 3 referees (professors/supervisors) with detailed info about your research.',icon:'📬'});
-    steps.push({month:`Aug ${prevYear}`,task:'Take IELTS Exam',desc:'Book and take official IELTS exam. Ensure scores reach universities by October.',icon:'🗣'});
-    steps.push({month:`Sep–Oct ${prevYear}`,task:'Prepare Application Documents',desc:'CV, Transcripts, Research Proposal, SOP, Certificates, Passport copy.',icon:'📁'});
-    steps.push({month:`Oct–Nov ${prevYear}`,task:'Submit Applications',desc:`Most PhD applications due Oct–Dec for ${intake} ${year} intake.`,icon:'📤'});
-    steps.push({month:`Dec ${prevYear}`,task:'Funding Applications',desc:'Apply for DAAD, CSC, Fullbright, and university-specific scholarships.',icon:'💰'});
-    steps.push({month:`Jan–Mar ${year}`,task:'Interview Round',desc:'Prepare for supervisor interviews — know your research proposal deeply.',icon:'🎙'});
-    steps.push({month:`Apr ${year}`,task:'Apply for Student Visa',desc:`Start ${country} visa application after receiving admission letter.`,icon:'🛂'});
-    steps.push({month:`Jun ${year}`,task:'Visa Approved',desc:'Receive visa, book flights and accommodation.',icon:'✈'});
-    steps.push({month:`Sep ${year}`,task:'Arrival & Enrollment',desc:`Arrive in ${country}, attend orientation, register at university.`,icon:'🎓'});
+    steps=[
+      {month:`Jan–Mar ${prevYear}`,task:'Research Potential Supervisors',desc:'Email 5–10 professors about potential PhD projects and funding availability.',icon:'🔍'},
+      {month:`Apr ${prevYear}`,task:'IELTS Preparation',desc:`Target IELTS Band ${country==='Germany'||country==='Netherlands'?'6.5':'7.0'} — join preparation course.`,icon:'📝'},
+      {month:`Jun ${prevYear}`,task:'Write Research Proposal',desc:'Draft 2,000-word research proposal with methodology and literature review.',icon:'📄'},
+      {month:`Jul ${prevYear}`,task:'Request Recommendation Letters',desc:'Contact 3 referees (professors/supervisors) with detailed info about your research.',icon:'📬'},
+      {month:`Aug ${prevYear}`,task:'Take IELTS Exam',desc:'Book and take official IELTS exam. Ensure scores reach universities by October.',icon:'🗣'},
+      {month:`Sep–Oct ${prevYear}`,task:'Prepare Application Documents',desc:'CV, Transcripts, Research Proposal, SOP, Certificates, Passport copy.',icon:'📁'},
+      {month:`Oct–Nov ${prevYear}`,task:'Submit Applications',desc:`Most PhD applications due Oct–Dec for ${year} intake.`,icon:'📤'},
+      {month:`Dec ${prevYear}`,task:'Funding Applications',desc:'Apply for DAAD, CSC, Fullbright, and university-specific scholarships.',icon:'💰'},
+      {month:`Jan–Mar ${year}`,task:'Interview Round',desc:'Prepare for supervisor interviews — know your research proposal deeply.',icon:'🎙'},
+      {month:`Apr ${year}`,task:'Apply for Student Visa',desc:`Start ${country} visa application after receiving admission letter.`,icon:'🛂'},
+      {month:`Jun ${year}`,task:'Visa Approved',desc:'Receive visa, book flights and accommodation.',icon:'✈'},
+      {month:`Sep ${year}`,task:'Arrival & Enrollment',desc:`Arrive in ${country}, attend orientation, register at university.`,icon:'🎓'},
+    ];
   } else if(degree==='Master'){
-    steps.push({month:`Jan–Mar ${prevYear}`,task:'Research Programs',desc:'Compare master programs, requirements, and scholarships across universities.',icon:'🔍'});
-    steps.push({month:`Apr ${prevYear}`,task:'IELTS Preparation',desc:`Target IELTS ${country==='UK'?'6.5–7.0':'6.5'} — start intensive preparation.`,icon:'📝'});
-    steps.push({month:`Jun ${prevYear}`,task:'Take IELTS Exam',desc:'Book official IELTS. Register early — test centres fill up quickly.',icon:'🗣'});
-    steps.push({month:`Jul–Aug ${prevYear}`,task:'Draft SOP & CV',desc:'Write Statement of Purpose (700–1,000 words). Tailor for each university.',icon:'📄'});
-    steps.push({month:`Sep ${prevYear}`,task:'Request Recommendation Letters',desc:'Ask 2–3 referees. Give them your CV and SOP draft to reference.',icon:'📬'});
-    steps.push({month:`Oct–Nov ${prevYear}`,task:'Submit Applications',desc:`Apply to 5–8 universities. ${country==='Germany'?'Use uni-assist.de for Germany.':'Use university portals directly.'}`,icon:'📤'});
-    steps.push({month:`Nov–Dec ${prevYear}`,task:'Apply for Scholarships',desc:`Apply for: ${country==='Germany'?'DAAD Scholarship':country==='Netherlands'?'Holland Scholarship':country==='Sweden'?'Swedish Institute':'Chevening/Fullbright'} and university merit awards.`,icon:'💰'});
-    steps.push({month:`Feb–Apr ${year}`,task:'Receive Offers',desc:'Review admission offers. Compare scholarship packages carefully before accepting.',icon:'📨'});
-    steps.push({month:`Apr–May ${year}`,task:'Apply for Student Visa',desc:`Gather all documents and apply for ${country} student visa/permit.`,icon:'🛂'});
-    steps.push({month:`Jun–Jul ${year}`,task:'Visa & Housing',desc:'Confirm visa approval. Book student housing or find accommodation.',icon:'🏠'});
-    steps.push({month:`Aug ${year}`,task:'Final Preparation',desc:'Attend pre-departure orientation, arrange travel insurance, open bank account.',icon:'✈'});
-    steps.push({month:`Sep ${year}`,task:'Arrival',desc:`Welcome to ${country}! Register at university, attend orientation week.`,icon:'🎓'});
+    steps=[
+      {month:`Jan–Mar ${prevYear}`,task:'Research Programs',desc:'Compare master programs, requirements, and scholarships across universities.',icon:'🔍'},
+      {month:`Apr ${prevYear}`,task:'IELTS Preparation',desc:`Target IELTS ${country==='UK'?'6.5–7.0':'6.5'} — start intensive preparation.`,icon:'📝'},
+      {month:`Jun ${prevYear}`,task:'Take IELTS Exam',desc:'Book official IELTS. Register early — test centres fill up quickly.',icon:'🗣'},
+      {month:`Jul–Aug ${prevYear}`,task:'Draft SOP & CV',desc:'Write Statement of Purpose (700–1,000 words). Tailor for each university.',icon:'📄'},
+      {month:`Sep ${prevYear}`,task:'Request Recommendation Letters',desc:'Ask 2–3 referees. Give them your CV and SOP draft to reference.',icon:'📬'},
+      {month:`Oct–Nov ${prevYear}`,task:'Submit Applications',desc:`Apply to 5–8 universities. ${country==='Germany'?'Use uni-assist.de for Germany.':'Use university portals directly.'}`,icon:'📤'},
+      {month:`Nov–Dec ${prevYear}`,task:'Apply for Scholarships',desc:`Apply for: ${country==='Germany'?'DAAD Scholarship':country==='Netherlands'?'Holland Scholarship':country==='Sweden'?'Swedish Institute':'Chevening/Fullbright'}`,icon:'💰'},
+      {month:`Feb–Apr ${year}`,task:'Receive Offers',desc:'Review admission offers. Compare scholarship packages carefully before accepting.',icon:'📨'},
+      {month:`Apr–May ${year}`,task:'Apply for Student Visa',desc:`Gather all documents and apply for ${country} student visa/permit.`,icon:'🛂'},
+      {month:`Jun–Jul ${year}`,task:'Visa & Housing',desc:'Confirm visa approval. Book student housing or find accommodation.',icon:'🏠'},
+      {month:`Aug ${year}`,task:'Final Preparation',desc:'Attend pre-departure orientation, arrange travel insurance, open bank account.',icon:'✈'},
+      {month:`Sep ${year}`,task:'Arrival',desc:`Welcome to ${country}! Register at university, attend orientation week.`,icon:'🎓'},
+    ];
   } else {
-    steps.push({month:`Jan–Apr ${prevYear}`,task:'School Research & Shortlist',desc:'Research bachelor programs, entry requirements, and scholarships.',icon:'🔍'});
-    steps.push({month:`May ${prevYear}`,task:'IELTS / A-Level Preparation',desc:`Start IELTS preparation targeting ${country==='UK'?'6.0–6.5':'6.5'}.`,icon:'📝'});
-    steps.push({month:`Aug ${prevYear}`,task:'Take Standardized Tests',desc:'IELTS, SAT (for US/Canada), or language proficiency tests.',icon:'🗣'});
-    steps.push({month:`Sep–Oct ${prevYear}`,task:'Prepare Documents',desc:'Transcripts, diplomas, personal statement, recommendation letters.',icon:'📄'});
-    steps.push({month:`Oct–Dec ${prevYear}`,task:'Submit Applications',desc:`Apply to chosen universities before deadline. ${country==='UK'?'Use UCAS portal.':country==='Germany'?'Use uni-assist.de.':'Apply directly via university websites.'}`,icon:'📤'});
-    steps.push({month:`Jan–Mar ${year}`,task:'Scholarship Applications',desc:'Apply for scholarships — many have separate deadlines from admissions.',icon:'💰'});
-    steps.push({month:`Mar–Apr ${year}`,task:'Receive Decisions',desc:'Compare offers and scholarship packages. Accept your top choice.',icon:'📨'});
-    steps.push({month:`May ${year}`,task:'Apply for Student Visa',desc:`Submit student visa application with admission letter and financial documents.`,icon:'🛂'});
-    steps.push({month:`Jul ${year}`,task:'Pre-Departure Prep',desc:'Arrange housing, health insurance, pack, attend info sessions.',icon:'🏠'});
-    steps.push({month:`Sep ${year}`,task:'Start University',desc:`Begin your bachelor studies in ${country}!`,icon:'🎓'});
+    steps=[
+      {month:`Jan–Apr ${prevYear}`,task:'School Research & Shortlist',desc:'Research bachelor programs, entry requirements, and scholarships.',icon:'🔍'},
+      {month:`May ${prevYear}`,task:'IELTS / A-Level Preparation',desc:`Start IELTS preparation targeting ${country==='UK'?'6.0–6.5':'6.5'}.`,icon:'📝'},
+      {month:`Aug ${prevYear}`,task:'Take Standardized Tests',desc:'IELTS, SAT (for US/Canada), or language proficiency tests.',icon:'🗣'},
+      {month:`Sep–Oct ${prevYear}`,task:'Prepare Documents',desc:'Transcripts, diplomas, personal statement, recommendation letters.',icon:'📄'},
+      {month:`Oct–Dec ${prevYear}`,task:'Submit Applications',desc:`Apply to chosen universities before deadline. ${country==='UK'?'Use UCAS portal.':country==='Germany'?'Use uni-assist.de.':'Apply via university websites.'}`,icon:'📤'},
+      {month:`Jan–Mar ${year}`,task:'Scholarship Applications',desc:'Apply for scholarships — many have separate deadlines from admissions.',icon:'💰'},
+      {month:`Mar–Apr ${year}`,task:'Receive Decisions',desc:'Compare offers and scholarship packages. Accept your top choice.',icon:'📨'},
+      {month:`May ${year}`,task:'Apply for Student Visa',desc:`Submit student visa application with admission letter and financial documents.`,icon:'🛂'},
+      {month:`Jul ${year}`,task:'Pre-Departure Prep',desc:'Arrange housing, health insurance, pack, attend info sessions.',icon:'🏠'},
+      {month:`Sep ${year}`,task:'Start University',desc:`Begin your bachelor studies in ${country}!`,icon:'🎓'},
+    ];
   }
-
-  document.getElementById('timelineContent').innerHTML = steps.map((s,i)=>`
+  document.getElementById('timelineContent').innerHTML=steps.map(s=>`
     <div class="tl-item">
       <div class="tl-dot">${s.icon}</div>
       <div class="tl-content">
@@ -1193,184 +1445,39 @@ function generateTimeline(){
 }
 
 // ===================== DOCS =====================
-const docTemplates = {
-  sop: `STATEMENT OF PURPOSE
-
-[Your Name]
-[Email] | [Phone] | [LinkedIn]
-Date: [Date]
-
-To the Admissions Committee,
-[University Name], [Program Name]
-
-I am writing to express my strong interest in the [Master's/Bachelor's/PhD] program in [Field] at [University Name]. With a GPA of [X.X] and [X years] of academic and professional experience in [Field], I am confident that this program aligns perfectly with my academic goals and career aspirations.
-
-ACADEMIC BACKGROUND
-[Describe your undergraduate/graduate studies, key achievements, relevant coursework, thesis if any]
-
-PROFESSIONAL EXPERIENCE
-[Describe relevant internships, research, work experience — 2-3 paragraphs]
-
-WHY THIS UNIVERSITY / PROGRAM
-[Specific reasons why this program fits your goals, mention professors/research groups/facilities]
-
-CAREER GOALS
-[Describe your short-term and long-term career goals after graduation]
-
-CONCLUSION
-I am excited about the opportunity to contribute to [University Name]'s research community. I look forward to bringing my unique perspective and dedication to your program.
-
-Thank you for considering my application.
-
-Sincerely,
-[Your Name]`,
-
-  cv: `CURRICULUM VITAE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-PERSONAL INFORMATION
-Name: [Full Name]
-Date of Birth: [DD/MM/YYYY]
-Nationality: [Country]
-Email: [email@example.com]
-Phone: [+XXX XX XXX XXXX]
-LinkedIn: [linkedin.com/in/yourname]
-Address: [City, Country]
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EDUCATION
-[YEAR] – Present
-[University Name], [City, Country]
-[Degree], [Field of Study]
-GPA: [X.X/4.0] | Relevant courses: [List 3-4]
-
-[YEAR] – [YEAR]
-[Previous School], [City, Country]
-[High School Diploma / Bachelor's]
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-WORK EXPERIENCE
-[Month YEAR] – [Month YEAR]
-[Job Title] | [Company Name] | [City, Country]
-• [Key responsibility / achievement 1]
-• [Key responsibility / achievement 2]
-• [Key responsibility / achievement 3]
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SKILLS
-Technical: [Programming languages, tools, software]
-Languages: [Language 1 (Native), Language 2 (IELTS X.X), Language 3 (Basic)]
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-AWARDS & ACHIEVEMENTS
-• [Award Name], [Issuing Organization], [Year]
-• [Scholarship / Competition / Honor]
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EXTRACURRICULAR ACTIVITIES
-• [Club / Organization / Volunteer work]
-• [Leadership role or project]`,
-
-  motivation: `MOTIVATION LETTER
-
-[Your Name]
-[Address], [City, Country]
-[Email] | [Phone]
-[Date]
-
-[University Name]
-Admissions Office
-[University Address]
-
-Dear Admissions Committee,
-
-I am applying for the [Program Name] at [University Name], and I am deeply motivated to contribute to your academic community.
-
-My passion for [Field] was sparked by [specific experience/event]. During my studies at [Previous University], I developed expertise in [relevant skills/topics] and achieved [notable achievement].
-
-What excites me most about [University Name] specifically is [specific program feature, professor, research group, or opportunity]. I believe this environment will allow me to [specific goal].
-
-Beyond academics, I have demonstrated leadership through [extracurricular activity]. I volunteered at [organization], where I [specific achievement with impact].
-
-I am confident that my academic background, IELTS score of [X.X], and passion for [field] make me a strong candidate. I look forward to contributing to [University Name]'s vibrant international community.
-
-Thank you sincerely for considering my application.
-
-Warmest regards,
-[Your Name]`,
-
-  visa: `VISA COVER LETTER
-
-[Your Name]
-[Your Address]
-[City, Country, Postal Code]
-[Email Address]
-[Phone Number]
-[Date]
-
-To: [Country] Embassy / Consulate
-Re: Student Visa Application — [University Name]
-
-Dear Visa Officer,
-
-I, [Your Full Name], passport number [XXXXXXXX], am writing to request a student visa to study [Program Name] at [University Name], [City, Country].
-
-PROGRAM DETAILS:
-• University: [University Name]
-• Program: [Degree Level] in [Field of Study]
-• Duration: [Start Date] to [Expected End Date]
-• Student ID / Reference: [XXXXXXXX]
-
-FINANCIAL DOCUMENTATION:
-I have sufficient funds to support my studies and living expenses:
-• Tuition Fee: [Amount per year]
-• Living Costs: [Amount per year]
-• Source of Funding: [Personal savings / Family support / Scholarship — specify]
-• Bank statements and scholarship letters are attached.
-
-TIES TO HOME COUNTRY:
-I intend to return to [Home Country] upon completion of my studies to [career goal]. My strong ties to my home country include [family/job offer/business].
-
-I respectfully request that you consider my visa application favorably. All required documents are enclosed.
-
-Sincerely,
-[Your Full Name]
-[Signature]`
+const docTemplates={
+  sop:`STATEMENT OF PURPOSE\n\n[Your Name]\n[Email] | [Phone] | [LinkedIn]\nDate: [Date]\n\nTo the Admissions Committee,\n[University Name], [Program Name]\n\nI am writing to express my strong interest in the [Master's/Bachelor's/PhD] program in [Field] at [University Name]. With a GPA of [X.X] and [X years] of academic and professional experience in [Field], I am confident that this program aligns perfectly with my academic goals and career aspirations.\n\nACADEMIC BACKGROUND\n[Describe your undergraduate/graduate studies, key achievements, relevant coursework, thesis if any]\n\nPROFESSIONAL EXPERIENCE\n[Describe relevant internships, research, work experience — 2-3 paragraphs]\n\nWHY THIS UNIVERSITY / PROGRAM\n[Specific reasons why this program fits your goals, mention professors/research groups/facilities]\n\nCAREER GOALS\n[Describe your short-term and long-term career goals after graduation]\n\nCONCLUSION\nI am excited about the opportunity to contribute to [University Name]'s research community. I look forward to bringing my unique perspective and dedication to your program.\n\nThank you for considering my application.\n\nSincerely,\n[Your Name]`,
+  cv:`CURRICULUM VITAE\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nPERSONAL INFORMATION\nName: [Full Name]\nDate of Birth: [DD/MM/YYYY]\nNationality: [Country]\nEmail: [email@example.com]\nPhone: [+XXX XX XXX XXXX]\nLinkedIn: [linkedin.com/in/yourname]\nAddress: [City, Country]\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nEDUCATION\n[YEAR] – Present\n[University Name], [City, Country]\n[Degree], [Field of Study]\nGPA: [X.X/4.0]\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nWORK EXPERIENCE\n[Month YEAR] – [Month YEAR]\n[Job Title] | [Company Name] | [City, Country]\n• [Key responsibility / achievement 1]\n• [Key responsibility / achievement 2]\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nSKILLS\nTechnical: [Programming languages, tools, software]\nLanguages: [Language 1 (Native), Language 2 (IELTS X.X)]\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nAWARDS & ACHIEVEMENTS\n• [Award Name], [Issuing Organization], [Year]\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nEXTRACURRICULAR ACTIVITIES\n• [Club / Organization / Volunteer work]`,
+  motivation:`MOTIVATION LETTER\n\n[Your Name]\n[Address], [City, Country]\n[Email] | [Phone]\n[Date]\n\n[University Name]\nAdmissions Office\n\nDear Admissions Committee,\n\nI am applying for the [Program Name] at [University Name], and I am deeply motivated to contribute to your academic community.\n\nMy passion for [Field] was sparked by [specific experience/event]. During my studies at [Previous University], I developed expertise in [relevant skills/topics] and achieved [notable achievement].\n\nWhat excites me most about [University Name] specifically is [specific program feature, professor, research group, or opportunity]. I believe this environment will allow me to [specific goal].\n\nBeyond academics, I have demonstrated leadership through [extracurricular activity]. I volunteered at [organization], where I [specific achievement with impact].\n\nI am confident that my academic background, IELTS score of [X.X], and passion for [field] make me a strong candidate.\n\nThank you sincerely for considering my application.\n\nWarmest regards,\n[Your Name]`,
+  visa:`VISA COVER LETTER\n\n[Your Name]\n[Your Address]\n[City, Country, Postal Code]\n[Email Address]\n[Phone Number]\n[Date]\n\nTo: [Country] Embassy / Consulate\nRe: Student Visa Application — [University Name]\n\nDear Visa Officer,\n\nI, [Your Full Name], passport number [XXXXXXXX], am writing to request a student visa to study [Program Name] at [University Name], [City, Country].\n\nPROGRAM DETAILS:\n• University: [University Name]\n• Program: [Degree Level] in [Field of Study]\n• Duration: [Start Date] to [Expected End Date]\n\nFINANCIAL DOCUMENTATION:\nI have sufficient funds to support my studies and living expenses:\n• Tuition Fee: [Amount per year]\n• Living Costs: [Amount per year]\n• Source of Funding: [Personal savings / Family support / Scholarship]\n\nTIES TO HOME COUNTRY:\nI intend to return to [Home Country] upon completion of my studies to [career goal].\n\nI respectfully request that you consider my visa application favorably.\n\nSincerely,\n[Your Full Name]`
 };
 
-function switchDoc(type, btn){
+function switchDoc(type,btn){
   document.querySelectorAll('.doc-tab').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
-  document.getElementById('docText').value = docTemplates[type];
+  // Save current first, then switch
+  DB.set(DB_KEYS.docDraft+'_'+type, document.getElementById('docText').value);
+  const saved = DB.get(DB_KEYS.docDraft+'_'+type);
+  document.getElementById('docText').value = saved || docTemplates[type];
 }
-
 function docAction(type){
-  const ta = document.getElementById('docText');
+  const ta=document.getElementById('docText');
   if(type==='clear'){ta.value='';return;}
-  const placeholders = {name:'[Your Name]',uni:'[University Name]',program:'[Program Name]',year:new Date().getFullYear()};
-  const val = prompt('Enter '+type+':');
-  if(val) ta.value = ta.value.replace(new RegExp('\\['+type.charAt(0).toUpperCase()+type.slice(1)+' '+type.charAt(0).toUpperCase()+'\\w+\\]','g'),val);
+  const val=prompt('Enter '+type+':');
+  if(val) ta.value=ta.value.replace(/\[Your Name\]/g,type==='name'?val:ta.value).replace(/\[University Name\]/g,type==='uni'?val:ta.value);
 }
-
-document.addEventListener('DOMContentLoaded',()=>{
-  document.getElementById('docText').value = docTemplates.sop;
-});
-
-function copyDoc(){
-  navigator.clipboard.writeText(document.getElementById('docText').value);
-  showToast('✅ Copied to clipboard!');
-}
+function copyDoc(){navigator.clipboard.writeText(document.getElementById('docText').value);showToast('✅ Copied to clipboard!');}
 function downloadDoc(){
-  const text = document.getElementById('docText').value;
-  const blob = new Blob([text],{type:'text/plain'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'document.txt';
+  const text=document.getElementById('docText').value;
+  const blob=new Blob([text],{type:'text/plain'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='document.txt';
   a.click();
 }
 
 // ===================== QUIZ =====================
-const quizQuestions = [
+const quizQuestions=[
   {q:'What does IELTS stand for?',opts:['International English Language Testing System','International English Language Training Service','Integrated English Learning Testing System','International Education Language Test Standards'],ans:0},
   {q:'Which university has the lowest acceptance rate among these?',opts:['Oxford (17%)','Harvard (3%)','Melbourne (70%)','Copenhagen (55%)'],ans:1},
   {q:'German public universities charge approximately how much per semester?',opts:['€5,000','€500–€800 (admin fee only)','€2,000','Free'],ans:1},
@@ -1382,7 +1489,7 @@ const quizQuestions = [
   {q:'QS World University Rankings #1 for 2025–2026 is:',opts:['Harvard','Oxford','MIT','Stanford'],ans:2},
   {q:'A strong Statement of Purpose (SOP) should typically be how long?',opts:['150-200 words','500–1,000 words','2,000–3,000 words','100 words'],ans:1}
 ];
-let qIdx=0, qScore=0;
+let qIdx=0,qScore=0;
 function initQuiz(){
   qIdx=0;qScore=0;
   document.getElementById('quizCard').style.display='block';
@@ -1390,20 +1497,20 @@ function initQuiz(){
   renderQuestion();
 }
 function renderQuestion(){
-  const q = quizQuestions[qIdx];
-  document.getElementById('quizQuestion').textContent = `Q${qIdx+1}. ${q.q}`;
-  document.getElementById('quizOptions').innerHTML = q.opts.map((o,i)=>`<div class="quiz-opt" onclick="selectOpt(this,${i},${q.ans})">${String.fromCharCode(65+i)}. ${o}</div>`).join('');
-  document.getElementById('quizScore').textContent = `Score: ${qScore}/${qIdx}`;
+  const q=quizQuestions[qIdx];
+  document.getElementById('quizQuestion').textContent=`Q${qIdx+1}. ${q.q}`;
+  document.getElementById('quizOptions').innerHTML=q.opts.map((o,i)=>`<div class="quiz-opt" onclick="selectOpt(this,${i},${q.ans})">${String.fromCharCode(65+i)}. ${o}</div>`).join('');
+  document.getElementById('quizScore').textContent=`Score: ${qScore}/${qIdx}`;
   document.getElementById('quizNext').style.display='none';
-  document.getElementById('quizProgress').style.width = ((qIdx)/quizQuestions.length*100)+'%';
-  document.getElementById('quizProgressText').textContent = `${qIdx}/${quizQuestions.length}`;
+  document.getElementById('quizProgress').style.width=((qIdx)/quizQuestions.length*100)+'%';
+  document.getElementById('quizProgressText').textContent=`${qIdx}/${quizQuestions.length}`;
 }
 function selectOpt(el,chosen,correct){
   document.querySelectorAll('.quiz-opt').forEach(o=>o.style.pointerEvents='none');
   if(chosen===correct){el.classList.add('correct');qScore++;}
   else{el.classList.add('wrong');document.querySelectorAll('.quiz-opt')[correct].classList.add('correct');}
   document.getElementById('quizNext').style.display='inline-flex';
-  document.getElementById('quizScore').textContent = `Score: ${qScore}/${qIdx+1}`;
+  document.getElementById('quizScore').textContent=`Score: ${qScore}/${qIdx+1}`;
 }
 function nextQuestion(){
   qIdx++;
@@ -1412,75 +1519,27 @@ function nextQuestion(){
 }
 function showQuizResult(){
   document.getElementById('quizCard').style.display='none';
-  const r = document.getElementById('quizResult');
+  const r=document.getElementById('quizResult');
   r.style.display='block';
-  const pct = Math.round(qScore/quizQuestions.length*100);
-  document.getElementById('quizEmoji').textContent = pct>=80?'🏆':pct>=60?'🎓':'📚';
-  document.getElementById('quizFinalTitle').textContent = `${qScore}/${quizQuestions.length} — ${pct>=80?'Excellent!':pct>=60?'Good Job!':'Keep Learning!'}`;
-  document.getElementById('quizFinalDesc').textContent = pct>=80?'You know a lot about studying abroad! Ready to apply?':pct>=60?'Solid knowledge. Review the details and apply soon!':'Study our university guides to improve your knowledge.';
+  const pct=Math.round(qScore/quizQuestions.length*100);
+  document.getElementById('quizEmoji').textContent=pct>=80?'🏆':pct>=60?'🎓':'📚';
+  document.getElementById('quizFinalTitle').textContent=`${qScore}/${quizQuestions.length} — ${pct>=80?'Excellent!':pct>=60?'Good Job!':'Keep Learning!'}`;
+  document.getElementById('quizFinalDesc').textContent=pct>=80?'You know a lot about studying abroad! Ready to apply?':pct>=60?'Solid knowledge. Review the details and apply soon!':'Study our university guides to improve your knowledge.';
   document.getElementById('quizProgress').style.width='100%';
-  document.getElementById('quizProgressText').textContent = `${quizQuestions.length}/${quizQuestions.length}`;
+  document.getElementById('quizProgressText').textContent=`${quizQuestions.length}/${quizQuestions.length}`;
+  // Save score to DB
+  addQuizScore(qScore, quizQuestions.length);
+  showToast(`🧠 Quiz score saved: ${qScore}/${quizQuestions.length}`);
 }
 function restartQuiz(){initQuiz();}
-function filterDegree(deg,btn){
-  document.querySelectorAll('.tab').forEach(t=>{if(['All','Bachelor','Master','PhD / Doctorate'].includes(t.textContent.trim()))t.classList.remove('active')});
-  btn.classList.add('active');
-}
-
-// ===================== PAYMENT =====================
-let currentPlan = 'premium';
-function showPayment(plan){
-  currentPlan = plan;
-  const t = i18n[langs[currentLang]];
-  const features = {
-    premium: {
-      title: '⭐ Premium Plan — $2/month',
-      items: ['✓ Germany step-by-step application roadmap','✓ 5 University shortlist (researched for you)','✓ SOP writing structure + example template','✓ Europass CV template + guide','✓ IELTS strategy plan (Band 7–8)','✓ Visa document checklist','✓ Priority WhatsApp support']
-    },
-    pro: {
-      title: '💎 Pro Plan — $5/month',
-      items: ['✓ All Premium features','✓ 10 university analysis + acceptance chance rating','✓ Individual motivation strategy','✓ SOP idea brainstorming session','✓ Interview preparation questions','✓ Scholarship finding roadmap','✓ Visa cover letter template','✓ 1-on-1 WhatsApp consultation (1hr/month)']
-    }
-  };
-  const f = features[plan];
-  document.getElementById('payTitle').textContent = f.title;
-  document.getElementById('payBtnText').textContent = `Subscribe to ${plan==='premium'?'Premium $2':'Pro $5'}/month`;
-  document.getElementById('payFeatures').innerHTML = `<div style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:1rem;">${f.items.map(i=>`<div style="padding:0.35rem 0;font-size:0.88rem;color:var(--text);display:flex;gap:0.5rem;"><span style="color:var(--green)">✓</span><span>${i.replace('✓ ','')}</span></div>`).join('')}</div>`;
-  document.getElementById('payModal').classList.add('show');
-}
-function selectPayMethod(el,method){
-  document.querySelectorAll('.pay-method').forEach(m=>m.classList.remove('active'));
-  el.classList.add('active');
-  const cardForm = document.getElementById('cardForm');
-  cardForm.style.display = method==='card' ? 'block' : 'none';
-}
-function formatCard(el){
-  let v = el.value.replace(/\D/g,'').substring(0,16);
-  el.value = v.replace(/(.{4})/g,'$1 ').trim();
-}
-function processPayment(){
-  const btn = document.getElementById('payBtn');
-  btn.textContent = '⏳ Processing...';
-  btn.disabled = true;
-  setTimeout(()=>{
-    closeModal('payModal');
-    btn.textContent = document.getElementById('payBtnText').textContent;
-    btn.disabled = false;
-    showToast('✅ Thank you! Payment successful. Check WhatsApp for access: +996553373812');
-    setTimeout(()=>{window.open('https://wa.me/996553373812?text=Hello!+I+just+subscribed+to+'+currentPlan+'+plan+on+EduPath+Global','_blank')},1500);
-  },2000);
-}
 
 // ===================== TOAST =====================
 function showToast(msg){
-  const t = document.createElement('div');
+  const t=document.createElement('div');
   t.className='toast';t.textContent=msg;
   document.body.appendChild(t);
   setTimeout(()=>t.remove(),3500);
 }
-
-// ===================== PRICING PAGE =====================
-// Inline pricing in home (shown on scroll)
 
 // ===================== INIT =====================
 window.addEventListener('DOMContentLoaded',()=>{
@@ -1490,72 +1549,13 @@ window.addEventListener('DOMContentLoaded',()=>{
   generateTimeline();
   initQuiz();
   applyLang();
-  // Close modals on overlay click
+  // Load saved doc
+  const draft = DB.get(DB_KEYS.docDraft);
+  document.getElementById('docText').value = draft || docTemplates.sop;
+
   document.querySelectorAll('.modal-overlay').forEach(m=>{
     m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show');});
   });
-});
-</script>
-
-<!-- PRICING SECTION on Home Page (appended) -->
-<script>
-document.addEventListener('DOMContentLoaded',()=>{
-  const homeExtra = document.createElement('section');
-  homeExtra.style = 'padding:5rem 2rem;background:linear-gradient(180deg,var(--dark) 0%,var(--dark2) 100%);';
-  homeExtra.innerHTML = `
-  <div class="container">
-    <div class="section-header">
-      <div class="section-tag">Pricing Plans</div>
-      <h2 style="font-family:'Playfair Display',serif;">Choose Your Plan</h2>
-      <p style="color:var(--text-muted);">Affordable plans for students from every country. One-time access, worldwide payments accepted.</p>
-    </div>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <div class="price-name">Free</div>
-        <div class="price-amount">$0<span>/forever</span></div>
-        <ul class="price-features">
-          <li class="included"><span class="check">✓</span> 70 University database</li>
-          <li class="included"><span class="check">✓</span> AI Chance Calculator</li>
-          <li class="included"><span class="check">✓</span> Country guides</li>
-          <li class="included"><span class="check">✓</span> Basic document templates</li>
-          <li class="included"><span class="check">✓</span> Application timeline</li>
-          <li><span style="color:var(--text-muted)">✗</span> Personalized roadmap</li>
-          <li><span style="color:var(--text-muted)">✗</span> CV Europass template</li>
-        </ul>
-        <button class="btn btn-outline" style="width:100%;justify-content:center;" onclick="showPage('universities')">Get Started Free</button>
-      </div>
-      <div class="price-card featured">
-        <div class="price-name">Premium</div>
-        <div class="price-amount">$2<span>/month</span></div>
-        <ul class="price-features">
-          <li class="included"><span class="check">✓</span> Everything in Free</li>
-          <li class="included"><span class="check">✓</span> Germany step-by-step roadmap</li>
-          <li class="included"><span class="check">✓</span> 5 University shortlist</li>
-          <li class="included"><span class="check">✓</span> SOP structure + example</li>
-          <li class="included"><span class="check">✓</span> Europass CV template</li>
-          <li class="included"><span class="check">✓</span> IELTS strategy Band 7–8</li>
-          <li class="included"><span class="check">✓</span> Visa document checklist</li>
-        </ul>
-        <button class="btn btn-gold" style="width:100%;justify-content:center;" onclick="showPayment('premium')">⭐ Get Premium $2/mo</button>
-      </div>
-      <div class="price-card">
-        <div class="price-name">Pro</div>
-        <div class="price-amount">$5<span>/month</span></div>
-        <ul class="price-features">
-          <li class="included"><span class="check">✓</span> Everything in Premium</li>
-          <li class="included"><span class="check">✓</span> 10 university analysis</li>
-          <li class="included"><span class="check">✓</span> Individual motivation strategy</li>
-          <li class="included"><span class="check">✓</span> SOP brainstorming session</li>
-          <li class="included"><span class="check">✓</span> Interview prep questions</li>
-          <li class="included"><span class="check">✓</span> Visa cover letter template</li>
-          <li class="included"><span class="check">✓</span> 1-on-1 WhatsApp 1hr/month</li>
-        </ul>
-        <button class="btn" style="width:100%;justify-content:center;background:linear-gradient(135deg,#1A3A5C,#0A2040);border:1px solid var(--accent);color:var(--accent);" onclick="showPayment('pro')">💎 Get Pro $5/mo</button>
-      </div>
-    </div>
-    <p style="text-align:center;color:var(--text-muted);font-size:0.82rem;margin-top:2rem;">🌍 Accepts Visa, Mastercard, PayPal, MBank, Elsom, Crypto • 30-day money back guarantee • WhatsApp: +996553373812</p>
-  </div>`;
-  document.getElementById('page-home').appendChild(homeExtra);
 });
 </script>
 </body>
